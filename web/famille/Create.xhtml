@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FamilleCreateDlg" widgetVar="FamilleCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateFamilleTitle}">
+            <h:form id="FamilleCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{familleController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateFamilleLabel_nomFamille}" for="nomFamille" />
+                        <p:inputText id="nomFamille" value="#{familleController.selected.nomFamille}" title="#{bundle.CreateFamilleTitle_nomFamille}" />
+                        <p:outputLabel value="#{bundle.CreateFamilleLabel_zoneGeographique}" for="zoneGeographique" />
+                        <p:inputText id="zoneGeographique" value="#{familleController.selected.zoneGeographique}" title="#{bundle.CreateFamilleTitle_zoneGeographique}" />
+                        <p:outputLabel value="#{bundle.CreateFamilleLabel_situation}" for="situation" />
+                        <p:inputText id="situation" value="#{familleController.selected.situation}" title="#{bundle.CreateFamilleTitle_situation}" />
+                        <p:outputLabel value="#{bundle.CreateFamilleLabel_responsableZone}" for="responsableZone" />
+                        <p:inputText id="responsableZone" value="#{familleController.selected.responsableZone}" title="#{bundle.CreateFamilleTitle_responsableZone}" />
+                        <p:outputLabel value="#{bundle.CreateFamilleLabel_telephone}" for="telephone" />
+                        <p:inputText id="telephone" value="#{familleController.selected.telephone}" title="#{bundle.CreateFamilleTitle_telephone}" />
+                        <p:outputLabel value="#{bundle.CreateFamilleLabel_adresse}" for="adresse" />
+                        <p:inputText id="adresse" value="#{familleController.selected.adresse}" title="#{bundle.CreateFamilleTitle_adresse}" />
+                        <p:outputLabel value="#{bundle.CreateFamilleLabel_typeLogement}" for="typeLogement" />
+                        <p:selectOneMenu id="typeLogement" value="#{familleController.selected.typeLogement}">
+                            <f:selectItem itemLabel="اختيار نوع السكن" itemValue="#{null}"/>
+                            <f:selectItem itemLabel="سكن" itemValue="سكن"/>
+                            <f:selectItem itemLabel="كراء" itemValue="كراء"/>
+                            <f:selectItem itemLabel="رهن" itemValue="رهن"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{familleController.create}" value="#{bundle.Save}" update="display,:FamilleListForm:datalist,:growl" oncomplete="handleSubmit(args,'FamilleCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="FamilleCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

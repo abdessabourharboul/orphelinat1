@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListFamilleTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <div Class="ui-grid-row">
+                <div Class="ui-grid-col-4">
+                    <p:outputPanel autoUpdate="true">
+                        <h:form id="OrphelinListForm">
+                            <p:panel header="#{bundle.ListOrphelinTitle}">
+                                <p:dataTable id="datalist" value="#{familleController.orphelins}" var="itemo"
+                                             selectionMode="single" selection="#{familleController.orphelin}"
+                                             paginator="true"
+                                             rowKey="#{itemo.id}"
+                                             rows="10"
+                                             rowsPerPageTemplate="10,20,30,40,50" dir="rtl"
+                                             >
+                                    <p:ajax event="rowSelect"/>
+                                    <p:ajax event="rowUnselect"/>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListOrphelinTitle_prenom}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{itemo.toString()}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.Details}"/>
+                                        </f:facet>
+                                        <p:commandLink value="#{bundle.Details}" actionListener="#{familleController.detailsOrphelin(itemo)}" update=":OrphelinViewForm" oncomplete="PF('OrphelinViewDialog').show()" />
+                                    </p:column>
+
+
+                                </p:dataTable>
+                            </p:panel>
+                        </h:form>
+                    </p:outputPanel>
+                </div>
+                <div Class="ui-grid-col-4">
+                    <p:outputPanel autoUpdate="true">
+                        <h:form id="VeuveListForm">
+                            <p:panel header="#{bundle.ListVeuveTitle}">
+                                <p:dataTable id="datalist" value="#{familleController.veuves}" var="itemv"
+                                             selectionMode="single" selection="#{familleController.veuve}"
+                                             paginator="true"
+                                             rowKey="#{itemv.id}"
+                                             rows="10"
+                                             rowsPerPageTemplate="10,20,30,40,50" dir="rtl"
+                                             >
+                                    <p:ajax event="rowSelect"/>
+                                    <p:ajax event="rowUnselect"/>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.ListVeuveTitle_nomVeuve}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{itemv.nomVeuve}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="#{bundle.Details}"/>
+                                        </f:facet>
+                                        <p:commandLink value="#{bundle.Details}" actionListener="#{familleController.detailsVeuve(itemv)}" update=":VeuveViewForm" oncomplete="PF('VeuveViewDialog').show()" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>
+                        </h:form>
+                    </p:outputPanel>
+                </div>
+                <div Class="ui-grid-col-4">
+                    <h:form id="FamilleListForm" dir="RTL">
+                        <p:panel header="#{bundle.ListFamilleTitle}">
+                            <p:dataTable id="datalist" value="#{familleController.items}" var="item"
+                                         selectionMode="single" selection="#{familleController.selected}"
+                                         paginator="true"
+                                         rowKey="#{item.id}"
+                                         rows="10"
+                                         rowsPerPageTemplate="10,20,30,40,50" dir="rtl" 
+                                         >
+                                <p:ajax event="rowSelect" listener="#{familleController.regenererLesListes()}"/>
+                                <p:ajax event="rowUnselect" listener="#{familleController.regenererLesListes()}"/>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.ListFamilleTitle_nomFamille}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.nomFamille}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{bundle.Details}"/>
+                                    </f:facet>
+                                    <p:commandLink value="#{bundle.Details}" actionListener="#{familleController.detailsFamille(item)}" update=":FamilleViewForm" oncomplete="PF('FamilleViewDialog').show()" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </h:form>
+                </div>
+            </div>
+            <ui:include src="View_Famille.xhtml"/>
+            <ui:include src="View_Orphelin.xhtml"/>
+            <ui:include src="View_Veuve.xhtml"/>
+        </ui:define>
+    </ui:composition>
+</html>

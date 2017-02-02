@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="OrphelinViewDlg" widgetVar="OrphelinViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewOrphelinTitle}">
+            <h:form id="OrphelinViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{familleController.orphelin != null}">
+                        <h:outputText value="#{bundle.ViewOrphelinLabel_prenom}"/>
+                        <h:outputText value="#{familleController.orphelin.prenom}" title="#{bundle.ViewOrphelinTitle_prenom}"/>
+                        <h:outputText value="#{bundle.ListVeuveTitle_famille}"/>
+                        <h:outputText value="#{familleController.orphelin.veuve.famille.nomFamille}" title="#{bundle.ViewOrphelinTitle_veuve}"/>
+                        <h:outputText value="#{bundle.ViewOrphelinLabel_dateNaissance}"/>
+                        <h:outputText value="#{familleController.orphelin.dateNaissance}" title="#{bundle.ViewOrphelinTitle_dateNaissance}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewOrphelinLabel_anneeNaissance}"/>
+                        <h:outputText value="#{familleController.orphelin.anneeNaissance}" title="#{bundle.ViewOrphelinTitle_anneeNaissance}"/>
+                        <h:outputText value="#{bundle.ViewOrphelinLabel_age}"/>
+                        <h:outputText value="#{familleController.orphelin.age}" title="#{bundle.ViewOrphelinTitle_age}"/>
+                        <h:outputText value="#{bundle.ViewOrphelinLabel_sexe}"/>
+                        <h:outputText value="#{familleController.orphelin.sexe}" title="#{bundle.ViewOrphelinTitle_sexe}"/>
+                        <h:outputText value="#{bundle.ViewOrphelinLabel_codeMassar}"/>
+                        <h:outputText value="#{familleController.orphelin.codeMassar}" title="#{bundle.ViewOrphelinTitle_codeMassar}"/>
+                        <h:outputText value="#{bundle.ViewOrphelinLabel_tailleChaussures}"/>
+                        <h:outputText value="#{familleController.orphelin.tailleChaussures}" title="#{bundle.ViewOrphelinTitle_tailleChaussures}"/>
+                        <h:outputText value="#{bundle.ViewOrphelinLabel_description}"/>
+                        <h:outputText value="#{familleController.orphelin.description}" title="#{bundle.ViewOrphelinTitle_description}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="OrphelinViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

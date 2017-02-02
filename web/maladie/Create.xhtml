@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MaladieCreateDlg" widgetVar="MaladieCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateMaladieTitle}">
+            <h:form id="MaladieCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{maladieController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateScolariteLabel_orphelin}" for="orphelin" />
+                        <p:selectOneMenu id="orphelin" value="#{maladieController.selected.orphelin}" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{orphelinController.itemsAvailableSelectOne}"
+                                           var="orphelinItem"
+                                           itemValue="#{orphelinItem}"/>
+                        </p:selectOneMenu>                
+                        <p:outputLabel value="#{bundle.CreateMaladieLabel_nomMaladie}" for="nomMaladie" />
+                        <p:inputText id="nomMaladie" value="#{maladieController.selected.nomMaladie}" title="#{bundle.CreateMaladieTitle_nomMaladie}" />
+                        <p:outputLabel value="#{bundle.CreateOrphelinLabel_description}" for="description" />
+                        <p:inputText id="description" value="#{maladieController.selected.description}" title="#{bundle.CreateOrphelinTitle_description}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{maladieController.create}" value="#{bundle.Save}" update="display,:MaladieListForm:datalist,:growl" oncomplete="handleSubmit(args,'MaladieCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MaladieCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

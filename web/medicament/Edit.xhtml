@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MedicamentEditDlg" widgetVar="MedicamentEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditMedicamentTitle}">
+            <h:form id="MedicamentEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{medicamentController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditScolariteLabel_orphelin}" for="orphelin" />
+                        <p:selectOneMenu id="orphelin" value="#{medicamentController.selected.orphelin}" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{orphelinController.itemsAvailableSelectOne}"
+                                           var="orphelinItem"
+                                           itemValue="#{orphelinItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditMedicamentLabel_nomMedicament}" for="nomMedicament" />
+                        <p:inputText id="nomMedicament" value="#{medicamentController.selected.nomMedicament}" title="#{bundle.EditMedicamentTitle_nomMedicament}" />
+                        <p:outputLabel value="#{bundle.EditMedicamentLabel_prix}" for="prix" />
+                        <p:inputText id="prix" value="#{medicamentController.selected.prix}" title="#{bundle.EditMedicamentTitle_prix}" />
+                        <p:outputLabel value="#{bundle.EditMedicamentLabel_datePrise}" for="datePrise" />
+                        <p:calendar id="datePrise" pattern="MM/dd/yyyy" value="#{medicamentController.selected.datePrise}" title="#{bundle.EditMedicamentTitle_datePrise}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditOrphelinLabel_description}" for="description" />
+                        <p:inputText id="description" value="#{medicamentController.selected.description}" title="#{bundle.EditOrphelinTitle_description}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{medicamentController.update}" value="#{bundle.Save}" update="display,:MedicamentListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MedicamentEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MedicamentEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

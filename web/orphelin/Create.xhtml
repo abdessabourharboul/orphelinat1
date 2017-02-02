@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="OrphelinCreateDlg" widgetVar="OrphelinCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateOrphelinTitle}">
+            <h:form id="OrphelinCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{orphelinController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateOrphelinLabel_prenom}" for="prenom" />
+                        <p:inputText id="prenom" value="#{orphelinController.selected.prenom}" title="#{bundle.CreateOrphelinTitle_prenom}" />
+                        <p:outputLabel value="#{bundle.CreateOrphelinLabel_veuve}" for="veuve" />
+                        <p:selectOneMenu id="veuve" value="#{orphelinController.selected.veuve}" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{veuveController.itemsAvailableSelectOne}"
+                                           var="veuveItem"
+                                           itemValue="#{veuveItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateOrphelinLabel_dateNaissance}" for="dateNaissance" />
+                        <p:calendar id="dateNaissance" pattern="MM/dd/yyyy" value="#{orphelinController.selected.dateNaissance}" title="#{bundle.EditOrphelinTitle_dateNaissance}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateOrphelinLabel_sexe}" for="sexe" />
+                        <p:selectOneMenu id="sexe" value="#{orphelinController.selected.sexe}">
+                            <f:selectItem itemLabel="اختيار الجنس" itemValue="#{null}"/>
+                            <f:selectItem itemLabel="ذكر" itemValue="ذكر"/>
+                            <f:selectItem itemLabel="انثى" itemValue="انثى"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateOrphelinLabel_codeMassar}" for="codeMassar" />
+                        <p:inputText id="codeMassar" value="#{orphelinController.selected.codeMassar}" title="#{bundle.CreateOrphelinTitle_codeMassar}" />
+                        <p:outputLabel value="#{bundle.CreateOrphelinLabel_tailleChaussures}" for="tailleChaussures" />
+                        <p:inputText id="tailleChaussures" value="#{orphelinController.selected.tailleChaussures}" title="#{bundle.CreateOrphelinTitle_tailleChaussures}" />
+                        <p:outputLabel value="#{bundle.CreateOrphelinLabel_description}" for="description" />
+                        <p:inputText id="description" value="#{orphelinController.selected.description}" title="#{bundle.CreateOrphelinTitle_description}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{orphelinController.create}" value="#{bundle.Save}" update="display,:OrphelinListForm:datalist,:growl" oncomplete="handleSubmit(args,'OrphelinCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="OrphelinCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

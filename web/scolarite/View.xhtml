@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ScolariteViewDlg" widgetVar="ScolariteViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewScolariteTitle}">
+            <h:form id="ScolariteViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{scolariteController.selected != null}">
+                        <h:outputText value="#{bundle.ViewScolariteLabel_orphelin}"/>
+                        <h:outputText value="#{scolariteController.selected.orphelin.toString()}" title="#{bundle.ViewScolariteTitle_orphelin}"/>
+                        <h:outputText value="#{bundle.ViewScolariteLabel_etablissement}"/>
+                        <h:outputText value="#{scolariteController.selected.etablissement}" title="#{bundle.ViewScolariteTitle_etablissement}"/>
+                        <h:outputText value="#{bundle.ViewScolariteLabel_anneeScolaire}"/>
+                        <h:outputText value="#{scolariteController.selected.anneeScolaire}" title="#{bundle.ViewScolariteTitle_anneeScolaire}"/>
+                        <h:outputText value="#{bundle.ViewScolariteLabel_niveauScolaire}"/>
+                        <h:outputText value="#{scolariteController.selected.niveauScolaire}" title="#{bundle.ViewScolariteTitle_niveauScolaire}"/>
+                        <h:outputText value="#{bundle.ViewScolariteLabel_filiere}"/>
+                        <h:outputText value="#{scolariteController.selected.filiere}" title="#{bundle.ViewScolariteTitle_filiere}"/>
+                        <h:outputText value="#{bundle.ViewScolariteLabel_moyenne1}"/>
+                        <h:outputText value="#{scolariteController.selected.moyenne1}" title="#{bundle.ViewScolariteTitle_moyenne1}"/>
+                        <h:outputText value="#{bundle.ViewScolariteLabel_moyenne2}"/>
+                        <h:outputText value="#{scolariteController.selected.moyenne2}" title="#{bundle.ViewScolariteTitle_moyenne2}"/>
+                        <h:outputText value="#{bundle.ViewScolariteLabel_moyenneAnnee}"/>
+                        <h:outputText value="#{scolariteController.selected.moyenneAnnee}" title="#{bundle.ViewScolariteTitle_moyenneAnnee}"/>
+                        <h:outputText value="#{bundle.ViewScolariteLabel_resultat}"/>
+                        <h:outputText value="#{scolariteController.selected.resultat ? 'نعم': 'لا'}" />
+                        <h:outputText value="#{bundle.ViewScolariteLabel_soutienScolaire}"/>
+                        <h:outputText value="#{scolariteController.selected.soutienScolaire ? 'نعم': 'لا'}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ScolariteViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

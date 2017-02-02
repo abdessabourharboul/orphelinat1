@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BonificationCreateDlg" widgetVar="BonificationCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateBonificationTitle}">
+            <h:form id="BonificationCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{bonificationController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateScolariteLabel_orphelin}" for="orphelin" />
+                        <p:selectOneMenu id="orphelin" value="#{bonificationController.selected.orphelin}" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{orphelinController.itemsAvailableSelectOne}"
+                                           var="orphelinItem"
+                                           itemValue="#{orphelinItem}"/>
+                        </p:selectOneMenu>                        
+                        <p:outputLabel value="#{bundle.CreateBonificationLabel_nomBonification}" for="nomBonification" />
+                        <p:inputText id="nomBonification" value="#{bonificationController.selected.nomBonification}" title="#{bundle.CreateBonificationTitle_nomBonification}" />
+
+                        <p:outputLabel value="#{bundle.CreateBonificationLabel_dateBonification}" for="dateBonification" />
+                        <p:calendar id="dateBonification" pattern="MM/dd/yyyy" value="#{bonificationController.selected.dateBonification}" title="#{bundle.CreateBonificationTitle_dateBonification}"  showOn="button"/>
+
+                        <p:outputLabel value="#{bundle.CreateOrphelinLabel_description}" for="description" />
+                        <p:inputText id="description" value="#{bonificationController.selected.description}" title="#{bundle.CreateOrphelinTitle_description}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{bonificationController.create}" value="#{bundle.Save}" update="display,:BonificationListForm:datalist,:growl" oncomplete="handleSubmit(args,'BonificationCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="BonificationCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

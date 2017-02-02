@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ScolariteEditDlg" widgetVar="ScolariteEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditScolariteTitle}">
+            <h:form id="ScolariteEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{scolariteController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditScolariteLabel_orphelin}" for="orphelin" />
+                        <p:selectOneMenu id="orphelin" value="#{scolariteController.selected.orphelin}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{orphelinController.itemsAvailableSelectOne}"
+                                           var="orphelinItem"
+                                           itemValue="#{orphelinItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditScolariteLabel_etablissement}" for="etablissement" />
+                        <p:inputText id="etablissement" value="#{scolariteController.selected.etablissement}" title="#{bundle.EditScolariteTitle_etablissement}" />
+                        <p:outputLabel value="#{bundle.EditScolariteLabel_anneeScolaire}" for="anneeScolaire" />
+                        <p:inputText id="anneeScolaire" value="#{scolariteController.selected.anneeScolaire}" title="#{bundle.EditScolariteTitle_anneeScolaire}" />
+                        <p:outputLabel value="#{bundle.EditScolariteLabel_niveauScolaire}" for="niveauScolaire" />
+                        <p:inputText id="niveauScolaire" value="#{scolariteController.selected.niveauScolaire}" title="#{bundle.EditScolariteTitle_niveauScolaire}" />
+                        <p:outputLabel value="#{bundle.EditScolariteLabel_filiere}" for="filiere" />
+                        <p:inputText id="filiere" value="#{scolariteController.selected.filiere}" title="#{bundle.EditScolariteTitle_filiere}" />
+                        <p:outputLabel value="#{bundle.EditScolariteLabel_moyenne1}" for="moyenne1" />
+                        <p:inputText id="moyenne1" value="#{scolariteController.selected.moyenne1}" title="#{bundle.EditScolariteTitle_moyenne1}" />
+                        <p:outputLabel value="#{bundle.EditScolariteLabel_moyenne2}" for="moyenne2" />
+                        <p:inputText id="moyenne2" value="#{scolariteController.selected.moyenne2}" title="#{bundle.EditScolariteTitle_moyenne2}" />
+                        <p:outputLabel value="#{bundle.EditScolariteLabel_soutienScolaire}" for="soutienScolaire" />
+                        <p:selectBooleanCheckbox id="soutienScolaire" value="#{scolariteController.selected.soutienScolaire}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{scolariteController.update}" value="#{bundle.Save}" update="display,:ScolariteListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ScolariteEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ScolariteEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

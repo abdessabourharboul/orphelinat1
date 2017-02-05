@@ -30,15 +30,15 @@ public class Veuve implements Serializable {
     private Long id;
     private String nomVeuve;
     private String metierVeuve;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateNaissance;
     private String cin;
     private Long age;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dateNaissance;
 
     @ManyToOne
     private Famille famille;
 
-    @OneToMany(mappedBy = "veuve")
+    @OneToMany(mappedBy = "veuve", orphanRemoval = true)
     private List<Orphelin> orphelins;
 
     public Long getId() {

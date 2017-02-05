@@ -7,6 +7,10 @@ package service;
 
 import bean.Famille;
 import bean.Medicament;
+import bean.Orphelin;
+import controler.util.DateUtil;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -23,6 +27,34 @@ public class MedicamentFacade extends AbstractFacade<Medicament> {
     private EntityManager em;
     @EJB
     private FamilleFacade familleFacade;
+
+    public List<Medicament> findByQuery(String nomOrphelin, String nomMedicament, String description,
+            Float prixMin, Float prixMax, Date datePriseMin, Date datePriseMax) {
+        String requete = "SELECT r FROM Medicament r WHERE 1=1 ";
+        if (nomOrphelin != null && !nomOrphelin.equals("")) {
+            requete += " and r.orphelin.veuve.famille.nomFamille='" + nomOrphelin + "'";
+        }
+        if (nomMedicament != null && !nomMedicament.equals("")) {
+            requete += " and r.nomMedicament='" + nomMedicament + "'";
+        }
+        if (description != null && !description.equals("")) {
+            requete += " and r.description='" + description + "'";
+        }
+        if (prixMin != null && prixMin != 0) {
+            requete += " and r.prix >='" + prixMin + "'";
+        }
+        if (prixMax != null && prixMax != 0) {
+            requete += " and r.prix <='" + prixMax + "'";
+        }
+        if (datePriseMin != null) {
+            requete += " and r.datePrise >='" + DateUtil.getSqlDateTime(datePriseMin) + "'";
+        }
+        if (datePriseMax != null) {
+            requete += " and r.datePrise <='" + DateUtil.getSqlDateTime(datePriseMax) + "'";
+        }
+        System.out.println("haaa requette===>" + requete);
+        return em.createQuery(requete).getResultList();
+    }
 
     @Override
     public void create(Medicament medicament) {

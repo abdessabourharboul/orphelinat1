@@ -29,7 +29,7 @@
                         <p:inputText id="metierVeuve" value="#{veuveController.selected.metierVeuve}" title="#{bundle.EditVeuveTitle_metierVeuve}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{veuveController.update}" value="#{bundle.Save}" update="display,:VeuveListForm:datalist,:growl" oncomplete="handleSubmit(args, 'VeuveEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="VeuveEditDialog.hide()"/>
+                    <p:commandButton immediate="true" value="#{bundle.Cancel}" onclick="VeuveEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

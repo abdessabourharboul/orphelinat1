@@ -8,35 +8,57 @@
 
     <ui:composition>
 
-        <p:dialog id="OrphelinViewDlg" widgetVar="OrphelinViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewOrphelinTitle}">
+        <p:dialog id="OrphelinViewDlg" widgetVar="OrphelinViewDialog" modal="true" 
+                  resizable="true" appendTo="@(body)" header="#{bundle.ViewOrphelinTitle}" 
+                  fitViewport="true" maximizable="true" >
             <h:form id="OrphelinViewForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{familleController.orphelin != null}">
-                        <h:outputText value="#{bundle.ViewOrphelinLabel_prenom}"/>
-                        <h:outputText value="#{familleController.orphelin.prenom}" title="#{bundle.ViewOrphelinTitle_prenom}"/>
-                        <h:outputText value="#{bundle.ListVeuveTitle_famille}"/>
-                        <h:outputText value="#{familleController.orphelin.veuve.famille.nomFamille}" title="#{bundle.ViewOrphelinTitle_veuve}"/>
-                        <h:outputText value="#{bundle.ViewOrphelinLabel_dateNaissance}"/>
-                        <h:outputText value="#{familleController.orphelin.dateNaissance}" title="#{bundle.ViewOrphelinTitle_dateNaissance}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
-                        <h:outputText value="#{bundle.ViewOrphelinLabel_anneeNaissance}"/>
-                        <h:outputText value="#{familleController.orphelin.anneeNaissance}" title="#{bundle.ViewOrphelinTitle_anneeNaissance}"/>
-                        <h:outputText value="#{bundle.ViewOrphelinLabel_age}"/>
-                        <h:outputText value="#{familleController.orphelin.age}" title="#{bundle.ViewOrphelinTitle_age}"/>
-                        <h:outputText value="#{bundle.ViewOrphelinLabel_sexe}"/>
-                        <h:outputText value="#{familleController.orphelin.sexe}" title="#{bundle.ViewOrphelinTitle_sexe}"/>
-                        <h:outputText value="#{bundle.ViewOrphelinLabel_codeMassar}"/>
-                        <h:outputText value="#{familleController.orphelin.codeMassar}" title="#{bundle.ViewOrphelinTitle_codeMassar}"/>
-                        <h:outputText value="#{bundle.ViewOrphelinLabel_tailleChaussures}"/>
-                        <h:outputText value="#{familleController.orphelin.tailleChaussures}" title="#{bundle.ViewOrphelinTitle_tailleChaussures}"/>
-                        <h:outputText value="#{bundle.ViewOrphelinLabel_description}"/>
-                        <h:outputText value="#{familleController.orphelin.description}" title="#{bundle.ViewOrphelinTitle_description}"/>
-                    </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="OrphelinViewDialog.hide()"/>
+                    <div Class="ui-grid-row">
+                        <div Class="ui-grid-col-10">
+                            <div Class="ui-grid-row">
+                                <div Class="ui-grid-col-8"><ui:include src="List_Scolarite_Orphelin.xhtml"/></div>
+                                <div Class="ui-grid-col-4"><ui:include src="List_Bonification_Orphelin.xhtml"/></div> 
+                            </div>
+                            <div Class="ui-grid-row">
+                                <div Class="ui-grid-col-8"><ui:include src="List_Medicament_Orphelin.xhtml"/></div>
+                                <div Class="ui-grid-col-4"><ui:include src="List_Maladie_Orphelin.xhtml"/></div>
+                            </div>
+                        </div>
+                        <div Class="ui-grid-col-2">
+                            <center>
+                                <h:commandLink id="viewButton1" disabled="#{empty familleController.orphelin}">
+                                    <p:ajax update=":Orphelin1ViewForm" oncomplete="PF('Orphelin1ViewDialog').show()"/>
+                                    <p:graphicImage  style="height:150px;width:150px;" value="#{orphelinController.findPath(familleController.orphelin)}"/>
+                                </h:commandLink>
+                            </center>
+                            <p:panelGrid columns="2" rendered="#{familleController.orphelin != null}">
+                                <h:outputText value="#{bundle.ViewOrphelinLabel_prenom}" />
+                                <h:outputText value="#{familleController.orphelin.prenom}" title="#{bundle.ViewOrphelinTitle_prenom}" styleClass="normalInfo"/>
+                                <h:outputText value="#{bundle.ListVeuveTitle_famille}"/>
+                                <h:outputText value="#{familleController.orphelin.veuve.famille.nomFamille}" title="#{bundle.ViewOrphelinTitle_veuve}" styleClass="normalInfo"/>
+                                <h:outputText value="#{bundle.ViewOrphelinLabel_dateNaissance}"/>
+                                <h:outputText value="#{familleController.orphelin.dateNaissance}" title="#{bundle.ViewOrphelinTitle_dateNaissance}" styleClass="normalInfo">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                                <h:outputText value="#{bundle.ViewOrphelinLabel_anneeNaissance}"/>
+                                <h:outputText value="#{familleController.orphelin.anneeNaissance}" title="#{bundle.ViewOrphelinTitle_anneeNaissance}" styleClass="normalInfo"/>
+                                <h:outputText value="#{bundle.ViewOrphelinLabel_age}"/>
+                                <h:outputText value="#{familleController.orphelin.age}" title="#{bundle.ViewOrphelinTitle_age}" styleClass="normalInfo"/>
+                                <h:outputText value="#{bundle.ViewOrphelinLabel_sexe}"/>
+                                <h:outputText value="#{familleController.orphelin.sexe}" title="#{bundle.ViewOrphelinTitle_sexe}" styleClass="normalInfo"/>
+                                <h:outputText value="#{bundle.ViewOrphelinLabel_codeMassar}"/>
+                                <h:outputText value="#{familleController.orphelin.codeMassar}" title="#{bundle.ViewOrphelinTitle_codeMassar}" styleClass="normalInfo"/>
+                                <h:outputText value="#{bundle.ViewOrphelinLabel_tailleChaussures}"/>
+                                <h:outputText value="#{familleController.orphelin.tailleChaussures}" title="#{bundle.ViewOrphelinTitle_tailleChaussures}" styleClass="normalInfo"/>
+                                <h:outputText value="#{bundle.ViewOrphelinLabel_description}"/>
+                                <h:outputText value="#{familleController.orphelin.description}" title="#{bundle.ViewOrphelinTitle_description}" styleClass="normalInfo"/>
+                            </p:panelGrid>
+                        </div>
+                    </div>
+                    <center><p:commandButton value="#{bundle.Close}" onclick="OrphelinViewDialog.hide()"/></center>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
-
+        <ui:include src="View_Image.xhtml"/>
     </ui:composition>
 </html>

@@ -24,7 +24,7 @@
                         <p:inputText id="description" value="#{maladieController.selected.description}" title="#{bundle.EditOrphelinTitle_description}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{maladieController.update}" value="#{bundle.Save}" update="display,:MaladieListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MaladieEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="MaladieEditDialog.hide()"/>
+                    <p:commandButton immediate="true" value="#{bundle.Cancel}" onclick="MaladieEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

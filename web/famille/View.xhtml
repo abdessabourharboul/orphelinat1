@@ -12,22 +12,22 @@
             <h:form id="FamilleViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{familleController.selected != null}">
-                        <h:outputText value="#{bundle.ViewFamilleLabel_zoneGeographique}"/>
-                        <h:outputText value="#{familleController.selected.zoneGeographique}" title="#{bundle.ViewFamilleTitle_zoneGeographique}"/>
-                        <h:outputText value="#{bundle.ViewFamilleLabel_situation}"/>
-                        <h:outputText value="#{familleController.selected.situation}" title="#{bundle.ViewFamilleTitle_situation}"/>
-                        <h:outputText value="#{bundle.ViewFamilleLabel_responsableZone}"/>
-                        <h:outputText value="#{familleController.selected.responsableZone}" title="#{bundle.ViewFamilleTitle_responsableZone}"/>
-                        <h:outputText value="#{bundle.ViewFamilleLabel_telephone}"/>
-                        <h:outputText value="#{familleController.selected.telephone}" title="#{bundle.ViewFamilleTitle_telephone}"/>
-                        <h:outputText value="#{bundle.ViewFamilleLabel_nombrePersonnes}"/>
-                        <h:outputText value="#{familleController.selected.nombrePersonnes}" title="#{bundle.ViewFamilleTitle_nombrePersonnes}"/>
                         <h:outputText value="#{bundle.ViewFamilleLabel_nomFamille}"/>
                         <h:outputText value="#{familleController.selected.nomFamille}" title="#{bundle.ViewFamilleTitle_nomFamille}"/>
+                        <h:outputText value="#{bundle.ViewFamilleLabel_situation}"/>
+                        <h:outputText value="#{familleController.selected.situation}" title="#{bundle.ViewFamilleTitle_situation}"/>
+                        <h:outputText value="#{bundle.ViewFamilleLabel_nombrePersonnes}"/>
+                        <h:outputText value="#{familleController.selected.nombrePersonnes}" title="#{bundle.ViewFamilleTitle_nombrePersonnes}"/>
+                        <h:outputText value="#{bundle.ViewFamilleLabel_zoneGeographique}"/>
+                        <h:outputText value="#{familleController.selected.zoneGeographique}" title="#{bundle.ViewFamilleTitle_zoneGeographique}"/>
                         <h:outputText value="#{bundle.ViewFamilleLabel_typeLogement}"/>
                         <h:outputText value="#{familleController.selected.typeLogement}" title="#{bundle.ViewFamilleTitle_typeLogement}"/>
                         <h:outputText value="#{bundle.ViewFamilleLabel_adresse}"/>
                         <h:outputText value="#{familleController.selected.adresse}" title="#{bundle.ViewFamilleTitle_adresse}"/>
+                        <h:outputText value="#{bundle.ViewFamilleLabel_telephone}"/>
+                        <h:outputText value="#{familleController.selected.telephone}" title="#{bundle.ViewFamilleTitle_telephone}"/>
+                        <h:outputText value="#{bundle.ViewFamilleLabel_responsableZone}"/>
+                        <h:outputText value="#{familleController.selected.responsableZone}" title="#{bundle.ViewFamilleTitle_responsableZone}"/>
                         <h:outputText value="#{bundle.ViewFamilleLabel_cout}"/>
                         <h:outputText value="#{familleController.selected.cout}" title="#{bundle.ViewFamilleTitle_cout}"/>
                     </p:panelGrid>

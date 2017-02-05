@@ -6,6 +6,7 @@ import controller.util.JsfUtil.PersistAction;
 import service.VeuveFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -27,6 +28,82 @@ public class VeuveController implements Serializable {
     private service.VeuveFacade ejbFacade;
     private List<Veuve> items = null;
     private Veuve selected;
+    private String nomVeuveForSearch;
+    private String metierVeuveForSearch;
+    private String cinForSearch;
+    private Long ageMinForSearch;
+    private Long ageMaxForSearch;
+    private Date dateNaissanceMinForSearch;
+    private Date dateNaissanceMaxForSearch;
+
+    public void rechercheVeuveByQuery() {
+        items = ejbFacade.findByQuery(nomVeuveForSearch, metierVeuveForSearch, cinForSearch, ageMinForSearch,
+                ageMaxForSearch, dateNaissanceMinForSearch, dateNaissanceMaxForSearch);
+        System.out.println(items);
+    }
+
+    public void nullerLaListe() {
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            items = null;
+//            System.out.println("hanooo");
+        }
+    }
+
+    public String getNomVeuveForSearch() {
+        return nomVeuveForSearch;
+    }
+
+    public void setNomVeuveForSearch(String nomVeuveForSearch) {
+        this.nomVeuveForSearch = nomVeuveForSearch;
+    }
+
+    public String getMetierVeuveForSearch() {
+        return metierVeuveForSearch;
+    }
+
+    public void setMetierVeuveForSearch(String metierVeuveForSearch) {
+        this.metierVeuveForSearch = metierVeuveForSearch;
+    }
+
+    public String getCinForSearch() {
+        return cinForSearch;
+    }
+
+    public void setCinForSearch(String cinForSearch) {
+        this.cinForSearch = cinForSearch;
+    }
+
+    public Long getAgeMinForSearch() {
+        return ageMinForSearch;
+    }
+
+    public void setAgeMinForSearch(Long ageMinForSearch) {
+        this.ageMinForSearch = ageMinForSearch;
+    }
+
+    public Long getAgeMaxForSearch() {
+        return ageMaxForSearch;
+    }
+
+    public void setAgeMaxForSearch(Long ageMaxForSearch) {
+        this.ageMaxForSearch = ageMaxForSearch;
+    }
+
+    public Date getDateNaissanceMinForSearch() {
+        return dateNaissanceMinForSearch;
+    }
+
+    public void setDateNaissanceMinForSearch(Date dateNaissanceMinForSearch) {
+        this.dateNaissanceMinForSearch = dateNaissanceMinForSearch;
+    }
+
+    public Date getDateNaissanceMaxForSearch() {
+        return dateNaissanceMaxForSearch;
+    }
+
+    public void setDateNaissanceMaxForSearch(Date dateNaissanceMaxForSearch) {
+        this.dateNaissanceMaxForSearch = dateNaissanceMaxForSearch;
+    }
 
     public VeuveController() {
     }

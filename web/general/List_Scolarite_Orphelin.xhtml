@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition >
+        <p:outputPanel autoUpdate="true">
+            <h:form id="ScolariteListForm">
+                <p:fieldset legend="#{bundle.ListScolariteTitle}" collapsed="false" toggleable="true"  style="margin-bottom:20px">
+                    <p:dataTable id="datalist" value="#{familleController.findScolariteByOrphelin(familleController.orphelin)}" var="item"
+                                 selectionMode="single" selection="#{scolariteController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   />
+                        <p:ajax event="rowUnselect" />
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScolariteTitle_etablissement}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.etablissement}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScolariteTitle_anneeScolaire}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.anneeScolaire}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScolariteTitle_niveauScolaire}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.niveauScolaire}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScolariteTitle_filiere}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.filiere}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScolariteTitle_moyenne1}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.moyenne1}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScolariteTitle_moyenne2}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.moyenne2}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScolariteTitle_moyenneAnnee}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.moyenneAnnee}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScolariteTitle_resultat}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.resultat ? 'نعم': 'لا'}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListScolariteTitle_soutienScolaire}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.soutienScolaire ? 'نعم': 'لا'}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:fieldset>
+            </h:form>
+        </p:outputPanel>
+    </ui:composition>
+
+</html>

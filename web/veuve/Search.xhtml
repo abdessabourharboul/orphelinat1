@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <h:form id="VeuveRechercheForm" dir="RTL">
+            <p:fieldset legend="#{bundle.Criters_De_Recherche}" toggleable="true"  style="margin-bottom:20px">
+                <p:panelGrid id="panelRecherche" columns="10">
+                    <p:outputLabel value="#{bundle.ViewVeuveLabel_nomVeuve}" for="nomVeuve" style="display:block;width:80px"/>
+                    <p:inputText id="nomVeuve" value="#{veuveController.nomVeuveForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewVeuveLabel_metierVeuve}" for="metierVeuve" style="display:block;width:80px"/>
+                    <p:inputText id="metierVeuve" value="#{veuveController.metierVeuveForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewVeuveLabel_cin}" for="cin" style="display:block;width:80px"/>
+                    <p:inputText id="cin" value="#{veuveController.cinForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewVeuveLabel_ageMin}" for="ageMin" style="display:block;width:80px"/>
+                    <p:inputText id="ageMin" value="#{veuveController.ageMinForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewVeuveLabel_ageMax}" for="ageMax" style="display:block;width:80px"/>
+                    <p:inputText id="ageMax" value="#{veuveController.ageMaxForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewVeuveLabel_dateNaissanceMin}" for="dateNaissanceMin" style="display:block;width:80px"/>
+                    <p:calendar size="12" id="dateNaissanceMin" pattern="MM/dd/yyyy" value="#{veuveController.dateNaissanceMinForSearch}"  showOn="button">
+                        <f:convertDateTime pattern="MM/dd/yyyy"  />
+                    </p:calendar>
+
+                    <p:outputLabel value="#{bundle.ViewVeuveLabel_dateNaissanceMax}" for="dateNaissanceMax" style="display:block;width:80px"/>
+                    <p:calendar size="12" id="dateNaissanceMax" pattern="MM/dd/yyyy" value="#{veuveController.dateNaissanceMaxForSearch}"  showOn="button">
+                        <f:convertDateTime pattern="MM/dd/yyyy"  />
+                    </p:calendar>
+
+                    <p:commandButton id="rechercher" value="بحث" icon="ui-icon-search"  actionListener="#{veuveController.rechercheVeuveByQuery}" update=":VeuveListForm:datalist" style="display:block;width:60px" />         
+                </p:panelGrid>
+            </p:fieldset>
+        </h:form>
+    </ui:composition>
+</html>

@@ -34,7 +34,7 @@
                                         <f:facet name="header">
                                             <h:outputText value="#{bundle.Details}"/>
                                         </f:facet>
-                                        <p:commandLink value="#{bundle.Details}" actionListener="#{familleController.detailsOrphelin(itemo)}" update=":OrphelinViewForm" oncomplete="PF('OrphelinViewDialog').show()" />
+                                        <p:commandLink value="#{bundle.Details}" actionListener="#{familleController.detailsOrphelin(itemo)}" update=":OrphelinViewForm" oncomplete="PF('OrphelinViewDialog').show();PF('OrphelinViewDialog').toggleMaximize();" />
                                     </p:column>
 
 
@@ -107,4 +107,5 @@
             <ui:include src="View_Veuve.xhtml"/>
         </ui:define>
     </ui:composition>
+
 </html>

@@ -25,6 +25,7 @@ public class Maladie implements Serializable {
     private Long id;
     private String nomMaladie;
     private String description;
+
     @ManyToOne
     private Orphelin orphelin;
 

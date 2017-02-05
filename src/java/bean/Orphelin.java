@@ -29,30 +29,32 @@ public class Orphelin implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String prenom;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateNaissance;
-    private Long anneeNaissance;
-    private Long age;
-
     private String tailleChaussures;
     private String sexe;
     private String codeMassar;
     private String description;
-
-    @OneToMany(mappedBy = "orphelin")
-    private List<Scolarite> scolarites;
-
-    @OneToMany(mappedBy = "orphelin")
-    private List<Medicament> medicaments;
-
-    @OneToMany(mappedBy = "orphelin")
-    private List<Maladie> maladies;
-
-    @OneToMany(mappedBy = "orphelin")
-    private List<Bonification> bonifications;
+    private String photo;
+    private Long anneeNaissance;
+    private Long age;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dateNaissance;
 
     @ManyToOne
     private Veuve veuve;
+
+    private List<String> ancienPhotos;
+
+    @OneToMany(mappedBy = "orphelin", orphanRemoval = true)
+    private List<Scolarite> scolarites;
+
+    @OneToMany(mappedBy = "orphelin", orphanRemoval = true)
+    private List<Medicament> medicaments;
+
+    @OneToMany(mappedBy = "orphelin", orphanRemoval = true)
+    private List<Maladie> maladies;
+
+    @OneToMany(mappedBy = "orphelin", orphanRemoval = true)
+    private List<Bonification> bonifications;
 
     public Long getId() {
         return id;
@@ -60,6 +62,25 @@ public class Orphelin implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public List<String> getAncienPhotos() {
+        if (ancienPhotos == null) {
+            ancienPhotos = new ArrayList<>();
+        }
+        return ancienPhotos;
+    }
+
+    public void setAncienPhotos(List<String> ancienPhotos) {
+        this.ancienPhotos = ancienPhotos;
     }
 
     public List<Medicament> getMedicaments() {

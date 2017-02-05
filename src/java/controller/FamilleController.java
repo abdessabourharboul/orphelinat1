@@ -1,13 +1,18 @@
 package controller;
 
+import bean.Bonification;
 import bean.Famille;
+import bean.Maladie;
+import bean.Medicament;
 import bean.Orphelin;
+import bean.Scolarite;
 import bean.Veuve;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
 import service.FamilleFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -26,7 +31,7 @@ import service.VeuveFacade;
 @Named("familleController")
 @SessionScoped
 public class FamilleController implements Serializable {
-    
+
     @EJB
     private service.FamilleFacade ejbFacade;
     @EJB
@@ -39,108 +44,246 @@ public class FamilleController implements Serializable {
     private Veuve veuve;
     private List<Orphelin> orphelins;
     private Orphelin orphelin;
-    
+    private List<Famille> familles;
+    private String nomFamilleForSearch;
+    private String typeLogementForSearch;
+    private String adresseForSearch;
+    private String zoneGeographiqueForSearch;
+    private String situationForSearch;
+    private String responsableZoneForSearch;
+    private Long nombrePersonnesMinForSearch;
+    private Long nombrePersonnesMaxForSearch;
+    private String telephoneForSearch;
+    private Float coutMinForSearch;
+    private Float coutMaxForSearch;
+
+    public void rechercheFamilleByQuery() {
+        items = ejbFacade.findByQuery(nomFamilleForSearch, typeLogementForSearch, adresseForSearch,
+                zoneGeographiqueForSearch, situationForSearch, responsableZoneForSearch,
+                nombrePersonnesMinForSearch, nombrePersonnesMaxForSearch,
+                telephoneForSearch, coutMinForSearch, coutMaxForSearch);
+        System.out.println(items);
+    }
+
+    public List<Famille> getFamilles() {
+        if (familles == null) {
+            familles = new ArrayList<>();
+        }
+        return familles;
+    }
+
+    public void setFamilles(List<Famille> familles) {
+        this.familles = familles;
+    }
+
+    public String getNomFamilleForSearch() {
+        return nomFamilleForSearch;
+    }
+
+    public void setNomFamilleForSearch(String nomFamilleForSearch) {
+        this.nomFamilleForSearch = nomFamilleForSearch;
+    }
+
+    public String getTypeLogementForSearch() {
+        return typeLogementForSearch;
+    }
+
+    public void setTypeLogementForSearch(String typeLogementForSearch) {
+        this.typeLogementForSearch = typeLogementForSearch;
+    }
+
+    public String getAdresseForSearch() {
+        return adresseForSearch;
+    }
+
+    public void setAdresseForSearch(String adresseForSearch) {
+        this.adresseForSearch = adresseForSearch;
+    }
+
+    public String getZoneGeographiqueForSearch() {
+        return zoneGeographiqueForSearch;
+    }
+
+    public void setZoneGeographiqueForSearch(String zoneGeographiqueForSearch) {
+        this.zoneGeographiqueForSearch = zoneGeographiqueForSearch;
+    }
+
+    public String getSituationForSearch() {
+        return situationForSearch;
+    }
+
+    public void setSituationForSearch(String situationForSearch) {
+        this.situationForSearch = situationForSearch;
+    }
+
+    public String getResponsableZoneForSearch() {
+        return responsableZoneForSearch;
+    }
+
+    public Long getNombrePersonnesMinForSearch() {
+        return nombrePersonnesMinForSearch;
+    }
+
+    public void setNombrePersonnesMinForSearch(Long nombrePersonnesMinForSearch) {
+        this.nombrePersonnesMinForSearch = nombrePersonnesMinForSearch;
+    }
+
+    public Long getNombrePersonnesMaxForSearch() {
+        return nombrePersonnesMaxForSearch;
+    }
+
+    public void setNombrePersonnesMaxForSearch(Long nombrePersonnesMaxForSearch) {
+        this.nombrePersonnesMaxForSearch = nombrePersonnesMaxForSearch;
+    }
+
+    public String getTelephoneForSearch() {
+        return telephoneForSearch;
+    }
+
+    public void setTelephoneForSearch(String telephoneForSearch) {
+        this.telephoneForSearch = telephoneForSearch;
+    }
+
+    public Float getCoutMinForSearch() {
+        return coutMinForSearch;
+    }
+
+    public void setCoutMinForSearch(Float coutMinForSearch) {
+        this.coutMinForSearch = coutMinForSearch;
+    }
+
+    public Float getCoutMaxForSearch() {
+        return coutMaxForSearch;
+    }
+
+    public void setCoutMaxForSearch(Float coutMaxForSearch) {
+        this.coutMaxForSearch = coutMaxForSearch;
+    }
+
+    public void setResponsableZoneForSearch(String responsableZoneForSearch) {
+        this.responsableZoneForSearch = responsableZoneForSearch;
+    }
+
+    public List<Bonification> findBonificationByOrphelin(Orphelin orphelin) {
+        return orphelinFacade.findBonificationByOrphelin(orphelin);
+    }
+
+    public List<Maladie> findMaladieByOrphelin(Orphelin orphelin) {
+        return orphelinFacade.findMaladieByOrphelin(orphelin);
+    }
+
+    public List<Medicament> findMedicamentByOrphelin(Orphelin orphelin) {
+        return orphelinFacade.findMedicamentByOrphelin(orphelin);
+    }
+
+    public List<Scolarite> findScolariteByOrphelin(Orphelin orphelin) {
+        return orphelinFacade.findScolariteByOrphelin(orphelin);
+    }
+
     public void detailsFamille(Famille famille) {
         setSelected(famille);
     }
-    
+
     public void detailsVeuve(Veuve veuve) {
         setVeuve(veuve);
     }
-    
+
     public void detailsOrphelin(Orphelin orphelin) {
         setOrphelin(orphelin);
     }
-    
+
     public void regenererLesListes() {
         veuve = null;
         orphelin = null;
     }
-    
-    public void viderLaListe() {
-        items = null;
+
+    public void nullerLaListe() {
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            items = null;
+//            System.out.println("hanooo");
+        }
     }
-    
+
     public int calculNombrePersonnes(Famille famille) {
         return ejbFacade.calculNombrePersonnes(famille);
     }
-    
+
     public FamilleController() {
     }
-    
+
     public Famille getSelected() {
         return selected;
     }
-    
+
     public void setSelected(Famille selected) {
         this.selected = selected;
     }
-    
+
     public List<Veuve> getVeuves() {
         return veuveFacade.findVeuveByFamille(getSelected());
     }
-    
+
     public Veuve getVeuve() {
         if (veuve == null) {
             veuve = new Veuve();
         }
         return veuve;
     }
-    
+
     public void setVeuve(Veuve veuve) {
         this.veuve = veuve;
     }
-    
+
     public void setVeuves(List<Veuve> veuves) {
         this.veuves = veuves;
     }
-    
+
     public List<Orphelin> getOrphelins() {
         return orphelinFacade.findOrphelinByVeuve(getVeuve());
     }
-    
+
     public void setOrphelins(List<Orphelin> orphelins) {
         this.orphelins = orphelins;
     }
-    
+
     public Orphelin getOrphelin() {
         if (orphelin == null) {
             orphelin = new Orphelin();
         }
         return orphelin;
     }
-    
+
     public void setOrphelin(Orphelin orphelin) {
         this.orphelin = orphelin;
     }
-    
+
     protected void setEmbeddableKeys() {
     }
-    
+
     protected void initializeEmbeddableKey() {
     }
-    
+
     private FamilleFacade getFacade() {
         return ejbFacade;
     }
-    
+
     public Famille prepareCreate() {
         selected = new Famille();
         initializeEmbeddableKey();
         return selected;
     }
-    
+
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("FamilleCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
-    
+
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("FamilleUpdated"));
     }
-    
+
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("FamilleDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -148,14 +291,15 @@ public class FamilleController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
-    
+
     public List<Famille> getItems() {
         if (items == null) {
             items = getFacade().findAll();
         }
+        System.out.println("Hani f la Methode getItems()");
         return items;
     }
-    
+
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
@@ -185,22 +329,22 @@ public class FamilleController implements Serializable {
             }
         }
     }
-    
+
     public Famille getFamille(java.lang.Long id) {
         return getFacade().find(id);
     }
-    
+
     public List<Famille> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
-    
+
     public List<Famille> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
-    
+
     @FacesConverter(forClass = Famille.class)
     public static class FamilleControllerConverter implements Converter {
-        
+
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -210,19 +354,19 @@ public class FamilleController implements Serializable {
                     getValue(facesContext.getELContext(), null, "familleController");
             return controller.getFamille(getKey(value));
         }
-        
+
         java.lang.Long getKey(String value) {
             java.lang.Long key;
             key = Long.valueOf(value);
             return key;
         }
-        
+
         String getStringKey(java.lang.Long value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
-        
+
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -236,7 +380,7 @@ public class FamilleController implements Serializable {
                 return null;
             }
         }
-        
+
     }
-    
+
 }

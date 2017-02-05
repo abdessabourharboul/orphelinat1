@@ -6,6 +6,7 @@ import controller.util.JsfUtil.PersistAction;
 import service.MedicamentFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -27,6 +28,82 @@ public class MedicamentController implements Serializable {
     private service.MedicamentFacade ejbFacade;
     private List<Medicament> items = null;
     private Medicament selected;
+    private String nomOrphelinForSearch;
+    private String nomMedicamentForSearch;
+    private String descriptionForSearch;
+    private Float prixMinForSearch;
+    private Float prixMaxForSearch;
+    private Date datePriseMinForSearch;
+    private Date datePriseMaxForSearch;
+
+    public void rechercheMedicamentByQuery() {
+        items = ejbFacade.findByQuery(nomOrphelinForSearch, nomMedicamentForSearch, descriptionForSearch,
+                prixMinForSearch, prixMaxForSearch, datePriseMinForSearch, datePriseMaxForSearch);
+        System.out.println(items);
+    }
+
+    public void nullerLaListe() {
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            items = null;
+//            System.out.println("hanooo");
+        }
+    }
+
+    public String getNomOrphelinForSearch() {
+        return nomOrphelinForSearch;
+    }
+
+    public void setNomOrphelinForSearch(String nomOrphelinForSearch) {
+        this.nomOrphelinForSearch = nomOrphelinForSearch;
+    }
+
+    public String getNomMedicamentForSearch() {
+        return nomMedicamentForSearch;
+    }
+
+    public void setNomMedicamentForSearch(String nomMedicamentForSearch) {
+        this.nomMedicamentForSearch = nomMedicamentForSearch;
+    }
+
+    public String getDescriptionForSearch() {
+        return descriptionForSearch;
+    }
+
+    public void setDescriptionForSearch(String descriptionForSearch) {
+        this.descriptionForSearch = descriptionForSearch;
+    }
+
+    public Float getPrixMinForSearch() {
+        return prixMinForSearch;
+    }
+
+    public void setPrixMinForSearch(Float prixMinForSearch) {
+        this.prixMinForSearch = prixMinForSearch;
+    }
+
+    public Float getPrixMaxForSearch() {
+        return prixMaxForSearch;
+    }
+
+    public void setPrixMaxForSearch(Float prixMaxForSearch) {
+        this.prixMaxForSearch = prixMaxForSearch;
+    }
+
+    public Date getDatePriseMinForSearch() {
+        return datePriseMinForSearch;
+    }
+
+    public void setDatePriseMinForSearch(Date datePriseMinForSearch) {
+        this.datePriseMinForSearch = datePriseMinForSearch;
+    }
+
+    public Date getDatePriseMaxForSearch() {
+        return datePriseMaxForSearch;
+    }
+
+    public void setDatePriseMaxForSearch(Date datePriseMaxForSearch) {
+        this.datePriseMaxForSearch = datePriseMaxForSearch;
+    }
 
     public MedicamentController() {
     }

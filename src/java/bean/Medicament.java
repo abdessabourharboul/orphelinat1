@@ -26,10 +26,11 @@ public class Medicament implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nomMedicament;
-    private Float prix;
     private String description;
+    private Float prix;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date datePrise;
+
     @ManyToOne
     private Orphelin orphelin;
 

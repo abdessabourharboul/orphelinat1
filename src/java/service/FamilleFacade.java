@@ -7,6 +7,7 @@ package service;
 
 import bean.Famille;
 import bean.Veuve;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,17 +18,59 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class FamilleFacade extends AbstractFacade<Famille> {
-    
+
     @PersistenceContext(unitName = "Orphelinat1PU")
     private EntityManager em;
-    
+
+    public List<Famille> findByQuery(String nomFamille, String typeLogement, String adresse,
+            String zoneGeographique, String situation, String responsableZone,
+            Long nombrePersonnesMin, Long nombrePersonnesMax,
+            String telephone, Float coutMin, Float coutMax) {
+        String requete = "SELECT r FROM Famille r WHERE 1=1 ";
+        if (nomFamille != null && !nomFamille.equals("")) {
+            requete += " and r.nomFamille='" + nomFamille + "'";
+        }
+        if (typeLogement != null && !typeLogement.equals("")) {
+            requete += " and r.typeLogement='" + typeLogement + "'";
+        }
+        if (adresse != null && !adresse.equals("")) {
+            requete += " and r.adresse='" + adresse + "'";
+        }
+        if (zoneGeographique != null && !zoneGeographique.equals("")) {
+            requete += " and r.zoneGeographique='" + zoneGeographique + "'";
+        }
+        if (situation != null && !situation.equals("")) {
+            requete += " and r.situation='" + situation + "'";
+        }
+        if (responsableZone != null && !responsableZone.equals("")) {
+            requete += " and r.responsableZone='" + responsableZone + "'";
+        }
+        if (nombrePersonnesMin != null && nombrePersonnesMin != 0) {
+            requete += " and r.nombrePersonnes >='" + nombrePersonnesMin + "'";
+        }
+        if (nombrePersonnesMax != null && nombrePersonnesMax != 0) {
+            requete += " and r.nombrePersonnes <='" + nombrePersonnesMax + "'";
+        }
+        if (telephone != null && !telephone.equals("")) {
+            requete += " and r.telephone='" + telephone + "'";
+        }
+        if (coutMin != null && coutMin != 0) {
+            requete += " and r.cout >='" + coutMin + "'";
+        }
+        if (coutMax != null && coutMax != 0) {
+            requete += " and r.cout <='" + coutMax + "'";
+        }
+        System.out.println("haaa requette===>" + requete);
+        return em.createQuery(requete).getResultList();
+    }
+
     @Override
     public void create(Famille famille) {
         famille.setCout(0F);
         famille.setNombrePersonnes(0L);
         super.create(famille);
     }
-    
+
     public int calculNombrePersonnes(Famille famille) {
         int number = 0;
         number = number + famille.getVeuves().size();
@@ -40,14 +83,14 @@ public class FamilleFacade extends AbstractFacade<Famille> {
         }
         return number;
     }
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
     public FamilleFacade() {
         super(Famille.class);
     }
-    
+
 }

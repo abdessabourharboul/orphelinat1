@@ -35,9 +35,20 @@
                         <p:inputText id="tailleChaussures" value="#{orphelinController.selected.tailleChaussures}" title="#{bundle.EditOrphelinTitle_tailleChaussures}" />
                         <p:outputLabel value="#{bundle.EditOrphelinLabel_description}" for="description" />
                         <p:inputText id="description" value="#{orphelinController.selected.description}" title="#{bundle.EditOrphelinTitle_description}" />
+                        <p:outputLabel value="Photo :" for="photo" />
+                        <p:panel>
+                            <p:fileUpload id="photo" fileUploadListener="#{orphelinController.uploadEdit}"
+                                          mode="advanced"
+                                          dragDropSupport="true" multiple="false"
+                                          update="messages" sizeLimit="10000000"
+                                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                            <p:growl id="messages" showDetail="true"/>
+                        </p:panel>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{orphelinController.update}" value="#{bundle.Save}" update="display,:OrphelinListForm:datalist,:growl" oncomplete="handleSubmit(args, 'OrphelinEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="OrphelinEditDialog.hide()"/>
+                    <p:commandButton value="#{bundle.Cancel}" immediate="true"
+                                     actionListener="#{orphelinController.cancelEditOrphelin}" 
+                                     onclick="OrphelinEditDialog.hide()" />
                 </h:panelGroup>
             </h:form>
         </p:dialog>

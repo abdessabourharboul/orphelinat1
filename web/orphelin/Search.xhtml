@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <h:form id="OrphelinRechercheForm" dir="RTL">
+            <p:fieldset legend="#{bundle.Criters_De_Recherche}" toggleable="true"  style="margin-bottom:20px">
+                <p:panelGrid id="panelRecherche" columns="8">
+                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_prenom}" for="prenom" style="display:block;width:80px"/>
+                    <p:inputText id="prenom" value="#{orphelinController.prenomForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_tailleChaussures}" for="tailleChaussures" style="display:block;width:80px"/>
+                    <p:inputText id="tailleChaussures" value="#{orphelinController.tailleChaussuresForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_sexe}" for="sexe" style="display:block;width:80px"/>
+                    <p:inputText id="sexe" value="#{orphelinController.sexeForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_codeMassar}" for="codeMassar" style="display:block;width:80px"/>
+                    <p:inputText id="codeMassar" value="#{orphelinController.codeMassarForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_description}" for="description" style="display:block;width:80px"/>
+                    <p:inputText id="description" value="#{orphelinController.descriptionForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_anneeNaissanceMin}" for="anneeNaissanceMin" style="display:block;width:80px"/>
+                    <p:inputText id="anneeNaissanceMin" value="#{orphelinController.anneeNaissanceMinForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_anneeNaissanceMax}" for="anneeNaissanceMax" style="display:block;width:80px"/>
+                    <p:inputText id="anneeNaissanceMax" value="#{orphelinController.anneeNaissanceMaxForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewVeuveLabel_ageMin}" for="ageMin" style="display:block;width:80px"/>
+                    <p:inputText id="ageMin" value="#{orphelinController.ageMinForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewVeuveLabel_ageMax}" for="ageMax" style="display:block;width:80px"/>
+                    <p:inputText id="ageMax" value="#{orphelinController.ageMaxForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewVeuveLabel_dateNaissanceMin}" for="dateNaissanceMin" style="display:block;width:80px"/>
+                    <p:calendar size="12" id="dateNaissanceMin" pattern="MM/dd/yyyy" value="#{orphelinController.dateNaissanceMinForSearch}"  showOn="button">
+                        <f:convertDateTime pattern="MM/dd/yyyy"  />
+                    </p:calendar>
+
+                    <p:outputLabel value="#{bundle.ViewVeuveLabel_dateNaissanceMax}" for="dateNaissanceMax" style="display:block;width:80px"/>
+                    <p:calendar size="12" id="dateNaissanceMax" pattern="MM/dd/yyyy" value="#{orphelinController.dateNaissanceMaxForSearch}"  showOn="button">
+                        <f:convertDateTime pattern="MM/dd/yyyy"  />
+                    </p:calendar>
+
+                    <p:commandButton id="rechercher" value="بحث" icon="ui-icon-search"  actionListener="#{orphelinController.rechercheOrphelinByQuery}" update=":OrphelinListForm:datalist" style="display:block;width:60px" />         
+                </p:panelGrid>
+            </p:fieldset>
+        </h:form>
+    </ui:composition>
+</html>

@@ -28,14 +28,14 @@ public class Famille implements Serializable {
     private String nomFamille;
     private String typeLogement;
     private String adresse;
-    private Long nombrePersonnes;
     private String zoneGeographique;
     private String situation;
     private String responsableZone;
-    private Long telephone;
+    private Long nombrePersonnes;
+    private String telephone;
     private Float cout;
 
-    @OneToMany(mappedBy = "famille")
+    @OneToMany(mappedBy = "famille", orphanRemoval = true)
     private List<Veuve> veuves;
 
     public Long getId() {
@@ -78,11 +78,11 @@ public class Famille implements Serializable {
         this.responsableZone = responsableZone;
     }
 
-    public Long getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(Long telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 

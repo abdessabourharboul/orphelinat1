@@ -27,6 +27,121 @@ public class ScolariteController implements Serializable {
     private service.ScolariteFacade ejbFacade;
     private List<Scolarite> items = null;
     private Scolarite selected;
+    private String nomOrphelinForSearch;
+    private String etablissementForSearch;
+    private String anneeScolaireForSearch;
+    private String niveauScolaireForSearch;
+    private String filiereForSearch;
+    private Float moyenne1ForSearch;
+    private Float moyenne2ForSearch;
+    private Float moyenneAnneeMinForSearch;
+    private Float moyenneAnneeMaxForSearch;
+    private Boolean resultatForSearch = null;
+    private Boolean soutienScolaireForSearch = null;
+
+    public void rechercheScolariteByQuery() {
+        items = ejbFacade.findByQuery(
+                nomOrphelinForSearch, etablissementForSearch, anneeScolaireForSearch,
+                niveauScolaireForSearch, filiereForSearch, moyenne1ForSearch,
+                moyenne2ForSearch, moyenneAnneeMinForSearch, moyenneAnneeMaxForSearch,
+                resultatForSearch, soutienScolaireForSearch);
+        System.out.println(items);
+    }
+
+    public void nullerLaListe() {
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            items = null;
+//            System.out.println("hanooo");
+        }
+    }
+
+    public String getNomOrphelinForSearch() {
+        return nomOrphelinForSearch;
+    }
+
+    public void setNomOrphelinForSearch(String nomOrphelinForSearch) {
+        this.nomOrphelinForSearch = nomOrphelinForSearch;
+    }
+
+    public String getEtablissementForSearch() {
+        return etablissementForSearch;
+    }
+
+    public void setEtablissementForSearch(String etablissementForSearch) {
+        this.etablissementForSearch = etablissementForSearch;
+    }
+
+    public String getAnneeScolaireForSearch() {
+        return anneeScolaireForSearch;
+    }
+
+    public void setAnneeScolaireForSearch(String anneeScolaireForSearch) {
+        this.anneeScolaireForSearch = anneeScolaireForSearch;
+    }
+
+    public String getNiveauScolaireForSearch() {
+        return niveauScolaireForSearch;
+    }
+
+    public void setNiveauScolaireForSearch(String niveauScolaireForSearch) {
+        this.niveauScolaireForSearch = niveauScolaireForSearch;
+    }
+
+    public String getFiliereForSearch() {
+        return filiereForSearch;
+    }
+
+    public void setFiliereForSearch(String filiereForSearch) {
+        this.filiereForSearch = filiereForSearch;
+    }
+
+    public Float getMoyenne1ForSearch() {
+        return moyenne1ForSearch;
+    }
+
+    public void setMoyenne1ForSearch(Float moyenne1ForSearch) {
+        this.moyenne1ForSearch = moyenne1ForSearch;
+    }
+
+    public Float getMoyenne2ForSearch() {
+        return moyenne2ForSearch;
+    }
+
+    public void setMoyenne2ForSearch(Float moyenne2ForSearch) {
+        this.moyenne2ForSearch = moyenne2ForSearch;
+    }
+
+    public Float getMoyenneAnneeMinForSearch() {
+        return moyenneAnneeMinForSearch;
+    }
+
+    public void setMoyenneAnneeMinForSearch(Float moyenneAnneeMinForSearch) {
+        this.moyenneAnneeMinForSearch = moyenneAnneeMinForSearch;
+    }
+
+    public Float getMoyenneAnneeMaxForSearch() {
+        return moyenneAnneeMaxForSearch;
+    }
+
+    public void setMoyenneAnneeMaxForSearch(Float moyenneAnneeMaxForSearch) {
+        this.moyenneAnneeMaxForSearch = moyenneAnneeMaxForSearch;
+    }
+
+    public Boolean getResultatForSearch() {
+        return resultatForSearch;
+    }
+
+    public void setResultatForSearch(Boolean resultatForSearch) {
+        this.resultatForSearch = resultatForSearch;
+    }
+
+    public Boolean getSoutienScolaireForSearch() {
+        return soutienScolaireForSearch;
+    }
+
+    public void setSoutienScolaireForSearch(Boolean soutienScolaireForSearch) {
+        this.soutienScolaireForSearch = soutienScolaireForSearch;
+    }
 
     public ScolariteController() {
     }

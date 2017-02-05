@@ -5,11 +5,15 @@
  */
 package service;
 
+import bean.Bonification;
+import bean.Maladie;
+import bean.Medicament;
 import bean.Orphelin;
+import bean.Scolarite;
 import bean.Veuve;
-import static bean.Veuve_.famille;
 import controler.util.DateUtil;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -27,6 +31,47 @@ public class OrphelinFacade extends AbstractFacade<Orphelin> {
     private EntityManager em;
     @EJB
     private FamilleFacade familleFacade;
+
+    public List<Orphelin> findByQuery(String prenom, String tailleChaussures, String sexe,
+            String codeMassar, String description, Long anneeNaissanceMin, Long anneeNaissanceMax,
+            Long ageMin, Long ageMax, Date dateNaissanceMin, Date dateNaissanceMax) {
+        String requete = "SELECT r FROM Orphelin r WHERE 1=1 ";
+        if (prenom != null && !prenom.equals("")) {
+            requete += " and r.prenom='" + prenom + "'";
+        }
+        if (tailleChaussures != null && !tailleChaussures.equals("")) {
+            requete += " and r.tailleChaussures='" + tailleChaussures + "'";
+        }
+        if (sexe != null && !sexe.equals("")) {
+            requete += " and r.sexe='" + sexe + "'";
+        }
+        if (codeMassar != null && !codeMassar.equals("")) {
+            requete += " and r.codeMassar='" + codeMassar + "'";
+        }
+        if (description != null && !description.equals("")) {
+            requete += " and r.description='" + description + "'";
+        }
+        if (anneeNaissanceMin != null && anneeNaissanceMin != 0) {
+            requete += " and r.anneeNaissance >='" + anneeNaissanceMin + "'";
+        }
+        if (anneeNaissanceMax != null && anneeNaissanceMax != 0) {
+            requete += " and r.anneeNaissance <='" + anneeNaissanceMax + "'";
+        }
+        if (ageMin != null && ageMin != 0) {
+            requete += " and r.age >='" + ageMin + "'";
+        }
+        if (ageMax != null && ageMax != 0) {
+            requete += " and r.age <='" + ageMax + "'";
+        }
+        if (dateNaissanceMin != null) {
+            requete += " and r.dateNaissance >='" + DateUtil.getSqlDateTime(dateNaissanceMin) + "'";
+        }
+        if (dateNaissanceMax != null) {
+            requete += " and r.dateNaissance <='" + DateUtil.getSqlDateTime(dateNaissanceMax) + "'";
+        }
+        System.out.println("haaa requette===>" + requete);
+        return em.createQuery(requete).getResultList();
+    }
 
     public List<Orphelin> findOrphelinByVeuve(Veuve veuve) {
         if (veuve == null || veuve.getId() == null) {
@@ -53,6 +98,58 @@ public class OrphelinFacade extends AbstractFacade<Orphelin> {
         super.edit(orphelin);
     }
 
+    public List<Bonification> findBonificationByOrphelin(Orphelin orphelin) {
+        if (orphelin == null || orphelin.getId() == null) {
+            return new ArrayList<>();
+        } else {
+            String req = "SELECT ve FROM Bonification ve WHERE ve.orphelin.id='" + orphelin.getId() + "'";
+            return em.createQuery(req).getResultList();
+        }
+    }
+
+    public List<Maladie> findMaladieByOrphelin(Orphelin orphelin) {
+        if (orphelin == null || orphelin.getId() == null) {
+            return new ArrayList<>();
+        } else {
+            String req = "SELECT ve FROM Maladie ve WHERE ve.orphelin.id='" + orphelin.getId() + "'";
+            return em.createQuery(req).getResultList();
+        }
+    }
+
+    public List<Medicament> findMedicamentByOrphelin(Orphelin orphelin) {
+        if (orphelin == null || orphelin.getId() == null) {
+            return new ArrayList<>();
+        } else {
+            String req = "SELECT ve FROM Medicament ve WHERE ve.orphelin.id='" + orphelin.getId() + "'";
+            return em.createQuery(req).getResultList();
+        }
+    }
+
+    public List<Scolarite> findScolariteByOrphelin(Orphelin orphelin) {
+        if (orphelin == null || orphelin.getId() == null) {
+            return new ArrayList<>();
+        } else {
+            String req = "SELECT ve FROM Scolarite ve WHERE ve.orphelin.id='" + orphelin.getId() + "'";
+            return em.createQuery(req).getResultList();
+        }
+    }
+
+//    public List<Object> findObjectByOrphelin(Orphelin orphelin) {
+//        if (orphelin == null || orphelin.getId() == null) {
+//            return new ArrayList<>();
+//        } else {
+//            String req = "SELECT ve FROM '" + Object.class + "' ve WHERE ve.orphelin.id='" + orphelin.getId() + "'";
+//            return em.createQuery(req).getResultList();
+//        }
+//    }
+    //    @Override
+//    public void remove(Orphelin orphelin) {
+//        em.createQuery("DELETE FROM Scolarite b WHERE b.orphelin.id ='" + orphelin.getId() + "'").executeUpdate();
+//        em.createQuery("DELETE FROM Bonification b WHERE b.orphelin.id ='" + orphelin.getId() + "'").executeUpdate();
+//        em.createQuery("DELETE FROM Maladie b WHERE b.orphelin.id ='" + orphelin.getId() + "'").executeUpdate();
+//        em.createQuery("DELETE FROM Medicament b WHERE b.orphelin.id ='" + orphelin.getId() + "'").executeUpdate();
+//        super.remove(orphelin);
+//    }
     @Override
     protected EntityManager getEntityManager() {
         return em;

@@ -24,6 +24,7 @@ public class Scolarite implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String etablissement;
+    private String anneeScolaire;
     private String niveauScolaire;
     private String filiere;
     private Float moyenne1;
@@ -31,7 +32,6 @@ public class Scolarite implements Serializable {
     private Float moyenneAnnee;
     private Boolean resultat;
     private Boolean soutienScolaire;
-    private String anneeScolaire;
 
     @ManyToOne
     private Orphelin orphelin;

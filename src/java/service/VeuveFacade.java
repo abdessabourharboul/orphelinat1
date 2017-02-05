@@ -6,9 +6,11 @@
 package service;
 
 import bean.Famille;
+import bean.Orphelin;
 import bean.Veuve;
 import controler.util.DateUtil;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -26,6 +28,36 @@ public class VeuveFacade extends AbstractFacade<Veuve> {
     private EntityManager em;
     @EJB
     private FamilleFacade familleFacade;
+    @EJB
+    private OrphelinFacade orphelinFacade;
+
+    public List<Veuve> findByQuery(String nomVeuve, String metierVeuve, String cin,
+            Long ageMin, Long ageMax, Date dateNaissanceMin, Date dateNaissanceMax) {
+        String requete = "SELECT r FROM Veuve r WHERE 1=1 ";
+        if (nomVeuve != null && !nomVeuve.equals("")) {
+            requete += " and r.nomVeuve='" + nomVeuve + "'";
+        }
+        if (metierVeuve != null && !metierVeuve.equals("")) {
+            requete += " and r.metierVeuve='" + metierVeuve + "'";
+        }
+        if (cin != null && !cin.equals("")) {
+            requete += " and r.cin='" + cin + "'";
+        }
+        if (ageMin != null && ageMin != 0) {
+            requete += " and r.age >='" + ageMin + "'";
+        }
+        if (ageMax != null && ageMax != 0) {
+            requete += " and r.age <='" + ageMax + "'";
+        }
+        if (dateNaissanceMin != null) {
+            requete += " and r.dateNaissance >='" + DateUtil.getSqlDateTime(dateNaissanceMin) + "'";
+        }
+        if (dateNaissanceMax != null) {
+            requete += " and r.dateNaissance <='" + DateUtil.getSqlDateTime(dateNaissanceMax) + "'";
+        }
+        System.out.println("haaa requette===>" + requete);
+        return em.createQuery(requete).getResultList();
+    }
 
     public List<Veuve> findVeuveByFamille(Famille famille) {
         if (famille == null || famille.getId() == null) {
@@ -50,6 +82,14 @@ public class VeuveFacade extends AbstractFacade<Veuve> {
         super.edit(veuve);
     }
 
+//    @Override
+//    public void remove(Veuve veuve) {
+//        for (int i = 0; i < veuve.getOrphelins().size(); i++) {
+//            Orphelin get = veuve.getOrphelins().get(i);
+//            orphelinFacade.remove(get);
+//        }
+//        super.remove(veuve);
+//    }
     @Override
     protected EntityManager getEntityManager() {
         return em;

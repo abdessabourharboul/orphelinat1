@@ -6,6 +6,7 @@ import controller.util.JsfUtil.PersistAction;
 import service.BonificationFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -27,6 +28,64 @@ public class BonificationController implements Serializable {
     private service.BonificationFacade ejbFacade;
     private List<Bonification> items = null;
     private Bonification selected;
+    private String nomOrphelinForSearch;
+    private String nomBonificationForSearch;
+    private String descriptionForSearch;
+    private Date dateBonificationMinForSearch;
+    private Date dateBonificationMaxForSearch;
+
+    public void rechercheBonificationByQuery() {
+        items = ejbFacade.findByQuery(nomOrphelinForSearch, nomBonificationForSearch, descriptionForSearch,
+                dateBonificationMinForSearch, dateBonificationMaxForSearch);
+        System.out.println(items);
+    }
+
+    public void nullerLaListe() {
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            items = null;
+//            System.out.println("hanooo");
+        }
+    }
+
+    public String getNomOrphelinForSearch() {
+        return nomOrphelinForSearch;
+    }
+
+    public void setNomOrphelinForSearch(String nomOrphelinForSearch) {
+        this.nomOrphelinForSearch = nomOrphelinForSearch;
+    }
+
+    public String getNomBonificationForSearch() {
+        return nomBonificationForSearch;
+    }
+
+    public void setNomBonificationForSearch(String nomBonificationForSearch) {
+        this.nomBonificationForSearch = nomBonificationForSearch;
+    }
+
+    public String getDescriptionForSearch() {
+        return descriptionForSearch;
+    }
+
+    public void setDescriptionForSearch(String descriptionForSearch) {
+        this.descriptionForSearch = descriptionForSearch;
+    }
+
+    public Date getDateBonificationMinForSearch() {
+        return dateBonificationMinForSearch;
+    }
+
+    public void setDateBonificationMinForSearch(Date dateBonificationMinForSearch) {
+        this.dateBonificationMinForSearch = dateBonificationMinForSearch;
+    }
+
+    public Date getDateBonificationMaxForSearch() {
+        return dateBonificationMaxForSearch;
+    }
+
+    public void setDateBonificationMaxForSearch(Date dateBonificationMaxForSearch) {
+        this.dateBonificationMaxForSearch = dateBonificationMaxForSearch;
+    }
 
     public BonificationController() {
     }

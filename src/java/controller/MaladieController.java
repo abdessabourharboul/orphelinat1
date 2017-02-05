@@ -27,6 +27,45 @@ public class MaladieController implements Serializable {
     private service.MaladieFacade ejbFacade;
     private List<Maladie> items = null;
     private Maladie selected;
+    private String nomOrphelinForSearch;
+    private String nomMaladieForSearch;
+    private String descriptionForSearch;
+
+    public void rechercheMaladieByQuery() {
+        items = ejbFacade.findByQuery(nomOrphelinForSearch, nomMaladieForSearch, descriptionForSearch);
+        System.out.println(items);
+    }
+
+    public void nullerLaListe() {
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            items = null;
+//            System.out.println("hanooo");
+        }
+    }
+
+    public String getNomOrphelinForSearch() {
+        return nomOrphelinForSearch;
+    }
+
+    public void setNomOrphelinForSearch(String nomOrphelinForSearch) {
+        this.nomOrphelinForSearch = nomOrphelinForSearch;
+    }
+
+    public String getNomMaladieForSearch() {
+        return nomMaladieForSearch;
+    }
+
+    public void setNomMaladieForSearch(String nomMaladieForSearch) {
+        this.nomMaladieForSearch = nomMaladieForSearch;
+    }
+
+    public String getDescriptionForSearch() {
+        return descriptionForSearch;
+    }
+
+    public void setDescriptionForSearch(String descriptionForSearch) {
+        this.descriptionForSearch = descriptionForSearch;
+    }
 
     public MaladieController() {
     }
@@ -78,6 +117,7 @@ public class MaladieController implements Serializable {
         if (items == null) {
             items = getFacade().findAll();
         }
+        System.out.println("Hani f la Methode getItems()");
         return items;
     }
 

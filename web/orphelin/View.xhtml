@@ -12,6 +12,13 @@
             <h:form id="OrphelinViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{orphelinController.selected != null}">
+                        <h:outputText value="photo"/>
+                        <p:panel>                           
+                            <h:commandLink id="viewButton1" disabled="#{empty orphelinController.selected}">
+                                <p:ajax update=":Orphelin1ViewForm" oncomplete="PF('Orphelin1ViewDialog').show()"/>
+                                <p:graphicImage  style="height:200px;width:200px;" value="#{orphelinController.findPath(orphelinController.selected)}"/>
+                            </h:commandLink>
+                        </p:panel>                        
                         <h:outputText value="#{bundle.ViewOrphelinLabel_prenom}"/>
                         <h:outputText value="#{orphelinController.selected.prenom}" title="#{bundle.ViewOrphelinTitle_prenom}"/>
                         <h:outputText value="#{bundle.ListVeuveTitle_famille}"/>
@@ -37,6 +44,6 @@
                 </h:panelGroup>
             </h:form>
         </p:dialog>
-
+        <ui:include src="View_Image.xhtml"/>
     </ui:composition>
 </html>

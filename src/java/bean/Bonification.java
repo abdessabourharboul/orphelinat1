@@ -26,9 +26,9 @@ public class Bonification implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nomBonification;
+    private String description;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateBonification;
-    private String description;
 
     @ManyToOne
     private Orphelin orphelin;

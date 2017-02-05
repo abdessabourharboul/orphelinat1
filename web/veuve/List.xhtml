@@ -14,66 +14,70 @@
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="VeuveListForm">
-                <p:panel header="#{bundle.ListVeuveTitle}">
-                    <p:dataTable id="datalist" value="#{veuveController.items}" var="item"
-                                 selectionMode="single" selection="#{veuveController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
+            <f:event type="preRenderView" listener="#{veuveController.nullerLaListe()}" />
+            <ui:include src="Search.xhtml"/>
+            <p:outputPanel autoUpdate="true">
+                <h:form id="VeuveListForm">
+                    <p:panel header="#{bundle.ListVeuveTitle}">
+                        <p:dataTable id="datalist" value="#{veuveController.items}" var="item"
+                                     selectionMode="single" selection="#{veuveController.selected}"
+                                     paginator="true"
+                                     rowKey="#{item.id}"
+                                     rows="10"
+                                     rowsPerPageTemplate="10,20,30,40,50"
+                                     >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                            <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                            <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListVeuveTitle_famille}"/>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListVeuveTitle_famille}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.famille.nomFamille}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListVeuveTitle_nomVeuve}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nomVeuve}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListVeuveTitle_cin}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.cin}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListVeuveTitle_dateNaissance}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.dateNaissance}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListOrphelinTitle_age}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.age}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListVeuveTitle_metierVeuve}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.metierVeuve}"/>
+                            </p:column>
+                            <f:facet name="footer">
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{veuveController.prepareCreate}" update=":VeuveCreateForm" oncomplete="PF('VeuveCreateDialog').show()"/>
+                                <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":VeuveViewForm" oncomplete="PF('VeuveViewDialog').show()" disabled="#{empty veuveController.selected}"/>
+                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":VeuveEditForm" oncomplete="PF('VeuveEditDialog').show()" disabled="#{empty veuveController.selected}"/>
+                                <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{veuveController.destroy}" update=":growl,datalist" disabled="#{empty veuveController.selected}"/>
                             </f:facet>
-                            <h:outputText value="#{item.famille.nomFamille}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListVeuveTitle_nomVeuve}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nomVeuve}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListVeuveTitle_cin}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.cin}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListVeuveTitle_dateNaissance}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.dateNaissance}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListOrphelinTitle_age}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.age}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListVeuveTitle_metierVeuve}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.metierVeuve}"/>
-                        </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{veuveController.prepareCreate}" update=":VeuveCreateForm" oncomplete="PF('VeuveCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":VeuveViewForm" oncomplete="PF('VeuveViewDialog').show()" disabled="#{empty veuveController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":VeuveEditForm" oncomplete="PF('VeuveEditDialog').show()" disabled="#{empty veuveController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{veuveController.destroy}" update=":growl,datalist" disabled="#{empty veuveController.selected}"/>
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
-            </h:form>
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+            </p:outputPanel>
 
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>

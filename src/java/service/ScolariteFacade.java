@@ -6,6 +6,7 @@
 package service;
 
 import bean.Scolarite;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +20,47 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
 
     @PersistenceContext(unitName = "Orphelinat1PU")
     private EntityManager em;
+
+    public List<Scolarite> findByQuery(String nomOrphelin, String etablissement, String anneeScolaire,
+            String niveauScolaire, String filiere, Float moyenne1, Float moyenne2,
+            Float moyenneAnneeMin, Float moyenneAnneeMax, Boolean resultat, Boolean soutienScolaire) {
+        String requete = "SELECT r FROM Scolarite r WHERE 1=1 ";
+        if (nomOrphelin != null && !nomOrphelin.equals("")) {
+            requete += " and r.orphelin.veuve.famille.nomFamille='" + nomOrphelin + "'";
+        }
+        if (etablissement != null && !etablissement.equals("")) {
+            requete += " and r.etablissement='" + etablissement + "'";
+        }
+        if (anneeScolaire != null && !anneeScolaire.equals("")) {
+            requete += " and r.anneeScolaire='" + anneeScolaire + "'";
+        }
+        if (niveauScolaire != null && !niveauScolaire.equals("")) {
+            requete += " and r.niveauScolaire='" + niveauScolaire + "'";
+        }
+        if (filiere != null && !filiere.equals("")) {
+            requete += " and r.filiere='" + filiere + "'";
+        }
+        if (moyenne1 != null && moyenne1 != 0) {
+            requete += " and r.moyenne1='" + moyenne1 + "'";
+        }
+        if (moyenne2 != null && moyenne2 != 0) {
+            requete += " and r.moyenne2='" + moyenne2 + "'";
+        }
+        if (moyenneAnneeMin != null && moyenneAnneeMin != 0) {
+            requete += " and r.moyenneAnnee >='" + moyenneAnneeMin + "'";
+        }
+        if (moyenneAnneeMax != null && moyenneAnneeMax != 0) {
+            requete += " and r.moyenneAnnee <='" + moyenneAnneeMax + "'";
+        }
+        if (resultat != null) {
+            requete += " AND r.resultat=" + resultat;
+        }
+        if (soutienScolaire != null) {
+            requete += " AND r.soutienScolaire=" + soutienScolaire;
+        }
+        System.out.println("haaa requette===>" + requete);
+        return em.createQuery(requete).getResultList();
+    }
 
     @Override
     public void create(Scolarite scolarite) {

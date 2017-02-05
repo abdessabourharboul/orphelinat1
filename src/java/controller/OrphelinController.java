@@ -4,9 +4,11 @@ import bean.Orphelin;
 import controler.util.DateUtil;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.ServerConfigUtil;
 import service.OrphelinFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -19,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.event.FileUploadEvent;
 
 @Named("orphelinController")
 @SessionScoped
@@ -28,6 +31,33 @@ public class OrphelinController implements Serializable {
     private service.OrphelinFacade ejbFacade;
     private List<Orphelin> items = null;
     private Orphelin selected;
+    private Integer size = 0;
+    private String prenomForSearch;
+    private String tailleChaussuresForSearch;
+    private String sexeForSearch;
+    private String codeMassarForSearch;
+    private String descriptionForSearch;
+    private Long anneeNaissanceMinForSearch;
+    private Long anneeNaissanceMaxForSearch;
+    private Long ageMinForSearch;
+    private Long ageMaxForSearch;
+    private Date dateNaissanceMinForSearch;
+    private Date dateNaissanceMaxForSearch;
+
+    public void rechercheOrphelinByQuery() {
+        items = ejbFacade.findByQuery(prenomForSearch, tailleChaussuresForSearch, sexeForSearch,
+                codeMassarForSearch, descriptionForSearch, anneeNaissanceMinForSearch,
+                anneeNaissanceMaxForSearch, ageMinForSearch, ageMaxForSearch,
+                dateNaissanceMinForSearch, dateNaissanceMaxForSearch);
+        System.out.println(items);
+    }
+
+    public void nullerLaListe() {
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            items = null;
+//            System.out.println("hanooo");
+        }
+    }
 
     public int calculAge(Orphelin orphelin) {
         return DateUtil.calculAge(orphelin.getDateNaissance());
@@ -35,6 +65,139 @@ public class OrphelinController implements Serializable {
 
     public int getYear(Orphelin orphelin) {
         return DateUtil.getYear(orphelin.getDateNaissance());
+    }
+
+    public void upload(FileUploadEvent event) {
+        getSelected().setPhoto("Orphelin-" + new Date().getTime() + ".png");
+        ServerConfigUtil.upload(event.getFile(), ServerConfigUtil.getPhotoOrphelinPath(true), getSelected().getPhoto());
+    }
+
+    public void uploadEdit(FileUploadEvent event) {
+        if (getSelected().getPhoto() == null) {
+            upload(event);
+            size = 1;
+        } else {
+            getSelected().getAncienPhotos().add(getSelected().getPhoto());
+            getSelected().setPhoto("Orphelin-" + new Date().getTime() + ".png");
+            ServerConfigUtil.upload(event.getFile(), ServerConfigUtil.getPhotoOrphelinPath(true), getSelected().getPhoto());
+            size = 2;
+        }
+    }
+
+    public void cancelEditOrphelin() {
+        if (size == 1) {
+            ServerConfigUtil.delete(ServerConfigUtil.getPhotoOrphelinPath(true), getSelected().getPhoto());
+            getSelected().setPhoto(null);
+        } else if (size == 2) {
+            ServerConfigUtil.delete(ServerConfigUtil.getPhotoOrphelinPath(true), getSelected().getPhoto());
+            getSelected().setPhoto(getSelected().getAncienPhotos().get(getSelected().getAncienPhotos().size() - 1));
+            getSelected().getAncienPhotos().remove(getSelected().getAncienPhotos().size() - 1);
+        }
+    }
+
+    public String findPath(Orphelin orphelin) {
+        if (orphelin != null) {
+            if (orphelin.getPhoto() != null) {
+                return ServerConfigUtil.getPhotoOrphelinPath(false) + "/" + orphelin.getPhoto();
+            }
+        }
+        return ServerConfigUtil.getPhotoOrphelinPath(false) + "/noOne.png";
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public String getPrenomForSearch() {
+        return prenomForSearch;
+    }
+
+    public void setPrenomForSearch(String prenomForSearch) {
+        this.prenomForSearch = prenomForSearch;
+    }
+
+    public String getTailleChaussuresForSearch() {
+        return tailleChaussuresForSearch;
+    }
+
+    public void setTailleChaussuresForSearch(String tailleChaussuresForSearch) {
+        this.tailleChaussuresForSearch = tailleChaussuresForSearch;
+    }
+
+    public String getSexeForSearch() {
+        return sexeForSearch;
+    }
+
+    public void setSexeForSearch(String sexeForSearch) {
+        this.sexeForSearch = sexeForSearch;
+    }
+
+    public String getCodeMassarForSearch() {
+        return codeMassarForSearch;
+    }
+
+    public void setCodeMassarForSearch(String codeMassarForSearch) {
+        this.codeMassarForSearch = codeMassarForSearch;
+    }
+
+    public String getDescriptionForSearch() {
+        return descriptionForSearch;
+    }
+
+    public void setDescriptionForSearch(String descriptionForSearch) {
+        this.descriptionForSearch = descriptionForSearch;
+    }
+
+    public Long getAnneeNaissanceMinForSearch() {
+        return anneeNaissanceMinForSearch;
+    }
+
+    public void setAnneeNaissanceMinForSearch(Long anneeNaissanceMinForSearch) {
+        this.anneeNaissanceMinForSearch = anneeNaissanceMinForSearch;
+    }
+
+    public Long getAnneeNaissanceMaxForSearch() {
+        return anneeNaissanceMaxForSearch;
+    }
+
+    public void setAnneeNaissanceMaxForSearch(Long anneeNaissanceMaxForSearch) {
+        this.anneeNaissanceMaxForSearch = anneeNaissanceMaxForSearch;
+    }
+
+    public Long getAgeMinForSearch() {
+        return ageMinForSearch;
+    }
+
+    public void setAgeMinForSearch(Long ageMinForSearch) {
+        this.ageMinForSearch = ageMinForSearch;
+    }
+
+    public Long getAgeMaxForSearch() {
+        return ageMaxForSearch;
+    }
+
+    public void setAgeMaxForSearch(Long ageMaxForSearch) {
+        this.ageMaxForSearch = ageMaxForSearch;
+    }
+
+    public Date getDateNaissanceMinForSearch() {
+        return dateNaissanceMinForSearch;
+    }
+
+    public void setDateNaissanceMinForSearch(Date dateNaissanceMinForSearch) {
+        this.dateNaissanceMinForSearch = dateNaissanceMinForSearch;
+    }
+
+    public Date getDateNaissanceMaxForSearch() {
+        return dateNaissanceMaxForSearch;
+    }
+
+    public void setDateNaissanceMaxForSearch(Date dateNaissanceMaxForSearch) {
+        this.dateNaissanceMaxForSearch = dateNaissanceMaxForSearch;
     }
 
     public OrphelinController() {
@@ -98,6 +261,7 @@ public class OrphelinController implements Serializable {
                     getFacade().create(selected);
                 } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
+                    size = 0;
                 } else {
                     getFacade().remove(selected);
                 }

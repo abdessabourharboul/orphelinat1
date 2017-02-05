@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <h:form id="FamilleRechercheForm" dir="RTL">
+            <p:fieldset legend="#{bundle.Criters_De_Recherche}" toggleable="true"  style="margin-bottom:20px">
+                <p:panelGrid id="panelRecherche" columns="12">
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_nomFamille}" for="nomFamille" style="display:block;width:80px"/>
+                    <p:inputText id="nomFamille" value="#{familleController.nomFamilleForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_typeLogement}" for="typeLogement" style="display:block;width:80px"/>
+                    <p:inputText id="typeLogement" value="#{familleController.typeLogementForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_adresse}" for="adresse" style="display:block;width:80px"/>
+                    <p:inputText id="adresse" value="#{familleController.adresseForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_zoneGeographique}" for="zoneGeographique" style="display:block;width:80px"/>
+                    <p:inputText id="zoneGeographique" value="#{familleController.zoneGeographiqueForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_situation}" for="situation" style="display:block;width:80px"/>
+                    <p:inputText id="situation" value="#{familleController.situationForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_responsableZone}" for="responsableZone" style="display:block;width:80px"/>
+                    <p:inputText id="responsableZone" value="#{familleController.responsableZoneForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_nombrePersonnesMin}" for="nombrePersonnesMin" style="display:block;width:80px"/>
+                    <p:inputText id="nombrePersonnesMin" value="#{familleController.nombrePersonnesMinForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_nombrePersonnesMax}" for="nombrePersonnesMax" style="display:block;width:80px"/>
+                    <p:inputText id="nombrePersonnesMax" value="#{familleController.nombrePersonnesMaxForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_telephone}" for="telephone" style="display:block;width:80px"/>
+                    <p:inputText id="telephone" value="#{familleController.telephoneForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_coutMin}" for="coutMin" style="display:block;width:80px"/>
+                    <p:inputText id="coutMin" value="#{familleController.coutMinForSearch}" style="display:block;width:80px;color: red" />
+
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_coutMax}" for="coutMax" style="display:block;width:80px"/>
+                    <p:inputText id="coutMax" value="#{familleController.coutMaxForSearch}" style="display:block;width:80px;color: red" />
+
+
+                    <p:commandButton id="rechercher" value="بحث" icon="ui-icon-search"  actionListener="#{familleController.rechercheFamilleByQuery}" update=":FamilleListForm:datalist" style="display:block;width:60px" />         
+                </p:panelGrid>
+            </p:fieldset>
+        </h:form>
+    </ui:composition>
+</html>

@@ -35,7 +35,7 @@
                         <p:selectBooleanCheckbox id="soutienScolaire" value="#{scolariteController.selected.soutienScolaire}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{scolariteController.update}" value="#{bundle.Save}" update="display,:ScolariteListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ScolariteEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="ScolariteEditDialog.hide()"/>
+                    <p:commandButton immediate="true" value="#{bundle.Cancel}" onclick="ScolariteEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

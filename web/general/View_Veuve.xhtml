@@ -13,19 +13,19 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{familleController.veuve != null}">
                         <h:outputText value="#{bundle.ViewVeuveLabel_famille}"/>
-                        <h:outputText value="#{familleController.veuve.famille.nomFamille}" title="#{bundle.ViewVeuveTitle_famille}"/>
+                        <h:outputText value="#{familleController.veuve.famille.nomFamille}" styleClass="normalInfo" title="#{bundle.ViewVeuveTitle_famille}"/>
                         <h:outputText value="#{bundle.ViewVeuveLabel_nomVeuve}"/>
-                        <h:outputText value="#{familleController.veuve.nomVeuve}" title="#{bundle.ViewVeuveTitle_nomVeuve}"/>
+                        <h:outputText value="#{familleController.veuve.nomVeuve}" styleClass="normalInfo" title="#{bundle.ViewVeuveTitle_nomVeuve}"/>
                         <h:outputText value="#{bundle.ViewVeuveLabel_cin}"/>
-                        <h:outputText value="#{familleController.veuve.cin}" title="#{bundle.ViewVeuveTitle_cin}"/>
+                        <h:outputText value="#{familleController.veuve.cin}" styleClass="normalInfo" title="#{bundle.ViewVeuveTitle_cin}"/>
                         <h:outputText value="#{bundle.ViewVeuveLabel_dateNaissance}"/>
-                        <h:outputText value="#{familleController.veuve.dateNaissance}" title="#{bundle.ViewVeuveTitle_dateNaissance}">
+                        <h:outputText value="#{familleController.veuve.dateNaissance}" styleClass="normalInfo" title="#{bundle.ViewVeuveTitle_dateNaissance}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
                         <h:outputText value="#{bundle.ViewOrphelinLabel_age}"/>
-                        <h:outputText value="#{familleController.veuve.age}" title="#{bundle.ViewOrphelinTitle_age}"/>
+                        <h:outputText value="#{familleController.veuve.age}" styleClass="normalInfo" title="#{bundle.ViewOrphelinTitle_age}"/>
                         <h:outputText value="#{bundle.ViewVeuveLabel_metierVeuve}"/>
-                        <h:outputText value="#{familleController.veuve.metierVeuve}" title="#{bundle.ViewVeuveTitle_metierVeuve}"/>
+                        <h:outputText value="#{familleController.veuve.metierVeuve}" styleClass="normalInfo" title="#{bundle.ViewVeuveTitle_metierVeuve}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="VeuveViewDialog.hide()"/>
                 </h:panelGroup>

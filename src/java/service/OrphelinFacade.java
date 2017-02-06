@@ -37,6 +37,15 @@ public class OrphelinFacade extends AbstractFacade<Orphelin> {
         return em.createQuery(nomRequette).getResultList();
     }
 
+    public List<String> findPathByString(Orphelin orphelin) {
+        if (orphelin == null || orphelin.getId() == null) {
+            return new ArrayList<>();
+        }
+        String requete = "SELECT r.ancienPhotos FROM Orphelin r WHERE 1=1 AND "
+                + " r.id='" + orphelin.getId() + "'";
+        return executerLaRequette(requete);
+    }
+
     public List<String> findByQueryString(String nomVariable) {
         switch (nomVariable) {
             case "prenom": {

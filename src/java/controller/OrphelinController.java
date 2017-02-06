@@ -108,6 +108,17 @@ public class OrphelinController implements Serializable {
         return ServerConfigUtil.getPhotoOrphelinPath(false) + "/noOne.png";
     }
 
+    public String findPathByString(String nomPic) {
+        if (nomPic != null) {
+            return ServerConfigUtil.getPhotoOrphelinPath(false) + "/" + nomPic;
+        }
+        return ServerConfigUtil.getPhotoOrphelinPath(false) + "/noOne.png";
+    }
+
+    public List<String> findPathByString1() {
+        return getFacade().findPathByString(getSelected());
+    }
+
     public Integer getSize() {
         return size;
     }

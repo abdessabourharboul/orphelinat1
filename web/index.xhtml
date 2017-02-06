@@ -7,23 +7,30 @@
         <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
     <h:body>
-        Hello from Facelets
-        <br />
-        <h:link outcome="general/general" value="general" />
-        <br />
-        <h:link outcome="/bonification/List" value="Show All Bonification Items"/>
-        <br />
-        <h:link outcome="/famille/List" value="Show All Famille Items"/>
-        <br />
-        <h:link outcome="/maladie/List" value="Show All Maladie Items"/>
-        <br />
-        <h:link outcome="/medicament/List" value="Show All Medicament Items"/>
-        <br />
-        <h:link outcome="/orphelin/List" value="Show All Orphelin Items"/>
-        <br />
-        <h:link outcome="/scolarite/List" value="Show All Scolarite Items"/>
-        <br />
-        <h:link outcome="/veuve/List" value="Show All Veuve Items"/>
+        <center>
+            <p1>بسم الله الرحمان الرحيم</p1><br></br>
+            <p1>#{bundle.AppName}</p1>
+        </center>
+        <h:form dir="RTL">
+            <center>
+                <br />
+                <h:link outcome="general/general" value="لائحة عامة" styleClass="generalClass"/>
+                <br />
+                <h:link outcome="/famille/List" value="#{bundle.ViewFamilleShowAllLink}" styleClass="generalClass"/>
+                <br />
+                <h:link outcome="/orphelin/List" value="#{bundle.ViewOrphelinShowAllLink}" styleClass="generalClass"/>
+                <br />
+                <h:link outcome="/veuve/List" value="#{bundle.ViewVeuveShowAllLink}" styleClass="generalClass"/>
+                <br />
+                <h:link outcome="/scolarite/List" value="#{bundle.ViewScolariteShowAllLink}" styleClass="generalClass"/>
+                <br />
+                <h:link outcome="/bonification/List" value="#{bundle.ViewBonificationShowAllLink}" styleClass="generalClass"/>
+                <br />
+                <h:link outcome="/maladie/List" value="#{bundle.ViewMaladieShowAllLink}" styleClass="generalClass"/>
+                <br />
+                <h:link outcome="/medicament/List" value="#{bundle.ViewMedicamentShowAllLink}" styleClass="generalClass"/>
+            </center>
+        </h:form>
     </h:body>
 
 

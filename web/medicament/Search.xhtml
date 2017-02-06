@@ -10,13 +10,28 @@
             <p:fieldset legend="#{bundle.Criters_De_Recherche}" toggleable="true"  style="margin-bottom:20px">
                 <p:panelGrid id="panelRecherche" columns="8">
                     <p:outputLabel value="#{bundle.ViewVeuveLabel_famille}" for="nomOrphelin" style="display:block;width:80px"/>
-                    <p:inputText id="nomOrphelin" value="#{medicamentController.nomOrphelinForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="nomOrphelin" value="#{medicamentController.nomOrphelinForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{medicamentController.getItemsAvailableSelectOneString('nomOrphelin')}"
+                                       var="NomOrphelin"
+                                       itemValue="#{NomOrphelin}" itemLabel="#{NomOrphelin}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewMedicamentLabel_nomMedicament}" for="nomMedicament" style="display:block;width:80px"/>
-                    <p:inputText id="nomMedicament" value="#{medicamentController.nomMedicamentForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="nomMedicament" value="#{medicamentController.nomMedicamentForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{medicamentController.getItemsAvailableSelectOneString('nomMedicament')}"
+                                       var="NomMedicament"
+                                       itemValue="#{NomMedicament}" itemLabel="#{NomMedicament}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewOrphelinLabel_description}" for="description" style="display:block;width:80px"/>
-                    <p:inputText id="description" value="#{medicamentController.descriptionForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="description" value="#{medicamentController.descriptionForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{medicamentController.getItemsAvailableSelectOneString('description')}"
+                                       var="Description"
+                                       itemValue="#{Description}" itemLabel="#{Description}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewMedicamentLabel_prixMin}" for="prixMin" style="display:block;width:80px"/>
                     <p:inputText id="prixMin" value="#{medicamentController.prixMinForSearch}" style="display:block;width:80px;color: red" />

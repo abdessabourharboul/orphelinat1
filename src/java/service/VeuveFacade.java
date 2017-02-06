@@ -31,6 +31,30 @@ public class VeuveFacade extends AbstractFacade<Veuve> {
     @EJB
     private OrphelinFacade orphelinFacade;
 
+    public List<String> executerLaRequette(String nomRequette) {
+        System.out.println("haaa requette===>" + nomRequette);
+        return em.createQuery(nomRequette).getResultList();
+    }
+
+    public List<String> findByQueryString(String nomVariable) {
+        switch (nomVariable) {
+            case "nomVeuve": {
+                String requete = "SELECT DISTINCT  r.nomVeuve FROM Veuve r";
+                return executerLaRequette(requete);
+            }
+            case "metierVeuve": {
+                String requete = "SELECT DISTINCT  r.metierVeuve FROM Veuve r";
+                return executerLaRequette(requete);
+            }
+            case "cin": {
+                String requete = "SELECT DISTINCT  r.cin FROM Veuve r";
+                return executerLaRequette(requete);
+            }
+            default:
+                return new ArrayList<>();
+        }
+    }
+
     public List<Veuve> findByQuery(String nomVeuve, String metierVeuve, String cin,
             Long ageMin, Long ageMax, Date dateNaissanceMin, Date dateNaissanceMax) {
         String requete = "SELECT r FROM Veuve r WHERE 1=1 ";

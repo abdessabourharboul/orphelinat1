@@ -31,6 +31,10 @@ public class MaladieController implements Serializable {
     private String nomMaladieForSearch;
     private String descriptionForSearch;
 
+    public List<String> getItemsAvailableSelectOneString(String nomVariable) {
+        return getFacade().findByQueryString(nomVariable);
+    }
+
     public void rechercheMaladieByQuery() {
         items = ejbFacade.findByQuery(nomOrphelinForSearch, nomMaladieForSearch, descriptionForSearch);
         System.out.println(items);

@@ -32,6 +32,38 @@ public class OrphelinFacade extends AbstractFacade<Orphelin> {
     @EJB
     private FamilleFacade familleFacade;
 
+    public List<String> executerLaRequette(String nomRequette) {
+        System.out.println("haaa requette===>" + nomRequette);
+        return em.createQuery(nomRequette).getResultList();
+    }
+
+    public List<String> findByQueryString(String nomVariable) {
+        switch (nomVariable) {
+            case "prenom": {
+                String requete = "SELECT DISTINCT  r.prenom FROM Orphelin r";
+                return executerLaRequette(requete);
+            }
+            case "tailleChaussures": {
+                String requete = "SELECT DISTINCT  r.tailleChaussures FROM Orphelin r";
+                return executerLaRequette(requete);
+            }
+            case "sexe": {
+                String requete = "SELECT DISTINCT  r.sexe FROM Orphelin r";
+                return executerLaRequette(requete);
+            }
+            case "codeMassar": {
+                String requete = "SELECT DISTINCT  r.codeMassar FROM Orphelin r";
+                return executerLaRequette(requete);
+            }
+            case "description": {
+                String requete = "SELECT DISTINCT  r.description FROM Orphelin r";
+                return executerLaRequette(requete);
+            }
+            default:
+                return new ArrayList<>();
+        }
+    }
+
     public List<Orphelin> findByQuery(String prenom, String tailleChaussures, String sexe,
             String codeMassar, String description, Long anneeNaissanceMin, Long anneeNaissanceMax,
             Long ageMin, Long ageMax, Date dateNaissanceMin, Date dateNaissanceMax) {

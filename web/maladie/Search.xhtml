@@ -10,13 +10,28 @@
             <p:fieldset legend="#{bundle.Criters_De_Recherche}" toggleable="true"  style="margin-bottom:20px">
                 <p:panelGrid id="panelRecherche" columns="10">
                     <p:outputLabel value="#{bundle.ViewVeuveLabel_famille}" for="nomOrphelin" style="display:block;width:80px"/>
-                    <p:inputText id="nomOrphelin" value="#{maladieController.nomOrphelinForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="nomOrphelin" value="#{maladieController.nomOrphelinForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{maladieController.getItemsAvailableSelectOneString('nomOrphelin')}"
+                                       var="NomOrphelin"
+                                       itemValue="#{NomOrphelin}" itemLabel="#{NomOrphelin}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewMaladieLabel_nomMaladie}" for="nomMaladie" style="display:block;width:80px"/>
-                    <p:inputText id="nomMaladie" value="#{maladieController.nomMaladieForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="nomMaladie" value="#{maladieController.nomMaladieForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{maladieController.getItemsAvailableSelectOneString('nomMaladie')}"
+                                       var="NomMaladie"
+                                       itemValue="#{NomMaladie}" itemLabel="#{NomMaladie}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewOrphelinLabel_description}" for="description" style="display:block;width:80px"/>
-                    <p:inputText id="description" value="#{maladieController.descriptionForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="description" value="#{maladieController.descriptionForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{maladieController.getItemsAvailableSelectOneString('description')}"
+                                       var="Description"
+                                       itemValue="#{Description}" itemLabel="#{Description}"/>
+                    </p:selectOneMenu>
 
                     <p:commandButton id="rechercher" value="بحث" icon="ui-icon-search"  actionListener="#{maladieController.rechercheMaladieByQuery}" update=":MaladieListForm:datalist" style="display:block;width:60px" />         
                 </p:panelGrid>

@@ -91,12 +91,16 @@
                                 <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":OrphelinViewForm" oncomplete="PF('OrphelinViewDialog').show()" disabled="#{empty orphelinController.selected}"/>
                                 <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":OrphelinEditForm" oncomplete="PF('OrphelinEditDialog').show()" disabled="#{empty orphelinController.selected}"/>
                                 <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{orphelinController.destroy}" update=":growl,datalist" disabled="#{empty orphelinController.selected}"/>
+                                <h:commandLink >
+                                    <p:graphicImage url="/resources/images/excel.png" width="24"/>
+                                    <p:dataExporter type="xls" target="datalist" fileName="famille" />
+                                </h:commandLink>
                             </f:facet>
                         </p:dataTable>
                     </p:panel>
                 </h:form>
             </p:outputPanel>
-            
+
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>

@@ -36,6 +36,10 @@ public class MedicamentController implements Serializable {
     private Date datePriseMinForSearch;
     private Date datePriseMaxForSearch;
 
+    public List<String> getItemsAvailableSelectOneString(String nomVariable) {
+        return getFacade().findByQueryString(nomVariable);
+    }
+
     public void rechercheMedicamentByQuery() {
         items = ejbFacade.findByQuery(nomOrphelinForSearch, nomMedicamentForSearch, descriptionForSearch,
                 prixMinForSearch, prixMaxForSearch, datePriseMinForSearch, datePriseMaxForSearch);

@@ -36,6 +36,10 @@ public class VeuveController implements Serializable {
     private Date dateNaissanceMinForSearch;
     private Date dateNaissanceMaxForSearch;
 
+    public List<String> getItemsAvailableSelectOneString(String nomVariable) {
+        return getFacade().findByQueryString(nomVariable);
+    }
+
     public void rechercheVeuveByQuery() {
         items = ejbFacade.findByQuery(nomVeuveForSearch, metierVeuveForSearch, cinForSearch, ageMinForSearch,
                 ageMaxForSearch, dateNaissanceMinForSearch, dateNaissanceMaxForSearch);

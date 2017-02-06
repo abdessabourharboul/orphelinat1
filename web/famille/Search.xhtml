@@ -8,25 +8,45 @@
     <ui:composition>
         <h:form id="FamilleRechercheForm" dir="RTL">
             <p:fieldset legend="#{bundle.Criters_De_Recherche}" toggleable="true"  style="margin-bottom:20px">
-                <p:panelGrid id="panelRecherche" columns="12">
+                <p:panelGrid id="panelRecherche" columns="8" >
                     <p:outputLabel value="#{bundle.ViewFamilleLabel_nomFamille}" for="nomFamille" style="display:block;width:80px"/>
-                    <p:inputText id="nomFamille" value="#{familleController.nomFamilleForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="nomFamille" value="#{familleController.nomFamilleForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{familleController.getItemsAvailableSelectOneString('nomFamille')}"
+                                       var="NomFamille"
+                                       itemValue="#{NomFamille}" itemLabel="#{NomFamille}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewFamilleLabel_typeLogement}" for="typeLogement" style="display:block;width:80px"/>
-                    <p:inputText id="typeLogement" value="#{familleController.typeLogementForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="typeLogement" value="#{familleController.typeLogementForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{familleController.getItemsAvailableSelectOneString('typeLogement')}"
+                                       var="TypeLogement"
+                                       itemValue="#{TypeLogement}" itemLabel="#{TypeLogement}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewFamilleLabel_adresse}" for="adresse" style="display:block;width:80px"/>
-                    <p:inputText id="adresse" value="#{familleController.adresseForSearch}" style="display:block;width:80px;color: red" />
-
-                    <p:outputLabel value="#{bundle.ViewFamilleLabel_zoneGeographique}" for="zoneGeographique" style="display:block;width:80px"/>
-                    <p:inputText id="zoneGeographique" value="#{familleController.zoneGeographiqueForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="adresse" value="#{familleController.adresseForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{familleController.getItemsAvailableSelectOneString('adresse')}"
+                                       var="Adresse"
+                                       itemValue="#{Adresse}" itemLabel="#{Adresse}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewFamilleLabel_situation}" for="situation" style="display:block;width:80px"/>
-                    <p:inputText id="situation" value="#{familleController.situationForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="situation" value="#{familleController.situationForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{familleController.getItemsAvailableSelectOneString('situation')}"
+                                       var="Situation"
+                                       itemValue="#{Situation}" itemLabel="#{Situation}"/>
+                    </p:selectOneMenu>
 
-                    <p:outputLabel value="#{bundle.ViewFamilleLabel_responsableZone}" for="responsableZone" style="display:block;width:80px"/>
-                    <p:inputText id="responsableZone" value="#{familleController.responsableZoneForSearch}" style="display:block;width:80px;color: red" />
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_coutMin}" for="coutMin" style="display:block;width:80px"/>
+                    <p:inputText id="coutMin" value="#{familleController.coutMinForSearch}" style="display:block;width:80px;color: red" />
 
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_coutMax}" for="coutMax" style="display:block;width:80px"/>
+                    <p:inputText id="coutMax" value="#{familleController.coutMaxForSearch}" style="display:block;width:80px;color: red" />
+                   
                     <p:outputLabel value="#{bundle.ViewFamilleLabel_nombrePersonnesMin}" for="nombrePersonnesMin" style="display:block;width:80px"/>
                     <p:inputText id="nombrePersonnesMin" value="#{familleController.nombrePersonnesMinForSearch}" style="display:block;width:80px;color: red" />
 
@@ -34,14 +54,28 @@
                     <p:inputText id="nombrePersonnesMax" value="#{familleController.nombrePersonnesMaxForSearch}" style="display:block;width:80px;color: red" />
 
                     <p:outputLabel value="#{bundle.ViewFamilleLabel_telephone}" for="telephone" style="display:block;width:80px"/>
-                    <p:inputText id="telephone" value="#{familleController.telephoneForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="telephone" value="#{familleController.telephoneForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{familleController.getItemsAvailableSelectOneString('telephone')}"
+                                       var="Telephone"
+                                       itemValue="#{Telephone}" itemLabel="#{Telephone}"/>
+                    </p:selectOneMenu>
 
-                    <p:outputLabel value="#{bundle.ViewFamilleLabel_coutMin}" for="coutMin" style="display:block;width:80px"/>
-                    <p:inputText id="coutMin" value="#{familleController.coutMinForSearch}" style="display:block;width:80px;color: red" />
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_zoneGeographique}" for="zoneGeographique" style="display:block;width:80px"/>
+                    <p:selectOneMenu id="zoneGeographique" value="#{familleController.zoneGeographiqueForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{familleController.getItemsAvailableSelectOneString('zoneGeographique')}"
+                                       var="ZoneGeographique"
+                                       itemValue="#{ZoneGeographique}" itemLabel="#{ZoneGeographique}"/>
+                    </p:selectOneMenu>
 
-                    <p:outputLabel value="#{bundle.ViewFamilleLabel_coutMax}" for="coutMax" style="display:block;width:80px"/>
-                    <p:inputText id="coutMax" value="#{familleController.coutMaxForSearch}" style="display:block;width:80px;color: red" />
-
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_responsableZone}" for="responsableZone" style="display:block;width:80px"/>
+                    <p:selectOneMenu id="responsableZone" value="#{familleController.responsableZoneForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{familleController.getItemsAvailableSelectOneString('responsableZone')}"
+                                       var="ResponsableZone"
+                                       itemValue="#{ResponsableZone}" itemLabel="#{ResponsableZone}"/>
+                    </p:selectOneMenu>
 
                     <p:commandButton id="rechercher" value="بحث" icon="ui-icon-search"  actionListener="#{familleController.rechercheFamilleByQuery}" update=":FamilleListForm:datalist" style="display:block;width:60px" />         
                 </p:panelGrid>

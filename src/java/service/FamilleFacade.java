@@ -7,6 +7,7 @@ package service;
 
 import bean.Famille;
 import bean.Veuve;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,6 +22,46 @@ public class FamilleFacade extends AbstractFacade<Famille> {
 
     @PersistenceContext(unitName = "Orphelinat1PU")
     private EntityManager em;
+
+    public List<String> executerLaRequette(String nomRequette) {
+        System.out.println("haaa requette===>" + nomRequette);
+        return em.createQuery(nomRequette).getResultList();
+    }
+
+    public List<String> findByQueryString(String nomVariable) {
+        switch (nomVariable) {
+            case "nomFamille": {
+                String requete = "SELECT DISTINCT  r.nomFamille FROM Famille r";
+                return executerLaRequette(requete);
+            }
+            case "typeLogement": {
+                String requete = "SELECT DISTINCT  r.typeLogement FROM Famille r";
+                return executerLaRequette(requete);
+            }
+            case "adresse": {
+                String requete = "SELECT DISTINCT  r.adresse FROM Famille r";
+                return executerLaRequette(requete);
+            }
+            case "zoneGeographique": {
+                String requete = "SELECT DISTINCT  r.zoneGeographique FROM Famille r";
+                return executerLaRequette(requete);
+            }
+            case "situation": {
+                String requete = "SELECT DISTINCT  r.situation FROM Famille r";
+                return executerLaRequette(requete);
+            }
+            case "responsableZone": {
+                String requete = "SELECT DISTINCT  r.responsableZone FROM Famille r";
+                return executerLaRequette(requete);
+            }
+            case "telephone": {
+                String requete = "SELECT DISTINCT  r.telephone FROM Famille r";
+                return executerLaRequette(requete);
+            }
+            default:
+                return new ArrayList<>();
+        }
+    }
 
     public List<Famille> findByQuery(String nomFamille, String typeLogement, String adresse,
             String zoneGeographique, String situation, String responsableZone,

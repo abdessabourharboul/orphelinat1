@@ -10,19 +10,44 @@
             <p:fieldset legend="#{bundle.Criters_De_Recherche}" toggleable="true"  style="margin-bottom:20px">
                 <p:panelGrid id="panelRecherche" columns="8">
                     <p:outputLabel value="#{bundle.ViewOrphelinLabel_prenom}" for="prenom" style="display:block;width:80px"/>
-                    <p:inputText id="prenom" value="#{orphelinController.prenomForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="prenom" value="#{orphelinController.prenomForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{orphelinController.getItemsAvailableSelectOneString('prenom')}"
+                                       var="Prenom"
+                                       itemValue="#{Prenom}" itemLabel="#{Prenom}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewOrphelinLabel_tailleChaussures}" for="tailleChaussures" style="display:block;width:80px"/>
-                    <p:inputText id="tailleChaussures" value="#{orphelinController.tailleChaussuresForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="tailleChaussures" value="#{orphelinController.tailleChaussuresForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{orphelinController.getItemsAvailableSelectOneString('tailleChaussures')}"
+                                       var="TailleChaussures"
+                                       itemValue="#{TailleChaussures}" itemLabel="#{TailleChaussures}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewOrphelinLabel_sexe}" for="sexe" style="display:block;width:80px"/>
-                    <p:inputText id="sexe" value="#{orphelinController.sexeForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="sexe" value="#{orphelinController.sexeForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{orphelinController.getItemsAvailableSelectOneString('sexe')}"
+                                       var="Sexe"
+                                       itemValue="#{Sexe}" itemLabel="#{Sexe}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewOrphelinLabel_codeMassar}" for="codeMassar" style="display:block;width:80px"/>
-                    <p:inputText id="codeMassar" value="#{orphelinController.codeMassarForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="codeMassar" value="#{orphelinController.codeMassarForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{orphelinController.getItemsAvailableSelectOneString('codeMassar')}"
+                                       var="CodeMassar"
+                                       itemValue="#{CodeMassar}" itemLabel="#{CodeMassar}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewOrphelinLabel_description}" for="description" style="display:block;width:80px"/>
-                    <p:inputText id="description" value="#{orphelinController.descriptionForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="description" value="#{orphelinController.descriptionForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{orphelinController.getItemsAvailableSelectOneString('description')}"
+                                       var="Description"
+                                       itemValue="#{Description}" itemLabel="#{Description}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewOrphelinLabel_anneeNaissanceMin}" for="anneeNaissanceMin" style="display:block;width:80px"/>
                     <p:inputText id="anneeNaissanceMin" value="#{orphelinController.anneeNaissanceMinForSearch}" style="display:block;width:80px;color: red" />

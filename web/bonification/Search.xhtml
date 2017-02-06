@@ -8,15 +8,30 @@
     <ui:composition>
         <h:form id="BonificationRechercheForm" dir="RTL">
             <p:fieldset legend="#{bundle.Criters_De_Recherche}" toggleable="true"  style="margin-bottom:20px">
-                <p:panelGrid id="panelRecherche" columns="10">
+                <p:panelGrid id="panelRecherche" columns="6">
                     <p:outputLabel value="#{bundle.ViewVeuveLabel_famille}" for="nomOrphelin" style="display:block;width:80px"/>
-                    <p:inputText id="nomOrphelin" value="#{bonificationController.nomOrphelinForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="nomOrphelin" value="#{bonificationController.nomOrphelinForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{bonificationController.getItemsAvailableSelectOneString('nomOrphelin')}"
+                                       var="NomOrphelin"
+                                       itemValue="#{NomOrphelin}" itemLabel="#{NomOrphelin}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewBonificationLabel_nomBonification}" for="nomBonification" style="display:block;width:80px"/>
-                    <p:inputText id="nomBonification" value="#{bonificationController.nomBonificationForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="nomBonification" value="#{bonificationController.nomBonificationForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{bonificationController.getItemsAvailableSelectOneString('nomBonification')}"
+                                       var="NomBonification"
+                                       itemValue="#{NomBonification}" itemLabel="#{NomBonification}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewOrphelinLabel_description}" for="description" style="display:block;width:80px"/>
-                    <p:inputText id="description" value="#{bonificationController.descriptionForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="description" value="#{bonificationController.descriptionForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{bonificationController.getItemsAvailableSelectOneString('description')}"
+                                       var="Description"
+                                       itemValue="#{Description}" itemLabel="#{Description}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewBonificationLabel_dateNaissanceMin}" for="dateBonificationMin" style="display:block;width:80px"/>
                     <p:calendar size="12" id="dateBonificationMin" pattern="MM/dd/yyyy" value="#{bonificationController.dateBonificationMinForSearch}"  showOn="button">
@@ -28,6 +43,7 @@
                         <f:convertDateTime pattern="MM/dd/yyyy"  />
                     </p:calendar>
 
+                    <P1></P1>
                     <p:commandButton id="rechercher" value="بحث" icon="ui-icon-search"  actionListener="#{bonificationController.rechercheBonificationByQuery}" update=":BonificationListForm:datalist" style="display:block;width:60px" />         
                 </p:panelGrid>
             </p:fieldset>

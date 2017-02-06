@@ -87,8 +87,17 @@
                                 <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":FamilleViewForm" oncomplete="PF('FamilleViewDialog').show()" disabled="#{empty familleController.selected}"/>
                                 <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":FamilleEditForm" oncomplete="PF('FamilleEditDialog').show()" disabled="#{empty familleController.selected}"/>
                                 <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{familleController.destroy}" update=":growl,datalist" disabled="#{empty familleController.selected}"/>
+                                <h:commandLink >
+                                    <p:graphicImage url="/resources/images/excel.png" width="24"/>
+                                    <p:dataExporter type="xls" target="datalist" fileName="famille" />
+                                </h:commandLink>
+<!--                                <h:commandLink >
+                                    <p:graphicImage url="/resources/images/pdf.png" width="24"/>
+                                    <p:dataExporter type="pdf" target="datalist" fileName="famille" />
+                                </h:commandLink>-->
                             </f:facet>
                         </p:dataTable>
+
                     </p:panel>
                 </h:form>
             </p:outputPanel>

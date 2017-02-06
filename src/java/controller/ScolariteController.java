@@ -39,6 +39,10 @@ public class ScolariteController implements Serializable {
     private Boolean resultatForSearch = null;
     private Boolean soutienScolaireForSearch = null;
 
+    public List<String> getItemsAvailableSelectOneString(String nomVariable) {
+        return getFacade().findByQueryString(nomVariable);
+    }
+
     public void rechercheScolariteByQuery() {
         items = ejbFacade.findByQuery(
                 nomOrphelinForSearch, etablissementForSearch, anneeScolaireForSearch,

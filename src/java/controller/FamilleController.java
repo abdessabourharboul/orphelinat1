@@ -57,6 +57,10 @@ public class FamilleController implements Serializable {
     private Float coutMinForSearch;
     private Float coutMaxForSearch;
 
+    public List<String> getItemsAvailableSelectOneString(String nomVariable) {
+        return getFacade().findByQueryString(nomVariable);
+    }
+
     public void rechercheFamilleByQuery() {
         items = ejbFacade.findByQuery(nomFamilleForSearch, typeLogementForSearch, adresseForSearch,
                 zoneGeographiqueForSearch, situationForSearch, responsableZoneForSearch,

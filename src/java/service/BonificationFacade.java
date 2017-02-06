@@ -7,6 +7,7 @@ package service;
 
 import bean.Bonification;
 import controler.util.DateUtil;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -22,6 +23,30 @@ public class BonificationFacade extends AbstractFacade<Bonification> {
 
     @PersistenceContext(unitName = "Orphelinat1PU")
     private EntityManager em;
+
+    public List<String> executerLaRequette(String nomRequette) {
+        System.out.println("haaa requette===>" + nomRequette);
+        return em.createQuery(nomRequette).getResultList();
+    }
+
+    public List<String> findByQueryString(String nomVariable) {
+        switch (nomVariable) {
+            case "nomOrphelin": {
+                String requete = "SELECT DISTINCT  r.nomFamille FROM Famille r";
+                return executerLaRequette(requete);
+            }
+            case "nomBonification": {
+                String requete = "SELECT DISTINCT  r.nomBonification FROM Bonification r";
+                return executerLaRequette(requete);
+            }
+            case "description": {
+                String requete = "SELECT DISTINCT  r.description FROM Bonification r";
+                return executerLaRequette(requete);
+            }
+            default:
+                return new ArrayList<>();
+        }
+    }
 
     public List<Bonification> findByQuery(String nomOrphelin, String nomBonification, String description,
             Date dateBonificationMin, Date dateBonificationMax) {

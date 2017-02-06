@@ -34,6 +34,10 @@ public class BonificationController implements Serializable {
     private Date dateBonificationMinForSearch;
     private Date dateBonificationMaxForSearch;
 
+    public List<String> getItemsAvailableSelectOneString(String nomVariable) {
+        return getFacade().findByQueryString(nomVariable);
+    }
+
     public void rechercheBonificationByQuery() {
         items = ejbFacade.findByQuery(nomOrphelinForSearch, nomBonificationForSearch, descriptionForSearch,
                 dateBonificationMinForSearch, dateBonificationMaxForSearch);

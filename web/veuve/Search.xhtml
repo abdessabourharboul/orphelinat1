@@ -8,15 +8,30 @@
     <ui:composition>
         <h:form id="VeuveRechercheForm" dir="RTL">
             <p:fieldset legend="#{bundle.Criters_De_Recherche}" toggleable="true"  style="margin-bottom:20px">
-                <p:panelGrid id="panelRecherche" columns="10">
+                <p:panelGrid id="panelRecherche" columns="8">
                     <p:outputLabel value="#{bundle.ViewVeuveLabel_nomVeuve}" for="nomVeuve" style="display:block;width:80px"/>
-                    <p:inputText id="nomVeuve" value="#{veuveController.nomVeuveForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="nomVeuve" value="#{veuveController.nomVeuveForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{veuveController.getItemsAvailableSelectOneString('nomVeuve')}"
+                                       var="NomVeuve"
+                                       itemValue="#{NomVeuve}" itemLabel="#{NomVeuve}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewVeuveLabel_metierVeuve}" for="metierVeuve" style="display:block;width:80px"/>
-                    <p:inputText id="metierVeuve" value="#{veuveController.metierVeuveForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="metierVeuve" value="#{veuveController.metierVeuveForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{veuveController.getItemsAvailableSelectOneString('metierVeuve')}"
+                                       var="MetierVeuve"
+                                       itemValue="#{MetierVeuve}" itemLabel="#{MetierVeuve}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewVeuveLabel_cin}" for="cin" style="display:block;width:80px"/>
-                    <p:inputText id="cin" value="#{veuveController.cinForSearch}" style="display:block;width:80px;color: red" />
+                    <p:selectOneMenu id="cin" value="#{veuveController.cinForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{veuveController.getItemsAvailableSelectOneString('cin')}"
+                                       var="Cin"
+                                       itemValue="#{Cin}" itemLabel="#{Cin}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewVeuveLabel_ageMin}" for="ageMin" style="display:block;width:80px"/>
                     <p:inputText id="ageMin" value="#{veuveController.ageMinForSearch}" style="display:block;width:80px;color: red" />

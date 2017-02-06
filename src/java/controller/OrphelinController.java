@@ -44,6 +44,10 @@ public class OrphelinController implements Serializable {
     private Date dateNaissanceMinForSearch;
     private Date dateNaissanceMaxForSearch;
 
+    public List<String> getItemsAvailableSelectOneString(String nomVariable) {
+        return getFacade().findByQueryString(nomVariable);
+    }
+
     public void rechercheOrphelinByQuery() {
         items = ejbFacade.findByQuery(prenomForSearch, tailleChaussuresForSearch, sexeForSearch,
                 codeMassarForSearch, descriptionForSearch, anneeNaissanceMinForSearch,

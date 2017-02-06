@@ -6,6 +6,7 @@
 package service;
 
 import bean.Scolarite;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -20,6 +21,38 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
 
     @PersistenceContext(unitName = "Orphelinat1PU")
     private EntityManager em;
+    
+    public List<String> executerLaRequette(String nomRequette) {
+        System.out.println("haaa requette===>" + nomRequette);
+        return em.createQuery(nomRequette).getResultList();
+    }
+
+    public List<String> findByQueryString(String nomVariable) {
+        switch (nomVariable) {
+            case "nomOrphelin": {
+                String requete = "SELECT DISTINCT  r.nomFamille FROM Famille r";
+                return executerLaRequette(requete);
+            }
+            case "etablissement": {
+                String requete = "SELECT DISTINCT  r.etablissement FROM Scolarite r";
+                return executerLaRequette(requete);
+            }
+            case "anneeScolaire": {
+                String requete = "SELECT DISTINCT  r.anneeScolaire FROM Scolarite r";
+                return executerLaRequette(requete);
+            }
+            case "niveauScolaire": {
+                String requete = "SELECT DISTINCT  r.niveauScolaire FROM Scolarite r";
+                return executerLaRequette(requete);
+            }
+            case "filiere": {
+                String requete = "SELECT DISTINCT  r.filiere FROM Scolarite r";
+                return executerLaRequette(requete);
+            }
+            default:
+                return new ArrayList<>();
+        }
+    }
 
     public List<Scolarite> findByQuery(String nomOrphelin, String etablissement, String anneeScolaire,
             String niveauScolaire, String filiere, Float moyenne1, Float moyenne2,

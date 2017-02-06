@@ -9,6 +9,7 @@ import bean.Famille;
 import bean.Medicament;
 import bean.Orphelin;
 import controler.util.DateUtil;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -27,6 +28,30 @@ public class MedicamentFacade extends AbstractFacade<Medicament> {
     private EntityManager em;
     @EJB
     private FamilleFacade familleFacade;
+
+    public List<String> executerLaRequette(String nomRequette) {
+        System.out.println("haaa requette===>" + nomRequette);
+        return em.createQuery(nomRequette).getResultList();
+    }
+
+    public List<String> findByQueryString(String nomVariable) {
+        switch (nomVariable) {
+            case "nomOrphelin": {
+                String requete = "SELECT DISTINCT  r.nomFamille FROM Famille r";
+                return executerLaRequette(requete);
+            }
+            case "nomMedicament": {
+                String requete = "SELECT DISTINCT  r.nomMedicament FROM Medicament r";
+                return executerLaRequette(requete);
+            }
+            case "description": {
+                String requete = "SELECT DISTINCT  r.description FROM Medicament r";
+                return executerLaRequette(requete);
+            }
+            default:
+                return new ArrayList<>();
+        }
+    }
 
     public List<Medicament> findByQuery(String nomOrphelin, String nomMedicament, String description,
             Float prixMin, Float prixMax, Date datePriseMin, Date datePriseMax) {

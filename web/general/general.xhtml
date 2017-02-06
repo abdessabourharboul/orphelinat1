@@ -85,9 +85,9 @@
                                          >
                                 <p:ajax event="rowSelect" listener="#{familleController.regenererLesListes()}"/>
                                 <p:ajax event="rowUnselect" listener="#{familleController.regenererLesListes()}"/>
-                                <p:column>
+                                <p:column filterBy="#{item.nomFamille}" filterMatchMode="contains" filterPosition="top">
                                     <f:facet name="header">
-                                        <h:outputText value="#{bundle.ListFamilleTitle_nomFamille}"/>
+                                        <center><h:outputText value="#{bundle.ListFamilleTitle_nomFamille}"/></center>
                                     </f:facet>
                                     <h:outputText value="#{item.nomFamille}"/>
                                 </p:column>

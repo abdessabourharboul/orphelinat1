@@ -48,6 +48,10 @@ public class OrphelinFacade extends AbstractFacade<Orphelin> {
 
     public List<String> findByQueryString(String nomVariable) {
         switch (nomVariable) {
+            case "nom": {
+                String requete = "SELECT DISTINCT  r.nomFamille FROM Famille r";
+                return executerLaRequette(requete);
+            }
             case "prenom": {
                 String requete = "SELECT DISTINCT  r.prenom FROM Orphelin r";
                 return executerLaRequette(requete);
@@ -73,12 +77,12 @@ public class OrphelinFacade extends AbstractFacade<Orphelin> {
         }
     }
 
-    public List<Orphelin> findByQuery(String prenom, String tailleChaussures, String sexe,
+    public List<Orphelin> findByQuery(String nom, String tailleChaussures, String sexe,
             String codeMassar, String description, Long anneeNaissanceMin, Long anneeNaissanceMax,
             Long ageMin, Long ageMax, Date dateNaissanceMin, Date dateNaissanceMax) {
         String requete = "SELECT r FROM Orphelin r WHERE 1=1 ";
-        if (prenom != null && !prenom.equals("")) {
-            requete += " and r.prenom='" + prenom + "'";
+        if (nom != null && !nom.equals("")) {
+            requete += " and r.veuve.famille.nomFamille='" + nom + "'";
         }
         if (tailleChaussures != null && !tailleChaussures.equals("")) {
             requete += " and r.tailleChaussures='" + tailleChaussures + "'";
@@ -127,7 +131,8 @@ public class OrphelinFacade extends AbstractFacade<Orphelin> {
     public void create(Orphelin orphelin) {
         orphelin.setAnneeNaissance(new Long(DateUtil.getYear(orphelin.getDateNaissance())));
         orphelin.setAge(new Long(DateUtil.calculAge(orphelin.getDateNaissance())));
-        orphelin.getVeuve().getFamille().setNombrePersonnes(orphelin.getVeuve().getFamille().getNombrePersonnes() + 1);
+        orphelin.getVeuve().getFamille().setNombrePersonnes(familleFacade.nombrePersonne(orphelin.getVeuve().getFamille()) + 1);
+//        orphelin.getVeuve().getFamille().setNombrePersonnes(orphelin.getVeuve().getFamille().getNombrePersonnes() + 1);
         familleFacade.edit(orphelin.getVeuve().getFamille());
         super.create(orphelin);
     }

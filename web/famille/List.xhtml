@@ -14,15 +14,16 @@
         <ui:define name="body">
             <f:event type="preRenderView"  listener="#{familleController.nullerLaListe()}"/>
             <ui:include src="Search.xhtml"/>
-            <p:outputPanel autoUpdate="true">
+<!--            <p:outputPanel autoUpdate="true">-->
                 <h:form id="FamilleListForm">
                     <p:panel header="#{bundle.ListFamilleTitle}">
                         <p:dataTable id="datalist" value="#{familleController.items}" var="item"
                                      selectionMode="single" selection="#{familleController.selected}"
                                      paginator="true"
                                      rowKey="#{item.id}"
-                                     rows="10"
-                                     rowsPerPageTemplate="10,20,30,40,50"
+                                     rows="50"
+                                     rowsPerPageTemplate="10,20,30,40,50,100"
+                                     rowIndexVar="index"
                                      >
 
                             <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
@@ -30,11 +31,18 @@
 
                             <p:column>
                                 <f:facet name="header">
+                                    <h:outputText value="index" />
+                                </f:facet>
+                                <h:outputText 
+                                    value="#{index + 1}" />
+                            </p:column>
+                            <p:column sortBy="#{item.nomFamille}">
+                                <f:facet name="header">
                                     <h:outputText value="#{bundle.ListFamilleTitle_nomFamille}"/>
                                 </f:facet>
                                 <h:outputText value="#{item.nomFamille}"/>
                             </p:column>
-                            <p:column>
+                            <p:column sortBy="#{item.situation}">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListFamilleTitle_situation}"/>
                                 </f:facet>
@@ -74,7 +82,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListFamilleTitle_responsableZone}"/>
                                 </f:facet>
-                                <h:outputText value="#{item.responsableZone}"/>
+                                <h:outputText value="#{item.user.nom}"/>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">
@@ -86,26 +94,28 @@
                                 <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{familleController.prepareCreate}" update=":FamilleCreateForm" oncomplete="PF('FamilleCreateDialog').show()"/>
                                 <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":FamilleViewForm" oncomplete="PF('FamilleViewDialog').show()" disabled="#{empty familleController.selected}"/>
                                 <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":FamilleEditForm" oncomplete="PF('FamilleEditDialog').show()" disabled="#{empty familleController.selected}"/>
-                                <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{familleController.destroy}" update=":growl,datalist" disabled="#{empty familleController.selected}"/>
+                                <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}"  update=":FamilleDeleteForm" oncomplete="PF('FamilleDeleteDialog').show()" disabled="#{empty familleController.selected}"/>
+<!--                                <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="# {bundle.Delete}" actionListener="# {familleController.destroy}" update=":growl,datalist" disabled="# {empty familleController.selected}"/>-->
                                 <h:commandLink >
                                     <p:graphicImage url="/resources/images/excel.png" width="24"/>
                                     <p:dataExporter type="xls" target="datalist" fileName="famille" />
                                 </h:commandLink>
-<!--                                <h:commandLink >
-                                    <p:graphicImage url="/resources/images/pdf.png" width="24"/>
-                                    <p:dataExporter type="pdf" target="datalist" fileName="famille" />
-                                </h:commandLink>-->
+                                <!--                                <h:commandLink >
+                                                                    <p:graphicImage url="/resources/images/pdf.png" width="24"/>
+                                                                    <p:dataExporter type="pdf" target="datalist" fileName="famille" />
+                                                                </h:commandLink>-->
                             </f:facet>
                         </p:dataTable>
 
                     </p:panel>
                 </h:form>
-            </p:outputPanel>
+<!--            </p:outputPanel>-->
 
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
-        </ui:define>
+            <ui:include src="Delete.xhtml"/>
+        </ui:define>e
     </ui:composition>
 
 </html>

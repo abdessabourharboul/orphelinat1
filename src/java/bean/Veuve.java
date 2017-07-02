@@ -34,6 +34,8 @@ public class Veuve implements Serializable {
     private Long age;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateNaissance;
+    private String photo;
+    private List<String> ancienPhotos;
 
     @ManyToOne
     private Famille famille;
@@ -47,6 +49,25 @@ public class Veuve implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public List<String> getAncienPhotos() {
+        if (ancienPhotos == null) {
+            ancienPhotos = new ArrayList<>();
+        }
+        return ancienPhotos;
+    }
+
+    public void setAncienPhotos(List<String> ancienPhotos) {
+        this.ancienPhotos = ancienPhotos;
     }
 
     public Long getAge() {

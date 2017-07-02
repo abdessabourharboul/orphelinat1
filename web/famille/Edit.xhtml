@@ -16,10 +16,17 @@
                         <p:inputText id="nomFamille" value="#{familleController.selected.nomFamille}" title="#{bundle.EditFamilleTitle_nomFamille}" />
                         <p:outputLabel value="#{bundle.EditFamilleLabel_zoneGeographique}" for="zoneGeographique" />
                         <p:inputText id="zoneGeographique" value="#{familleController.selected.zoneGeographique}" title="#{bundle.EditFamilleTitle_zoneGeographique}" />
+
                         <p:outputLabel value="#{bundle.EditFamilleLabel_situation}" for="situation" />
-                        <p:inputText id="situation" value="#{familleController.selected.situation}" title="#{bundle.EditFamilleTitle_situation}" />
-                        <p:outputLabel value="#{bundle.EditFamilleLabel_responsableZone}" for="responsableZone" />
-                        <p:inputText id="responsableZone" value="#{familleController.selected.responsableZone}" title="#{bundle.EditFamilleTitle_responsableZone}" />
+                        <p:selectOneMenu id="situation" value="#{familleController.selected.situation}">
+                            <f:selectItem itemLabel="اختيار الوضعية" itemValue="#{null}"/>
+                            <f:selectItem itemLabel="مكفول" itemValue="مكفول"/>
+                            <f:selectItem itemLabel="في انتظار" itemValue="في انتظار"/>
+                            <f:selectItem itemLabel="موسمي" itemValue="موسمي"/>
+                            <f:selectItem itemLabel="معوز" itemValue="معوز"/>
+                            <f:selectItem itemLabel="اخر" itemValue="اخر"/>
+                        </p:selectOneMenu>
+
                         <p:outputLabel value="#{bundle.EditFamilleLabel_telephone}" for="telephone" />
                         <p:inputText id="telephone" value="#{familleController.selected.telephone}" title="#{bundle.EditFamilleTitle_telephone}" />
                         <p:outputLabel value="#{bundle.EditFamilleLabel_adresse}" for="adresse" />
@@ -27,9 +34,10 @@
                         <p:outputLabel value="#{bundle.EditFamilleLabel_typeLogement}" for="typeLogement" />
                         <p:selectOneMenu id="typeLogement" value="#{familleController.selected.typeLogement}">
                             <f:selectItem itemLabel="اختيار نوع السكن" itemValue="#{null}"/>
-                            <f:selectItem itemLabel="سكن" itemValue="سكن"/>
+                            <f:selectItem itemLabel="ملك" itemValue="ملك"/>
                             <f:selectItem itemLabel="كراء" itemValue="كراء"/>
                             <f:selectItem itemLabel="رهن" itemValue="رهن"/>
+                            <f:selectItem itemLabel="اخر" itemValue="اخر"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{familleController.update}" value="#{bundle.Save}" update="display,:FamilleListForm:datalist,:growl" oncomplete="handleSubmit(args, 'FamilleEditDialog');"/>

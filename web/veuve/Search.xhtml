@@ -17,13 +17,7 @@
                                        itemValue="#{NomVeuve}" itemLabel="#{NomVeuve}"/>
                     </p:selectOneMenu>
 
-                    <p:outputLabel value="#{bundle.ViewVeuveLabel_metierVeuve}" for="metierVeuve" style="display:block;width:80px"/>
-                    <p:selectOneMenu id="metierVeuve" value="#{veuveController.metierVeuveForSearch}" filter="true" filterMatchMode="contains">
-                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{veuveController.getItemsAvailableSelectOneString('metierVeuve')}"
-                                       var="MetierVeuve"
-                                       itemValue="#{MetierVeuve}" itemLabel="#{MetierVeuve}"/>
-                    </p:selectOneMenu>
+                    
 
                     <p:outputLabel value="#{bundle.ViewVeuveLabel_cin}" for="cin" style="display:block;width:80px"/>
                     <p:selectOneMenu id="cin" value="#{veuveController.cinForSearch}" filter="true" filterMatchMode="contains">
@@ -33,21 +27,7 @@
                                        itemValue="#{Cin}" itemLabel="#{Cin}"/>
                     </p:selectOneMenu>
 
-                    <p:outputLabel value="#{bundle.ViewVeuveLabel_ageMin}" for="ageMin" style="display:block;width:80px"/>
-                    <p:inputText id="ageMin" value="#{veuveController.ageMinForSearch}" style="display:block;width:80px;color: red" />
-
-                    <p:outputLabel value="#{bundle.ViewVeuveLabel_ageMax}" for="ageMax" style="display:block;width:80px"/>
-                    <p:inputText id="ageMax" value="#{veuveController.ageMaxForSearch}" style="display:block;width:80px;color: red" />
-
-                    <p:outputLabel value="#{bundle.ViewVeuveLabel_dateNaissanceMin}" for="dateNaissanceMin" style="display:block;width:80px"/>
-                    <p:calendar size="12" id="dateNaissanceMin" pattern="MM/dd/yyyy" value="#{veuveController.dateNaissanceMinForSearch}"  showOn="button">
-                        <f:convertDateTime pattern="MM/dd/yyyy"  />
-                    </p:calendar>
-
-                    <p:outputLabel value="#{bundle.ViewVeuveLabel_dateNaissanceMax}" for="dateNaissanceMax" style="display:block;width:80px"/>
-                    <p:calendar size="12" id="dateNaissanceMax" pattern="MM/dd/yyyy" value="#{veuveController.dateNaissanceMaxForSearch}"  showOn="button">
-                        <f:convertDateTime pattern="MM/dd/yyyy"  />
-                    </p:calendar>
+                
 
                     <p:commandButton id="rechercher" value="بحث" icon="ui-icon-search"  actionListener="#{veuveController.rechercheVeuveByQuery}" update=":VeuveListForm:datalist" style="display:block;width:60px" />         
                 </p:panelGrid>

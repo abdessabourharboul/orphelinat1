@@ -20,8 +20,8 @@
                                            var="veuveItem"
                                            itemValue="#{veuveItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.CreateOrphelinLabel_dateNaissance}" for="dateNaissance" />
-                        <p:calendar id="dateNaissance" pattern="MM/dd/yyyy" value="#{orphelinController.selected.dateNaissance}" title="#{bundle.EditOrphelinTitle_dateNaissance}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateOrphelinLabel_dateNaissance}"  />
+                        <p:calendar  pattern="MM/dd/yyyy" value="#{orphelinController.selected.dateNaissance}" title="#{bundle.EditOrphelinTitle_dateNaissance}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateOrphelinLabel_sexe}" for="sexe" />
                         <p:selectOneMenu id="sexe" value="#{orphelinController.selected.sexe}">
                             <f:selectItem itemLabel="اختيار الجنس" itemValue="#{null}"/>

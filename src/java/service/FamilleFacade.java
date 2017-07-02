@@ -6,9 +6,13 @@
 package service;
 
 import bean.Famille;
+import bean.User;
 import bean.Veuve;
+import controller.util.JsfUtil;
+import controller.util.SessionUtil;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,6 +26,24 @@ public class FamilleFacade extends AbstractFacade<Famille> {
 
     @PersistenceContext(unitName = "Orphelinat1PU")
     private EntityManager em;
+
+    public Long nombrePersonne(Famille famille) {
+        int nombre = 0;
+        for (int i = 0; i < famille.getVeuves().size(); i++) {
+            Veuve veuve = famille.getVeuves().get(i);
+            nombre = nombre + 1;
+            for (int j = 0; j < veuve.getOrphelins().size(); j++) {
+                Object get = veuve.getOrphelins().get(j);
+                nombre = nombre + 1;
+            }
+        }
+        Long res = new Long(nombre);
+        return res;
+    }
+
+    public List<Famille> findBySituation(String situation) {
+        return findByQuery(null, null, null, null, situation, null, null, null, null, null, null);
+    }
 
     public List<String> executerLaRequette(String nomRequette) {
         System.out.println("haaa requette===>" + nomRequette);
@@ -51,7 +73,7 @@ public class FamilleFacade extends AbstractFacade<Famille> {
                 return executerLaRequette(requete);
             }
             case "responsableZone": {
-                String requete = "SELECT DISTINCT  r.responsableZone FROM Famille r";
+                String requete = "SELECT DISTINCT  u.nom FROM User u";
                 return executerLaRequette(requete);
             }
             case "telephone": {
@@ -75,7 +97,9 @@ public class FamilleFacade extends AbstractFacade<Famille> {
             requete += " and r.typeLogement='" + typeLogement + "'";
         }
         if (adresse != null && !adresse.equals("")) {
-            requete += " and r.adresse='" + adresse + "'";
+//            requete += " and r.adresse='" + adresse + "'";
+
+            requete += " and r.adresse LIKE CONCAT('%','" + adresse + "','%')";
         }
         if (zoneGeographique != null && !zoneGeographique.equals("")) {
             requete += " and r.zoneGeographique='" + zoneGeographique + "'";
@@ -84,7 +108,7 @@ public class FamilleFacade extends AbstractFacade<Famille> {
             requete += " and r.situation='" + situation + "'";
         }
         if (responsableZone != null && !responsableZone.equals("")) {
-            requete += " and r.responsableZone='" + responsableZone + "'";
+            requete += " and r.user.nom='" + responsableZone + "'";
         }
         if (nombrePersonnesMin != null && nombrePersonnesMin != 0) {
             requete += " and r.nombrePersonnes >='" + nombrePersonnesMin + "'";
@@ -105,11 +129,29 @@ public class FamilleFacade extends AbstractFacade<Famille> {
         return em.createQuery(requete).getResultList();
     }
 
+    public User getConnectedUser() {
+        return SessionUtil.getConnectedUser();
+    }
+
+    private List<Famille> listeVerificationCreation(String nomFamille, String nomResponsable) {
+        String requete = "SELECT r FROM Famille r WHERE r.nomFamille='" + nomFamille + "' "
+                + "AND r.user.nom='" + nomResponsable + "'";
+        return em.createQuery(requete).getResultList();
+    }
+
     @Override
     public void create(Famille famille) {
+        famille.setUser(getConnectedUser());
         famille.setCout(0F);
         famille.setNombrePersonnes(0L);
-        super.create(famille);
+        List<Famille> listVerification = listeVerificationCreation(famille.getNomFamille(), famille.getUser().getNom());
+        System.out.println("ha lista de verification :" + listVerification);
+        if (listVerification != null) {
+            JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("FamilleExisteDeja"));
+        } else {
+            super.create(famille);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("FamilleCreated"));
+        }
     }
 
     public int calculNombrePersonnes(Famille famille) {

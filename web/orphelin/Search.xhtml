@@ -9,21 +9,15 @@
         <h:form id="OrphelinRechercheForm" dir="RTL">
             <p:fieldset legend="#{bundle.Criters_De_Recherche}" toggleable="true"  style="margin-bottom:20px">
                 <p:panelGrid id="panelRecherche" columns="8">
-                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_prenom}" for="prenom" style="display:block;width:80px"/>
-                    <p:selectOneMenu id="prenom" value="#{orphelinController.prenomForSearch}" filter="true" filterMatchMode="contains">
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_nomFamille}" for="nom" style="display:block;width:80px"/>
+                    <p:selectOneMenu id="nom" value="#{orphelinController.nomForSearch}" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{orphelinController.getItemsAvailableSelectOneString('prenom')}"
-                                       var="Prenom"
-                                       itemValue="#{Prenom}" itemLabel="#{Prenom}"/>
+                        <f:selectItems value="#{orphelinController.getItemsAvailableSelectOneString('nom')}"
+                                       var="Nom"
+                                       itemValue="#{Nom}" itemLabel="#{Nom}"/>
                     </p:selectOneMenu>
 
-                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_tailleChaussures}" for="tailleChaussures" style="display:block;width:80px"/>
-                    <p:selectOneMenu id="tailleChaussures" value="#{orphelinController.tailleChaussuresForSearch}" filter="true" filterMatchMode="contains">
-                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{orphelinController.getItemsAvailableSelectOneString('tailleChaussures')}"
-                                       var="TailleChaussures"
-                                       itemValue="#{TailleChaussures}" itemLabel="#{TailleChaussures}"/>
-                    </p:selectOneMenu>
+                  
 
                     <p:outputLabel value="#{bundle.ViewOrphelinLabel_sexe}" for="sexe" style="display:block;width:80px"/>
                     <p:selectOneMenu id="sexe" value="#{orphelinController.sexeForSearch}" filter="true" filterMatchMode="contains">

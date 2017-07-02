@@ -10,11 +10,10 @@
         <title><ui:insert name="title">Default Title</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
-
-
+     
     </h:head>
 
-    <h:body>
+    <h:body >
 
         <p:growl id="growl" life="3000" />
 
@@ -23,7 +22,14 @@
                 <h:form id="menuForm" >
                     <p:menubar>
                         <p:menuitem value="#{bundle.Home}" outcome="/general/general.xhtml" icon="ui-icon-home"/>
-                        <p:menuitem value="العائلات" outcome="/famille/List.xhtml" />
+                        <p:submenu label="العائلات" >
+                            <p:menuitem value="جميع العائلات" outcome="/famille/List.xhtml" />
+                            <p:menuitem value="العائلات المكفولة" outcome="/famille/List_Makfoul.xhtml" />
+                            <p:menuitem value="العائلات في انتظار" outcome="/famille/List_Intidar.xhtml" />
+                            <p:menuitem value="العائلات الموسمية" outcome="/famille/List_Mawsimi.xhtml" />
+                            <p:menuitem value="العائلات الجديدة" outcome="/famille/List_Jadid.xhtml" />
+                            <p:menuitem value="العائلات المعوزة" outcome="/famille/List_Mouiz.xhtml" />
+                        </p:submenu>
                         <p:menuitem value="الارامل" outcome="/veuve/List.xhtml" />
                         <p:menuitem value="الايتام" outcome="/orphelin/List.xhtml" />
                         <p:menuitem value="الدراسات" outcome="/scolarite/List.xhtml" />

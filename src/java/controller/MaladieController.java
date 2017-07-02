@@ -1,8 +1,10 @@
 package controller;
 
 import bean.Maladie;
+import bean.User;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.SessionUtil;
 import service.MaladieFacade;
 
 import java.io.Serializable;
@@ -30,6 +32,19 @@ public class MaladieController implements Serializable {
     private String nomOrphelinForSearch;
     private String nomMaladieForSearch;
     private String descriptionForSearch;
+    private String passwordForDelete;
+
+    public String getPasswordForDelete() {
+        return passwordForDelete;
+    }
+
+    public void setPasswordForDelete(String passwordForDelete) {
+        this.passwordForDelete = passwordForDelete;
+    }
+
+    public User getConnectedUser() {
+        return SessionUtil.getConnectedUser();
+    }
 
     public List<String> getItemsAvailableSelectOneString(String nomVariable) {
         return getFacade().findByQueryString(nomVariable);
@@ -129,12 +144,16 @@ public class MaladieController implements Serializable {
         if (selected != null) {
             setEmbeddableKeys();
             try {
-                if (persistAction != PersistAction.DELETE) {
+                if (persistAction == PersistAction.CREATE) {
+                    getFacade().create(selected);
+                    JsfUtil.addSuccessMessage(successMessage);
+                } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
+                    JsfUtil.addSuccessMessage(successMessage);
                 } else {
-                    getFacade().remove(selected);
+                    getFacade().removeItem(selected, passwordForDelete, getConnectedUser());
+//                  getFacade().remove(selected);
                 }
-                JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";
                 Throwable cause = ex.getCause();

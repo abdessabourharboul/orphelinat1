@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <style>
+            #bodyimage{
+                background-image: url("#{resource['images/AMPCO.jpg']}"); 
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-attachment:fixed;
+            }
+        </style>
+    </h:head>
+    <h:body id="bodyimage">
+        <center>
+            <p1>بسم الله الرحمان الرحيم</p1><br></br>
+            <p1>#{bundle.AppName}</p1>
+        </center>
+        <h:form dir="RTL">
+            <center>
+                <br />
+                <h:link outcome="general/general" value="لائحة عامة" styleClass="generalClass"/>
+                <br />
+                <h:link outcome="/famille/List" value="#{bundle.ViewFamilleShowAllLink}" styleClass="generalClass"/>
+                <br />
+                <h:link outcome="/orphelin/List" value="#{bundle.ViewOrphelinShowAllLink}" styleClass="generalClass"/>
+                <br />
+                <h:link outcome="/veuve/List" value="#{bundle.ViewVeuveShowAllLink}" styleClass="generalClass"/>
+                <br />
+                <h:link outcome="/scolarite/List" value="#{bundle.ViewScolariteShowAllLink}" styleClass="generalClass"/>
+                <br />
+                <h:link outcome="/bonification/List" value="#{bundle.ViewBonificationShowAllLink}" styleClass="generalClass"/>
+                <br />
+                <h:link outcome="/maladie/List" value="#{bundle.ViewMaladieShowAllLink}" styleClass="generalClass"/>
+                <br />
+                <h:link outcome="/medicament/List" value="#{bundle.ViewMedicamentShowAllLink}" styleClass="generalClass"/>
+            </center>
+        </h:form>
+        <br />
+        <h:link outcome="/user/List" value="Show All User Items"/>
+    </h:body>
+
+
+
+
+
+
+
+
+</html>
+

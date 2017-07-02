@@ -1,8 +1,10 @@
 package controller;
 
 import bean.Medicament;
+import bean.User;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.SessionUtil;
 import service.MedicamentFacade;
 
 import java.io.Serializable;
@@ -35,6 +37,19 @@ public class MedicamentController implements Serializable {
     private Float prixMaxForSearch;
     private Date datePriseMinForSearch;
     private Date datePriseMaxForSearch;
+    private String passwordForDelete;
+
+    public String getPasswordForDelete() {
+        return passwordForDelete;
+    }
+
+    public void setPasswordForDelete(String passwordForDelete) {
+        this.passwordForDelete = passwordForDelete;
+    }
+
+    public User getConnectedUser() {
+        return SessionUtil.getConnectedUser();
+    }
 
     public List<String> getItemsAvailableSelectOneString(String nomVariable) {
         return getFacade().findByQueryString(nomVariable);
@@ -168,12 +183,14 @@ public class MedicamentController implements Serializable {
             try {
                 if (persistAction == PersistAction.CREATE) {
                     getFacade().create(selected);
+                    JsfUtil.addSuccessMessage(successMessage);
                 } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
+                    JsfUtil.addSuccessMessage(successMessage);
                 } else {
-                    getFacade().remove(selected);
+                    getFacade().removeItem(selected, passwordForDelete, getConnectedUser());
+//                  getFacade().remove(selected);
                 }
-                JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";
                 Throwable cause = ex.getCause();

@@ -1,8 +1,10 @@
 package controller;
 
 import bean.Scolarite;
+import bean.User;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.SessionUtil;
 import service.ScolariteFacade;
 
 import java.io.Serializable;
@@ -36,8 +38,22 @@ public class ScolariteController implements Serializable {
     private Float moyenne2ForSearch;
     private Float moyenneAnneeMinForSearch;
     private Float moyenneAnneeMaxForSearch;
+    private Float moyenneAnneeExact;
     private Boolean resultatForSearch = null;
     private Boolean soutienScolaireForSearch = null;
+    private String passwordForDelete;
+
+    public String getPasswordForDelete() {
+        return passwordForDelete;
+    }
+
+    public void setPasswordForDelete(String passwordForDelete) {
+        this.passwordForDelete = passwordForDelete;
+    }
+
+    public User getConnectedUser() {
+        return SessionUtil.getConnectedUser();
+    }
 
     public List<String> getItemsAvailableSelectOneString(String nomVariable) {
         return getFacade().findByQueryString(nomVariable);
@@ -47,7 +63,7 @@ public class ScolariteController implements Serializable {
         items = ejbFacade.findByQuery(
                 nomOrphelinForSearch, etablissementForSearch, anneeScolaireForSearch,
                 niveauScolaireForSearch, filiereForSearch, moyenne1ForSearch,
-                moyenne2ForSearch, moyenneAnneeMinForSearch, moyenneAnneeMaxForSearch,
+                moyenne2ForSearch, moyenneAnneeMinForSearch, moyenneAnneeMaxForSearch, moyenneAnneeExact,
                 resultatForSearch, soutienScolaireForSearch);
         System.out.println(items);
     }
@@ -57,6 +73,14 @@ public class ScolariteController implements Serializable {
             items = null;
 //            System.out.println("hanooo");
         }
+    }
+
+    public Float getMoyenneAnneeExact() {
+        return moyenneAnneeExact;
+    }
+
+    public void setMoyenneAnneeExact(Float moyenneAnneeExact) {
+        this.moyenneAnneeExact = moyenneAnneeExact;
     }
 
     public String getNomOrphelinForSearch() {
@@ -206,12 +230,14 @@ public class ScolariteController implements Serializable {
             try {
                 if (persistAction == PersistAction.CREATE) {
                     getFacade().create(selected);
+                    JsfUtil.addSuccessMessage(successMessage);
                 } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
+                    JsfUtil.addSuccessMessage(successMessage);
                 } else {
-                    getFacade().remove(selected);
+                    getFacade().removeItem(selected, passwordForDelete, getConnectedUser());
+//                  getFacade().remove(selected);
                 }
-                JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";
                 Throwable cause = ex.getCause();

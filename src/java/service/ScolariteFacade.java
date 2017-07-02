@@ -21,7 +21,9 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
 
     @PersistenceContext(unitName = "Orphelinat1PU")
     private EntityManager em;
-    
+
+   
+
     public List<String> executerLaRequette(String nomRequette) {
         System.out.println("haaa requette===>" + nomRequette);
         return em.createQuery(nomRequette).getResultList();
@@ -56,7 +58,7 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
 
     public List<Scolarite> findByQuery(String nomOrphelin, String etablissement, String anneeScolaire,
             String niveauScolaire, String filiere, Float moyenne1, Float moyenne2,
-            Float moyenneAnneeMin, Float moyenneAnneeMax, Boolean resultat, Boolean soutienScolaire) {
+            Float moyenneAnneeMin, Float moyenneAnneeMax, Float moyenneAnneeExact, Boolean resultat, Boolean soutienScolaire) {
         String requete = "SELECT r FROM Scolarite r WHERE 1=1 ";
         if (nomOrphelin != null && !nomOrphelin.equals("")) {
             requete += " and r.orphelin.veuve.famille.nomFamille='" + nomOrphelin + "'";
@@ -84,6 +86,9 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
         }
         if (moyenneAnneeMax != null && moyenneAnneeMax != 0) {
             requete += " and r.moyenneAnnee <='" + moyenneAnneeMax + "'";
+        }
+        if (moyenneAnneeExact != null && moyenneAnneeExact != 0) {
+            requete += " and r.moyenneAnnee ='" + moyenneAnneeExact + "'";
         }
         if (resultat != null) {
             requete += " AND r.resultat=" + resultat;

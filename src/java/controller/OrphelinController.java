@@ -1,10 +1,15 @@
 package controller;
 
 import bean.Orphelin;
+import bean.User;
 import controler.util.DateUtil;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
 import controller.util.ServerConfigUtil;
+import controller.util.SessionUtil;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import service.OrphelinFacade;
 
 import java.io.Serializable;
@@ -21,7 +26,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.PhaseId;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 @Named("orphelinController")
 @SessionScoped
@@ -32,7 +40,7 @@ public class OrphelinController implements Serializable {
     private List<Orphelin> items = null;
     private Orphelin selected;
     private Integer size = 0;
-    private String prenomForSearch;
+    private String nomForSearch;
     private String tailleChaussuresForSearch;
     private String sexeForSearch;
     private String codeMassarForSearch;
@@ -43,13 +51,26 @@ public class OrphelinController implements Serializable {
     private Long ageMaxForSearch;
     private Date dateNaissanceMinForSearch;
     private Date dateNaissanceMaxForSearch;
+    private String passwordForDelete;
+
+    public String getPasswordForDelete() {
+        return passwordForDelete;
+    }
+
+    public void setPasswordForDelete(String passwordForDelete) {
+        this.passwordForDelete = passwordForDelete;
+    }
+
+    public User getConnectedUser() {
+        return SessionUtil.getConnectedUser();
+    }
 
     public List<String> getItemsAvailableSelectOneString(String nomVariable) {
         return getFacade().findByQueryString(nomVariable);
     }
 
     public void rechercheOrphelinByQuery() {
-        items = ejbFacade.findByQuery(prenomForSearch, tailleChaussuresForSearch, sexeForSearch,
+        items = ejbFacade.findByQuery(nomForSearch, tailleChaussuresForSearch, sexeForSearch,
                 codeMassarForSearch, descriptionForSearch, anneeNaissanceMinForSearch,
                 anneeNaissanceMaxForSearch, ageMinForSearch, ageMaxForSearch,
                 dateNaissanceMinForSearch, dateNaissanceMaxForSearch);
@@ -99,9 +120,24 @@ public class OrphelinController implements Serializable {
         }
     }
 
+    public StreamedContent getImage() throws IOException {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
+            return new DefaultStreamedContent();
+        } else {
+            // So, browser is requesting the image. Return a real StreamedContent with the image bytes.
+            String filename = context.getExternalContext().getRequestParameterMap().get("filename");
+            return new DefaultStreamedContent(new FileInputStream(new File("/photos/photoOrphelin", filename)));
+        }
+    }
+
     public String findPath(Orphelin orphelin) {
         if (orphelin != null) {
             if (orphelin.getPhoto() != null) {
+                System.out.println("ha b true" + ServerConfigUtil.getPhotoOrphelinPath(true) + "/" + orphelin.getPhoto());
+                System.out.println("ha b false" + ServerConfigUtil.getPhotoOrphelinPath(false) + "/" + orphelin.getPhoto());
                 return ServerConfigUtil.getPhotoOrphelinPath(false) + "/" + orphelin.getPhoto();
             }
         }
@@ -127,12 +163,12 @@ public class OrphelinController implements Serializable {
         this.size = size;
     }
 
-    public String getPrenomForSearch() {
-        return prenomForSearch;
+    public String getNomForSearch() {
+        return nomForSearch;
     }
 
-    public void setPrenomForSearch(String prenomForSearch) {
-        this.prenomForSearch = prenomForSearch;
+    public void setNomForSearch(String nomForSearch) {
+        this.nomForSearch = nomForSearch;
     }
 
     public String getTailleChaussuresForSearch() {
@@ -274,13 +310,15 @@ public class OrphelinController implements Serializable {
             try {
                 if (persistAction == PersistAction.CREATE) {
                     getFacade().create(selected);
+                    JsfUtil.addSuccessMessage(successMessage);
                 } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
                     size = 0;
+                    JsfUtil.addSuccessMessage(successMessage);
                 } else {
-                    getFacade().remove(selected);
+                    getFacade().removeItem(selected, passwordForDelete, getConnectedUser());
+//                  getFacade().remove(selected);
                 }
-                JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";
                 Throwable cause = ex.getCause();

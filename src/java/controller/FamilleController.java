@@ -6,9 +6,11 @@ import bean.Maladie;
 import bean.Medicament;
 import bean.Orphelin;
 import bean.Scolarite;
+import bean.User;
 import bean.Veuve;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.SessionUtil;
 import service.FamilleFacade;
 
 import java.io.Serializable;
@@ -56,6 +58,7 @@ public class FamilleController implements Serializable {
     private String telephoneForSearch;
     private Float coutMinForSearch;
     private Float coutMaxForSearch;
+    private String passwordForDelete;
 
     public List<String> getItemsAvailableSelectOneString(String nomVariable) {
         return getFacade().findByQueryString(nomVariable);
@@ -67,6 +70,14 @@ public class FamilleController implements Serializable {
                 nombrePersonnesMinForSearch, nombrePersonnesMaxForSearch,
                 telephoneForSearch, coutMinForSearch, coutMaxForSearch);
         System.out.println(items);
+    }
+
+    public String getPasswordForDelete() {
+        return passwordForDelete;
+    }
+
+    public void setPasswordForDelete(String passwordForDelete) {
+        this.passwordForDelete = passwordForDelete;
     }
 
     public List<Famille> getFamilles() {
@@ -201,6 +212,10 @@ public class FamilleController implements Serializable {
         orphelin = null;
     }
 
+    public void findFamillesForZoneGeographique(String zoneGeo) {
+        items = getFacade().findByQuery(null, null, null, zoneGeo, null, null, null, null, null, null, null);
+    }
+
     public void nullerLaListe() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             items = null;
@@ -243,7 +258,8 @@ public class FamilleController implements Serializable {
     }
 
     public List<Orphelin> getOrphelins() {
-        return orphelinFacade.findOrphelinByVeuve(getVeuve());
+        return veuveFacade.findOrphelinsByFamille(getSelected());
+//        return orphelinFacade.findOrphelinByVeuve(getVeuve());
     }
 
     public void setOrphelins(List<Orphelin> orphelins) {
@@ -296,6 +312,14 @@ public class FamilleController implements Serializable {
         }
     }
 
+    public List<Famille> getItemsBySituations(String situation) {
+        if (items == null) {
+            items = getFacade().findBySituation(situation);
+        }
+        System.out.println("Hani f la Methode getItemsBySituations()");
+        return items;
+    }
+
     public List<Famille> getItems() {
         if (items == null) {
             items = getFacade().findAll();
@@ -304,18 +328,24 @@ public class FamilleController implements Serializable {
         return items;
     }
 
+    public User getConnectedUser() {
+        return SessionUtil.getConnectedUser();
+    }
+
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
             try {
                 if (persistAction == PersistAction.CREATE) {
                     getFacade().create(selected);
+//                    JsfUtil.addSuccessMessage(successMessage);
                 } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
+                    JsfUtil.addSuccessMessage(successMessage);
                 } else {
-                    getFacade().remove(selected);
+                    getFacade().removeItem(selected, passwordForDelete, getConnectedUser());
+//                  getFacade().remove(selected);
                 }
-                JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";
                 Throwable cause = ex.getCause();

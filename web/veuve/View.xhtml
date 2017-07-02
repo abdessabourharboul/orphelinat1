@@ -12,6 +12,13 @@
             <h:form id="VeuveViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{veuveController.selected != null}">
+                        <h:outputText value="photo"/>
+                        <p:panel>                           
+                            <h:commandLink id="viewButton1" disabled="#{empty veuveController.selected}">
+                                <p:ajax update=":Veuve1ViewForm" oncomplete="PF('Veuve1ViewDialog').show()"/>
+                                <p:graphicImage  style="height:200px;width:200px;" value="#{veuveController.findPath(veuveController.selected)}"/>
+                            </h:commandLink>
+                        </p:panel> 
                         <h:outputText value="#{bundle.ViewVeuveLabel_famille}"/>
                         <h:outputText value="#{veuveController.selected.famille.nomFamille}" title="#{bundle.ViewVeuveTitle_famille}"/>
                         <h:outputText value="#{bundle.ViewVeuveLabel_nomVeuve}"/>
@@ -31,6 +38,6 @@
                 </h:panelGroup>
             </h:form>
         </p:dialog>
-
+        <ui:include src="View_Image.xhtml"/>
     </ui:composition>
 </html>

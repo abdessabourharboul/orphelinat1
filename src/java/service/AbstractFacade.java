@@ -5,6 +5,9 @@
  */
 package service;
 
+import bean.User;
+import controller.util.HashPasswords;
+import controller.util.JsfUtil;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -34,6 +37,14 @@ public abstract class AbstractFacade<T> {
         getEntityManager().remove(getEntityManager().merge(entity));
     }
 
+    public void removeItem(T entity, String passwordConfirmation, User user) {
+        if (HashPasswords.crypt(passwordConfirmation).equals(user.getPasswordSuppresion())) {
+            remove(entity);
+        } else {
+            JsfUtil.addErrorMessage("Mot de passe incorrect");
+        }
+    }
+
     public T find(Object id) {
         return getEntityManager().find(entityClass, id);
     }
@@ -60,5 +71,5 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
 }

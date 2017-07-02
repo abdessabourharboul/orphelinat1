@@ -17,21 +17,11 @@
                                        itemValue="#{NomFamille}" itemLabel="#{NomFamille}"/>
                     </p:selectOneMenu>
 
-                    <p:outputLabel value="#{bundle.ViewFamilleLabel_typeLogement}" for="typeLogement" style="display:block;width:80px"/>
-                    <p:selectOneMenu id="typeLogement" value="#{familleController.typeLogementForSearch}" filter="true" filterMatchMode="contains">
-                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{familleController.getItemsAvailableSelectOneString('typeLogement')}"
-                                       var="TypeLogement"
-                                       itemValue="#{TypeLogement}" itemLabel="#{TypeLogement}"/>
-                    </p:selectOneMenu>
+
 
                     <p:outputLabel value="#{bundle.ViewFamilleLabel_adresse}" for="adresse" style="display:block;width:80px"/>
-                    <p:selectOneMenu id="adresse" value="#{familleController.adresseForSearch}" filter="true" filterMatchMode="contains">
-                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{familleController.getItemsAvailableSelectOneString('adresse')}"
-                                       var="Adresse"
-                                       itemValue="#{Adresse}" itemLabel="#{Adresse}"/>
-                    </p:selectOneMenu>
+                    <p:inputText id="adresse" value="#{familleController.adresseForSearch}" style="display:block;width:80px;color: red" />
+
 
                     <p:outputLabel value="#{bundle.ViewFamilleLabel_situation}" for="situation" style="display:block;width:80px"/>
                     <p:selectOneMenu id="situation" value="#{familleController.situationForSearch}" filter="true" filterMatchMode="contains">
@@ -41,12 +31,7 @@
                                        itemValue="#{Situation}" itemLabel="#{Situation}"/>
                     </p:selectOneMenu>
 
-                    <p:outputLabel value="#{bundle.ViewFamilleLabel_coutMin}" for="coutMin" style="display:block;width:80px"/>
-                    <p:inputText id="coutMin" value="#{familleController.coutMinForSearch}" style="display:block;width:80px;color: red" />
 
-                    <p:outputLabel value="#{bundle.ViewFamilleLabel_coutMax}" for="coutMax" style="display:block;width:80px"/>
-                    <p:inputText id="coutMax" value="#{familleController.coutMaxForSearch}" style="display:block;width:80px;color: red" />
-                   
                     <p:outputLabel value="#{bundle.ViewFamilleLabel_nombrePersonnesMin}" for="nombrePersonnesMin" style="display:block;width:80px"/>
                     <p:inputText id="nombrePersonnesMin" value="#{familleController.nombrePersonnesMinForSearch}" style="display:block;width:80px;color: red" />
 

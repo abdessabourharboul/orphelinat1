@@ -1,8 +1,11 @@
 package controller;
 
+import bean.User;
 import bean.Veuve;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.ServerConfigUtil;
+import controller.util.SessionUtil;
 import service.VeuveFacade;
 
 import java.io.Serializable;
@@ -19,6 +22,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.event.FileUploadEvent;
 
 @Named("veuveController")
 @SessionScoped
@@ -35,6 +39,35 @@ public class VeuveController implements Serializable {
     private Long ageMaxForSearch;
     private Date dateNaissanceMinForSearch;
     private Date dateNaissanceMaxForSearch;
+    private String passwordForDelete;
+
+    public String getPasswordForDelete() {
+        return passwordForDelete;
+    }
+
+    public void setPasswordForDelete(String passwordForDelete) {
+        this.passwordForDelete = passwordForDelete;
+    }
+
+    public User getConnectedUser() {
+        return SessionUtil.getConnectedUser();
+    }
+
+    public void upload(FileUploadEvent event) {
+        getSelected().setPhoto("Veuve-" + new Date().getTime() + ".png");
+        ServerConfigUtil.upload(event.getFile(), ServerConfigUtil.getPhotoOrphelinPath(true), getSelected().getPhoto());
+    }
+
+    public String findPath(Veuve veuve) {
+        if (veuve != null) {
+            if (veuve.getPhoto() != null) {
+                System.out.println("ha b true" + ServerConfigUtil.getPhotoOrphelinPath(true) + "/" + veuve.getPhoto());
+                System.out.println("ha b false" + ServerConfigUtil.getPhotoOrphelinPath(false) + "/" + veuve.getPhoto());
+                return ServerConfigUtil.getPhotoOrphelinPath(false) + "/" + veuve.getPhoto();
+            }
+        }
+        return ServerConfigUtil.getPhotoOrphelinPath(false) + "/noOne.png";
+    }
 
     public List<String> getItemsAvailableSelectOneString(String nomVariable) {
         return getFacade().findByQueryString(nomVariable);
@@ -170,10 +203,11 @@ public class VeuveController implements Serializable {
                     getFacade().create(selected);
                 } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
+                    JsfUtil.addSuccessMessage(successMessage);
                 } else {
-                    getFacade().remove(selected);
+                    getFacade().removeItem(selected, passwordForDelete, getConnectedUser());
+//                  getFacade().remove(selected);
                 }
-                JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";
                 Throwable cause = ex.getCause();

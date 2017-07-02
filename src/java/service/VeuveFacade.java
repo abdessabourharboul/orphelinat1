@@ -9,9 +9,11 @@ import bean.Famille;
 import bean.Orphelin;
 import bean.Veuve;
 import controler.util.DateUtil;
+import controller.util.JsfUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -92,12 +94,38 @@ public class VeuveFacade extends AbstractFacade<Veuve> {
         }
     }
 
+    public List<Orphelin> findOrphelinsByFamille(Famille famille) {
+        List<Orphelin> resultats = new ArrayList();
+        List<Veuve> veuves = findVeuveByFamille(famille);
+        for (int i = 0; i < veuves.size(); i++) {
+            Veuve get = veuves.get(i);
+            for (int j = 0; j < get.getOrphelins().size(); j++) {
+                Orphelin get1 = get.getOrphelins().get(j);
+                resultats.add(get1);
+            }
+        }
+        return resultats;
+    }
+
+    private List<Veuve> listeVerificationCreation(String nomVeuve) {
+        String requete = "SELECT r FROM Veuve r WHERE r.nomVeuve='" + nomVeuve + "'";
+        return em.createQuery(requete).getResultList();
+    }
+
     @Override
     public void create(Veuve veuve) {
         veuve.setAge(new Long(DateUtil.calculAge(veuve.getDateNaissance())));
-        veuve.getFamille().setNombrePersonnes(veuve.getFamille().getNombrePersonnes() + 1);
-        familleFacade.edit(veuve.getFamille());
-        super.create(veuve);
+        veuve.getFamille().setNombrePersonnes(familleFacade.nombrePersonne(veuve.getFamille()) + 1);
+//        veuve.getFamille().setNombrePersonnes(veuve.getFamille().getNombrePersonnes() + 1);
+        List<Veuve> listVerification = listeVerificationCreation(veuve.getNomVeuve());
+        System.out.println("ha lista de verification :" + listVerification);
+        if (listVerification != null) {
+            JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("VeuveExisteDeja"));
+        } else {
+            familleFacade.edit(veuve.getFamille());
+            super.create(veuve);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("VeuveCreated"));
+        }
     }
 
     @Override

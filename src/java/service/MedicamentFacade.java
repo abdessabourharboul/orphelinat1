@@ -7,7 +7,6 @@ package service;
 
 import bean.Famille;
 import bean.Medicament;
-import bean.Orphelin;
 import controler.util.DateUtil;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +27,8 @@ public class MedicamentFacade extends AbstractFacade<Medicament> {
     private EntityManager em;
     @EJB
     private FamilleFacade familleFacade;
+    
+   
 
     public List<String> executerLaRequette(String nomRequette) {
         System.out.println("haaa requette===>" + nomRequette);

@@ -6,7 +6,11 @@
 package service;
 
 import bean.Bonification;
+import bean.Maladie;
+import bean.User;
 import controler.util.DateUtil;
+import controller.util.HashPasswords;
+import controller.util.JsfUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +27,14 @@ public class BonificationFacade extends AbstractFacade<Bonification> {
 
     @PersistenceContext(unitName = "Orphelinat1PU")
     private EntityManager em;
+    
+//    public void removeItem(Bonification bonification, String passwordConfirmation, User user) {
+//        if (HashPasswords.crypt(passwordConfirmation).equals(user.getPasswordSuppresion())) {
+//            super.remove(bonification);
+//        } else {
+//            JsfUtil.addErrorMessage("Mot de passe incorrect");
+//        }
+//    }
 
     public List<String> executerLaRequette(String nomRequette) {
         System.out.println("haaa requette===>" + nomRequette);

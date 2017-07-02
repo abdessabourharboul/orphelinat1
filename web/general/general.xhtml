@@ -19,7 +19,7 @@
                                              selectionMode="single" selection="#{familleController.orphelin}"
                                              paginator="true"
                                              rowKey="#{itemo.id}"
-                                             rows="10"
+                                             rows="50"
                                              rowsPerPageTemplate="10,20,30,40,50" dir="rtl"
                                              >
                                     <p:ajax event="rowSelect"/>
@@ -51,7 +51,7 @@
                                              selectionMode="single" selection="#{familleController.veuve}"
                                              paginator="true"
                                              rowKey="#{itemv.id}"
-                                             rows="10"
+                                             rows="50"
                                              rowsPerPageTemplate="10,20,30,40,50" dir="rtl"
                                              >
                                     <p:ajax event="rowSelect"/>
@@ -80,11 +80,25 @@
                                          selectionMode="single" selection="#{familleController.selected}"
                                          paginator="true"
                                          rowKey="#{item.id}"
-                                         rows="10"
+                                         rows="50"
                                          rowsPerPageTemplate="10,20,30,40,50" dir="rtl" 
                                          >
                                 <p:ajax event="rowSelect" listener="#{familleController.regenererLesListes()}"/>
                                 <p:ajax event="rowUnselect" listener="#{familleController.regenererLesListes()}"/>
+                                <f:facet name="header">
+                                    <p:outputPanel>
+                                        <p:panelGrid id="panelRecherche" columns="2" >
+                                            <p:outputLabel value="#{bundle.ViewFamilleLabel_zoneGeographique}" for="zoneGeographique" style="display:block;width:80px"/>
+                                            <p:selectOneMenu id="zoneGeographique" value="#{familleController.zoneGeographiqueForSearch}" filter="true" filterMatchMode="contains">
+                                                <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                                                <f:selectItems value="#{familleController.getItemsAvailableSelectOneString('zoneGeographique')}"
+                                                               var="ZoneGeographique"
+                                                               itemValue="#{ZoneGeographique}" itemLabel="#{ZoneGeographique}"/>
+                                                <p:ajax process="zoneGeographique" listener="#{familleController.findFamillesForZoneGeographique(familleController.zoneGeographiqueForSearch)}" update="datalist"/>
+                                            </p:selectOneMenu>
+                                        </p:panelGrid>
+                                    </p:outputPanel>
+                                </f:facet>
                                 <p:column filterBy="#{item.nomFamille}" filterMatchMode="contains" filterPosition="top">
                                     <f:facet name="header">
                                         <center><h:outputText value="#{bundle.ListFamilleTitle_nomFamille}"/></center>

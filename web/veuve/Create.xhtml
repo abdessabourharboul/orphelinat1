@@ -26,6 +26,15 @@
                         <p:calendar id="dateNaissance" pattern="MM/dd/yyyy" value="#{veuveController.selected.dateNaissance}" title="#{bundle.EditVeuveTitle_dateNaissance}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateVeuveLabel_metierVeuve}" for="metierVeuve" />
                         <p:inputText id="metierVeuve" value="#{veuveController.selected.metierVeuve}" title="#{bundle.CreateVeuveTitle_metierVeuve}" />
+                        <p:outputLabel value="Photo :" for="photo" />
+                        <p:panel>
+                            <p:fileUpload id="photo" fileUploadListener="#{veuveController.upload}"
+                                          mode="advanced"
+                                          dragDropSupport="true" multiple="false"
+                                          update="messages" sizeLimit="10000000"
+                                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                            <p:growl id="messages" showDetail="true"/>
+                        </p:panel>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{veuveController.create}" value="#{bundle.Save}" update="display,:VeuveListForm:datalist,:growl" oncomplete="handleSubmit(args,'VeuveCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="VeuveCreateDialog.hide()"/>

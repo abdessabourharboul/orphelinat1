@@ -22,6 +22,8 @@ public class MaladieFacade extends AbstractFacade<Maladie> {
     @PersistenceContext(unitName = "Orphelinat1PU")
     private EntityManager em;
 
+   
+
     public List<String> executerLaRequette(String nomRequette) {
         System.out.println("haaa requette===>" + nomRequette);
         return em.createQuery(nomRequette).getResultList();

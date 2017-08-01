@@ -12,5 +12,9 @@
             <base-name>/BundleUser</base-name>
             <var>bundleUser</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/BundleProvision</base-name>
+            <var>bundleProvision</var>
+        </resource-bundle>
     </application>
 </faces-config>

@@ -25,6 +25,9 @@ public class Scolarite implements Serializable {
     private Long id;
     private String etablissement;
     private String anneeScolaire;
+    private String anneeScolaireFirst;
+    private String anneeScolaireSecond;
+    private String silkScolaire;
     private String niveauScolaire;
     private String filiere;
     private Float moyenne1;
@@ -44,12 +47,36 @@ public class Scolarite implements Serializable {
         this.id = id;
     }
 
+    public String getSilkScolaire() {
+        return silkScolaire;
+    }
+
+    public void setSilkScolaire(String silkScolaire) {
+        this.silkScolaire = silkScolaire;
+    }
+
     public String getAnneeScolaire() {
         return anneeScolaire;
     }
 
     public void setAnneeScolaire(String anneeScolaire) {
         this.anneeScolaire = anneeScolaire;
+    }
+
+    public String getAnneeScolaireFirst() {
+        return anneeScolaireFirst;
+    }
+
+    public void setAnneeScolaireFirst(String anneeScolaireFirst) {
+        this.anneeScolaireFirst = anneeScolaireFirst;
+    }
+
+    public String getAnneeScolaireSecond() {
+        return anneeScolaireSecond;
+    }
+
+    public void setAnneeScolaireSecond(String anneeScolaireSecond) {
+        this.anneeScolaireSecond = anneeScolaireSecond;
     }
 
     public String getEtablissement() {

@@ -6,9 +6,17 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <ui:composition>
+        <style>
+            .ui-selectonemenu{
+                width: 180px !important;
+            }
+            .ui-selectonemenu-label{
+                width: 180px !important;
+            }  
+        </style>
         <h:form id="ScolariteRechercheForm" dir="RTL">
             <p:fieldset legend="#{bundle.Criters_De_Recherche}" toggleable="true"  style="margin-bottom:20px">
-                <p:panelGrid id="panelRecherche" columns="12">
+                <p:panelGrid id="panelRecherche" columns="8">
                     <p:outputLabel value="#{bundle.ViewVeuveLabel_famille}" for="nomOrphelin" style="display:block;width:80px"/>
                     <p:selectOneMenu id="nomOrphelin" value="#{scolariteController.nomOrphelinForSearch}" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
@@ -55,12 +63,6 @@
                     <p:outputLabel value="#{bundle.ViewScolariteLabel_moyenne2}" for="moyenne2" style="display:block;width:80px"/>
                     <p:inputText id="moyenne2" value="#{scolariteController.moyenne2ForSearch}" style="display:block;width:80px;color: red" />
 
-                    <p:outputLabel value="#{bundle.ViewScolariteLabel_moyenneAnneeMin}" for="moyenneAnneeMin" style="display:block;width:80px"/>
-                    <p:inputText id="moyenneAnneeMin" value="#{scolariteController.moyenneAnneeMinForSearch}" style="display:block;width:80px;color: red" />
-
-                    <p:outputLabel value="#{bundle.ViewScolariteLabel_moyenneAnneeMax}" for="moyenneAnneeMax" style="display:block;width:80px"/>
-                    <p:inputText id="moyenneAnneeMax" value="#{scolariteController.moyenneAnneeMaxForSearch}" style="display:block;width:80px;color: red" />
-                
                     <p:outputLabel value="#{bundle.ViewScolariteLabel_moyenneAnnee}" for="moyenneAnneeExact" style="display:block;width:80px"/>
                     <p:inputText id="moyenneAnneeExact" value="#{scolariteController.moyenneAnneeExact}" style="display:block;width:80px;color: red" />
 

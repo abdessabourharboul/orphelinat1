@@ -38,7 +38,7 @@ public abstract class AbstractFacade<T> {
     }
 
     public void removeItem(T entity, String passwordConfirmation, User user) {
-        if (HashPasswords.crypt(passwordConfirmation).equals(user.getPasswordSuppresion())) {
+        if (HashPasswords.crypt(passwordConfirmation).equals(user.getPassword())) {
             remove(entity);
         } else {
             JsfUtil.addErrorMessage("Mot de passe incorrect");

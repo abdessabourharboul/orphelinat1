@@ -75,7 +75,14 @@ public class UserFacade extends AbstractFacade<User> {
     public void checkAuthentication() throws IOException {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         if (getConnectedUser() != null) {
-            externalContext.redirect(externalContext.getRequestContextPath() + "/first.xhtml");
+            externalContext.redirect(externalContext.getRequestContextPath() + "/faces/first.xhtml");
+        }
+    }
+
+    public void checkAuthentication1() throws IOException {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        if (getConnectedUser() == null) {
+            externalContext.redirect(externalContext.getRequestContextPath() + "/faces/index.xhtml");
         }
     }
 
@@ -88,7 +95,7 @@ public class UserFacade extends AbstractFacade<User> {
             return "/template?faces-redirect=true";
         } else {
             JsfUtil.addErrorMessage("Votre mot de passe n'a pas été changé");
-            return "/Parametres/ChangePassword?faces-redirect=true";
+            return "/user/ChangePassword?faces-redirect=true";
         }
     }
 

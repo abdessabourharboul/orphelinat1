@@ -2,8 +2,10 @@ package controller;
 
 import bean.Scolarite;
 import bean.User;
+import bean.Veuve;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.ScolariteStrings;
 import controller.util.SessionUtil;
 import service.ScolariteFacade;
 
@@ -42,6 +44,77 @@ public class ScolariteController implements Serializable {
     private Boolean resultatForSearch = null;
     private Boolean soutienScolaireForSearch = null;
     private String passwordForDelete;
+    private String situationDeSearch;
+    private String niveauScolaireDeSearch;
+
+    public void setSituationForPage(String situation) {
+        setSituationDeSearch(situation);
+        System.out.println("hahia situation de search ::::" + getSituationDeSearch());
+    }
+
+    public void setNiveauScolaireForPage(String niveauScolaire) {
+        setNiveauScolaireDeSearch(niveauScolaire);
+        System.out.println("hahwa niveauScolaire de search ::::" + getNiveauScolaireDeSearch());
+    }
+
+    public String getSituationDeSearch() {
+        return situationDeSearch;
+    }
+
+    public void setSituationDeSearch(String situationDeSearch) {
+        this.situationDeSearch = situationDeSearch;
+    }
+
+    public String getNiveauScolaireDeSearch() {
+        return niveauScolaireDeSearch;
+    }
+
+    public void setNiveauScolaireDeSearch(String niveauScolaireDeSearch) {
+        this.niveauScolaireDeSearch = niveauScolaireDeSearch;
+    }
+
+    public String passOrNot(Scolarite scolarite) {
+        if (scolarite.getResultat().equals(true)) {
+            return "انتقل";
+        } else if (scolarite.getResultat().equals(false)) {
+            return "كرر";
+        }
+        return "";
+    }
+
+    public boolean resultatBoolean(Scolarite scolarite) {
+        if (scolarite.getResultat() == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void passButtonActionListener(Scolarite scolarite) {
+        ejbFacade.passButtonActionListener(scolarite);
+        items = null;
+    }
+
+    public void notPassButtonActionListener(Scolarite scolarite) {
+        ejbFacade.notPassButtonActionListener(scolarite);
+        items = null;
+    }
+
+    public List<String> getNiveauxScolaires() {
+        return ScolariteStrings.findNiveauxBySilk(getSelected().getSilkScolaire());
+    }
+
+    public List<String> niveauxScolairesList() {
+        return ScolariteStrings.niveauxScolarite();
+    }
+
+    public void setAnneSecondaireAjax() {
+        Integer foo = Integer.parseInt(getSelected().getAnneeScolaireFirst());
+        String fooString;
+        foo++;
+        fooString = foo.toString();
+        getSelected().setAnneeScolaireSecond(fooString);
+    }
 
     public String getPasswordForDelete() {
         return passwordForDelete;
@@ -64,7 +137,7 @@ public class ScolariteController implements Serializable {
                 nomOrphelinForSearch, etablissementForSearch, anneeScolaireForSearch,
                 niveauScolaireForSearch, filiereForSearch, moyenne1ForSearch,
                 moyenne2ForSearch, moyenneAnneeMinForSearch, moyenneAnneeMaxForSearch, moyenneAnneeExact,
-                resultatForSearch, soutienScolaireForSearch);
+                resultatForSearch, soutienScolaireForSearch, getSituationDeSearch());
         System.out.println(items);
     }
 
@@ -221,6 +294,22 @@ public class ScolariteController implements Serializable {
         if (items == null) {
             items = getFacade().findAll();
         }
+        return items;
+    }
+
+    public List<Scolarite> getItemsByNiveaux() {
+        if (items == null) {
+            items = getFacade().findScolariteByNiveaux(getNiveauScolaireDeSearch());
+        }
+        System.out.println("Hani f la Methode getItemsBySituations()");
+        return items;
+    }
+
+    public List<Scolarite> getItemsBySituations() {
+        if (items == null) {
+            items = getFacade().findScolariteBySituation(getSituationDeSearch());
+        }
+        System.out.println("Hani f la Methode getItemsBySituations()");
         return items;
     }
 

@@ -47,12 +47,32 @@ public class UserController implements Serializable {
         ejbFacade.checkAuthentication();
     }
 
+    public void checkAuthentication1() throws IOException {
+        ejbFacade.checkAuthentication1();
+    }
+
     public String seDeconnecter() {
         return ejbFacade.logOut();
     }
 
     public String seConnecter() {
         return ejbFacade.connexion(selected);
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getConfNewPassword() {
+        return confNewPassword;
+    }
+
+    public void setConfNewPassword(String confNewPassword) {
+        this.confNewPassword = confNewPassword;
     }
 
     public User getSelected() {

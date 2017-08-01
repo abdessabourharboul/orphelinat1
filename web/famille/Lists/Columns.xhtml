@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:column width="20">
+            <f:facet name="header">
+                <h:outputText value="#" />
+            </f:facet>
+            <h:outputText 
+                value="#{index + 1}" />
+        </p:column>
+        <p:column sortBy="#{item.nomFamille}">
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListFamilleTitle_nomFamille}"/>
+            </f:facet>
+            <h:outputText value="#{item.nomFamille}"/>
+        </p:column>
+        <p:column sortBy="#{item.situation}">
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListFamilleTitle_situation}"/>
+            </f:facet>
+            <h:outputText value="#{item.situation}"/>
+        </p:column>
+        <p:column width="35">
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListFamilleTitle_nombrePersonnes}"/>
+            </f:facet>
+            <h:outputText value="#{item.nombrePersonnes}"/>
+        </p:column>
+        <p:column sortBy="#{item.user.zoneGeographique}">
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListFamilleTitle_zoneGeographique}"/>
+            </f:facet>
+            <h:outputText value="#{item.user.zoneGeographique}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListFamilleTitle_typeLogement}"/>
+            </f:facet>
+            <h:outputText value="#{item.typeLogement}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListFamilleTitle_adresse}"/>
+            </f:facet>
+            <h:outputText value="#{item.adresse}"/>
+        </p:column>
+        <p:column >
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListFamilleTitle_telephone}"/>
+            </f:facet>
+            <h:outputText value="#{item.telephone}"/>
+        </p:column>
+        <p:column style="background-color: #{item.user.zoneGeographique eq familleController.connectedUser.zoneGeographique ? '#c7ddef' : null}">
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListFamilleTitle_responsableZone}"/>
+            </f:facet>
+            <h:outputText value="#{item.user.nom}"/>
+        </p:column>
+<!--        <p:column>
+            <f:facet name="header">
+                <h:outputText value="# {bundle.ListFamilleTitle_cout}"/>
+            </f:facet>
+            <h:outputText value="# {item.cout}"/>
+        </p:column>-->
+
+    </ui:composition>
+</html>

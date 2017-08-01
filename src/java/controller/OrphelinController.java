@@ -1,7 +1,9 @@
 package controller;
 
+import bean.Famille;
 import bean.Orphelin;
 import bean.User;
+import bean.Veuve;
 import controler.util.DateUtil;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
@@ -37,11 +39,13 @@ public class OrphelinController implements Serializable {
 
     @EJB
     private service.OrphelinFacade ejbFacade;
+    @EJB
+    private service.VeuveFacade veuveFacade;
     private List<Orphelin> items = null;
     private Orphelin selected;
     private Integer size = 0;
     private String nomForSearch;
-    private String tailleChaussuresForSearch;
+    private String prenomForSearch;
     private String sexeForSearch;
     private String codeMassarForSearch;
     private String descriptionForSearch;
@@ -49,9 +53,22 @@ public class OrphelinController implements Serializable {
     private Long anneeNaissanceMaxForSearch;
     private Long ageMinForSearch;
     private Long ageMaxForSearch;
-    private Date dateNaissanceMinForSearch;
-    private Date dateNaissanceMaxForSearch;
+    private String zoneGeographiqueForSearch;
     private String passwordForDelete;
+    private Famille famille;
+    private String situationDeSearch;
+
+    public List<Veuve> getItemsVeuvesAvailableSelectOne(Famille famille) {
+        return veuveFacade.findVeuveByFamille(famille);
+    }
+
+    public Famille getFamille() {
+        return famille;
+    }
+
+    public void setFamille(Famille famille) {
+        this.famille = famille;
+    }
 
     public String getPasswordForDelete() {
         return passwordForDelete;
@@ -65,15 +82,23 @@ public class OrphelinController implements Serializable {
         return SessionUtil.getConnectedUser();
     }
 
+    public List<String> getItemsAvailableSelectOneStringNoms() {
+        return getFacade().findNomForSearchBySituation(getSituationDeSearch());
+    }
+
+    public List<String> getItemsAvailableSelectOneStringPrenoms() {
+        return getFacade().findPrenomForSearchBySituation(getSituationDeSearch());
+    }
+
     public List<String> getItemsAvailableSelectOneString(String nomVariable) {
         return getFacade().findByQueryString(nomVariable);
     }
 
     public void rechercheOrphelinByQuery() {
-        items = ejbFacade.findByQuery(nomForSearch, tailleChaussuresForSearch, sexeForSearch,
+        items = ejbFacade.findByQuery(nomForSearch, prenomForSearch, sexeForSearch,
                 codeMassarForSearch, descriptionForSearch, anneeNaissanceMinForSearch,
                 anneeNaissanceMaxForSearch, ageMinForSearch, ageMaxForSearch,
-                dateNaissanceMinForSearch, dateNaissanceMaxForSearch);
+                zoneGeographiqueForSearch, getSituationDeSearch());
         System.out.println(items);
     }
 
@@ -82,6 +107,11 @@ public class OrphelinController implements Serializable {
             items = null;
 //            System.out.println("hanooo");
         }
+    }
+
+    public void setSituationForPage(String situation) {
+        setSituationDeSearch(situation);
+        System.out.println("hahia situation de search ::::" + getSituationDeSearch());
     }
 
     public int calculAge(Orphelin orphelin) {
@@ -155,6 +185,14 @@ public class OrphelinController implements Serializable {
         return getFacade().findPathByString(getSelected());
     }
 
+    public String getSituationDeSearch() {
+        return situationDeSearch;
+    }
+
+    public void setSituationDeSearch(String situationDeSearch) {
+        this.situationDeSearch = situationDeSearch;
+    }
+
     public Integer getSize() {
         return size;
     }
@@ -171,12 +209,12 @@ public class OrphelinController implements Serializable {
         this.nomForSearch = nomForSearch;
     }
 
-    public String getTailleChaussuresForSearch() {
-        return tailleChaussuresForSearch;
+    public String getPrenomForSearch() {
+        return prenomForSearch;
     }
 
-    public void setTailleChaussuresForSearch(String tailleChaussuresForSearch) {
-        this.tailleChaussuresForSearch = tailleChaussuresForSearch;
+    public void setPrenomForSearch(String prenomForSearch) {
+        this.prenomForSearch = prenomForSearch;
     }
 
     public String getSexeForSearch() {
@@ -235,20 +273,12 @@ public class OrphelinController implements Serializable {
         this.ageMaxForSearch = ageMaxForSearch;
     }
 
-    public Date getDateNaissanceMinForSearch() {
-        return dateNaissanceMinForSearch;
+    public String getZoneGeographiqueForSearch() {
+        return zoneGeographiqueForSearch;
     }
 
-    public void setDateNaissanceMinForSearch(Date dateNaissanceMinForSearch) {
-        this.dateNaissanceMinForSearch = dateNaissanceMinForSearch;
-    }
-
-    public Date getDateNaissanceMaxForSearch() {
-        return dateNaissanceMaxForSearch;
-    }
-
-    public void setDateNaissanceMaxForSearch(Date dateNaissanceMaxForSearch) {
-        this.dateNaissanceMaxForSearch = dateNaissanceMaxForSearch;
+    public void setZoneGeographiqueForSearch(String zoneGeographiqueForSearch) {
+        this.zoneGeographiqueForSearch = zoneGeographiqueForSearch;
     }
 
     public OrphelinController() {
@@ -295,6 +325,14 @@ public class OrphelinController implements Serializable {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
+    }
+
+    public List<Orphelin> getItemsBySituations() {
+        if (items == null) {
+            items = getFacade().findOrphelinBySituation(getSituationDeSearch());
+        }
+        System.out.println("Hani f la Methode getItemsBySituations()");
+        return items;
     }
 
     public List<Orphelin> getItems() {

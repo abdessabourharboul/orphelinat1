@@ -24,12 +24,23 @@
                         <p:outputLabel value="#{bundle.EditVeuveLabel_cin}" for="cin" />
                         <p:inputText id="cin" value="#{veuveController.selected.cin}" title="#{bundle.EditVeuveTitle_cin}" />
                         <p:outputLabel value="#{bundle.EditVeuveLabel_dateNaissance}" for="dateNaissance" />
-                        <p:calendar id="dateNaissance" pattern="MM/dd/yyyy" value="#{veuveController.selected.dateNaissance}" title="#{bundle.EditVeuveTitle_dateNaissance}"  showOn="button"/>
+                        <p:calendar id="dateNaissance" pattern="dd/MM/yyyy" value="#{veuveController.selected.dateNaissance}" title="#{bundle.EditVeuveTitle_dateNaissance}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.EditVeuveLabel_metierVeuve}" for="metierVeuve" />
                         <p:inputText id="metierVeuve" value="#{veuveController.selected.metierVeuve}" title="#{bundle.EditVeuveTitle_metierVeuve}" />
+                        <p:outputLabel value="Photo :" for="photo" />
+                        <p:panel>
+                            <p:fileUpload id="photo" fileUploadListener="#{veuveController.uploadEdit}"
+                                          mode="advanced"
+                                          dragDropSupport="true" multiple="false"
+                                          update="messages" sizeLimit="10000000"
+                                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                            <p:growl id="messages" showDetail="true"/>
+                        </p:panel>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{veuveController.update}" value="#{bundle.Save}" update="display,:VeuveListForm:datalist,:growl" oncomplete="handleSubmit(args, 'VeuveEditDialog');"/>
-                    <p:commandButton immediate="true" value="#{bundle.Cancel}" onclick="VeuveEditDialog.hide()"/>
+                    <p:commandButton immediate="true" 
+                                     actionListener="#{veuveController.cancelEditOrphelin}"
+                                     value="#{bundle.Cancel}" onclick="VeuveEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

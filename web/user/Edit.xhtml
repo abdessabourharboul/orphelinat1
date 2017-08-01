@@ -15,9 +15,9 @@
                         <p:outputLabel value="#{bundleUser.EditUserLabel_id}" for="id" />
                         <p:inputText id="id" value="#{userController.selected.id}" title="#{bundleUser.EditUserTitle_id}" />
                         <p:outputLabel value="#{bundleUser.EditUserLabel_password}" for="password" />
-                        <p:inputText id="password" value="#{userController.selected.password}" title="#{bundleUser.EditUserTitle_password}" />
+                        <p:inputText id="password" value="#{userController.selected.nom}" title="#{bundleUser.EditUserTitle_password}" />
                         <p:outputLabel value="#{bundleUser.EditUserLabel_passwordSuppresion}" for="passwordSuppresion" />
-                        <p:inputText id="passwordSuppresion" value="#{userController.selected.passwordSuppresion}" title="#{bundleUser.EditUserTitle_passwordSuppresion}" />
+                        <p:inputText id="passwordSuppresion" value="#{userController.selected.zoneGeographique}" title="#{bundleUser.EditUserTitle_passwordSuppresion}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{userController.update}" value="#{bundleUser.Save}" update="display,:UserListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UserEditDialog');"/>
                     <p:commandButton value="#{bundleUser.Cancel}" onclick="UserEditDialog.hide()"/>

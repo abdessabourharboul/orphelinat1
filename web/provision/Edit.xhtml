@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProvisionEditDlg" widgetVar="ProvisionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleProvision.EditProvisionTitle}">
+            <h:form id="ProvisionEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{provisionController.selected != null}">
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{provisionController.selected.id}" title="#{bundleProvision.EditProvisionTitle_id}" />
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_annee}" for="annee" />
+                        <p:inputText id="annee" value="#{provisionController.selected.annee}" title="#{bundleProvision.EditProvisionTitle_annee}" />
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_nombrePersonne}" for="nombrePersonne" />
+                        <p:inputText id="nombrePersonne" value="#{provisionController.selected.nombrePersonne}" title="#{bundleProvision.EditProvisionTitle_nombrePersonne}" />
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_quantiteFarine}" for="quantiteFarine" />
+                        <p:inputText id="quantiteFarine" value="#{provisionController.selected.quantiteFarine}" title="#{bundleProvision.EditProvisionTitle_quantiteFarine}" />
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_quantiteHuile}" for="quantiteHuile" />
+                        <p:inputText id="quantiteHuile" value="#{provisionController.selected.quantiteHuile}" title="#{bundleProvision.EditProvisionTitle_quantiteHuile}" />
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_quantiteSucre}" for="quantiteSucre" />
+                        <p:inputText id="quantiteSucre" value="#{provisionController.selected.quantiteSucre}" title="#{bundleProvision.EditProvisionTitle_quantiteSucre}" />
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_quantiteLentilles}" for="quantiteLentilles" />
+                        <p:inputText id="quantiteLentilles" value="#{provisionController.selected.quantiteLentilles}" title="#{bundleProvision.EditProvisionTitle_quantiteLentilles}" />
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_quantiteThe}" for="quantiteThe" />
+                        <p:inputText id="quantiteThe" value="#{provisionController.selected.quantiteThe}" title="#{bundleProvision.EditProvisionTitle_quantiteThe}" />
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_quantiteRiz}" for="quantiteRiz" />
+                        <p:inputText id="quantiteRiz" value="#{provisionController.selected.quantiteRiz}" title="#{bundleProvision.EditProvisionTitle_quantiteRiz}" />
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_quantiteDchicha}" for="quantiteDchicha" />
+                        <p:inputText id="quantiteDchicha" value="#{provisionController.selected.quantiteDchicha}" title="#{bundleProvision.EditProvisionTitle_quantiteDchicha}" />
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_quantiteMfelka}" for="quantiteMfelka" />
+                        <p:inputText id="quantiteMfelka" value="#{provisionController.selected.quantiteMfelka}" title="#{bundleProvision.EditProvisionTitle_quantiteMfelka}" />
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_quantiteBeurre}" for="quantiteBeurre" />
+                        <p:inputText id="quantiteBeurre" value="#{provisionController.selected.quantiteBeurre}" title="#{bundleProvision.EditProvisionTitle_quantiteBeurre}" />
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_quantiteOeuf}" for="quantiteOeuf" />
+                        <p:inputText id="quantiteOeuf" value="#{provisionController.selected.quantiteOeuf}" title="#{bundleProvision.EditProvisionTitle_quantiteOeuf}" />
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_quantiteOni}" for="quantiteOni" />
+                        <p:inputText id="quantiteOni" value="#{provisionController.selected.quantiteOni}" title="#{bundleProvision.EditProvisionTitle_quantiteOni}" />
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_quantiteShampooing}" for="quantiteShampooing" />
+                        <p:inputText id="quantiteShampooing" value="#{provisionController.selected.quantiteShampooing}" title="#{bundleProvision.EditProvisionTitle_quantiteShampooing}" />
+                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_quantiteSavon}" for="quantiteSavon" />
+                        <p:inputText id="quantiteSavon" value="#{provisionController.selected.quantiteSavon}" title="#{bundleProvision.EditProvisionTitle_quantiteSavon}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{provisionController.update}" value="#{bundleProvision.Save}" update="display,:ProvisionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ProvisionEditDialog');"/>
+                    <p:commandButton value="#{bundleProvision.Cancel}" onclick="ProvisionEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

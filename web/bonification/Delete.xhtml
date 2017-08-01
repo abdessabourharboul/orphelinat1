@@ -13,7 +13,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{bonificationController.selected != null}">
                         <p:outputLabel value="الرقم السري للحذف:" for="passwordConfirmation" />
-                        <p:inputText id="passwordConfirmation" value="#{bonificationController.passwordForDelete}" />
+                        <p:password id="passwordConfirmation" value="#{bonificationController.passwordForDelete}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{bonificationController.destroy}" value="#{bundle.Save}" update="display,:BonificationListForm:datalist,:growl" oncomplete="handleSubmit(args,'BonificationDeleteDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="BonificationDeleteDialog.hide()"/>

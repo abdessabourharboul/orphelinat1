@@ -35,15 +35,15 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundleUser.ListUserTitle_password}"/>
+                                <h:outputText value="#{bundleUser.ListUserTitle_zoneGeographique}"/>
                             </f:facet>
-                            <h:outputText value="#{item.password}"/>
+                            <h:outputText value="#{item.zoneGeographique}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundleUser.ListUserTitle_passwordSuppresion}"/>
+                                <h:outputText value="#{bundleUser.ListUserTitle_nomResponsable}"/>
                             </f:facet>
-                            <h:outputText value="#{item.passwordSuppresion}"/>
+                            <h:outputText value="#{item.nom}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleUser.Create}" actionListener="#{userController.prepareCreate}" update=":UserCreateForm" oncomplete="PF('UserCreateDialog').show()"/>

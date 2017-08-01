@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundleProvision.ListProvisionTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="ProvisionListForm">
+                <p:panel header="#{bundleProvision.ListProvisionTitle}">
+                    <p:dataTable id="datalist" value="#{provisionController.items}" var="item"
+                                 selectionMode="single" selection="#{provisionController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+
+
+                        <p:columnGroup type="header">
+                            <p:row>
+                                <p:column rowspan="2" headerText="#{bundleProvision.ListProvisionTitle_nombreFamille}" />
+                                <p:column rowspan="2" headerText="#{bundleProvision.ListProvisionTitle_nombrePersonne}" />
+                                <p:column colspan="2" headerText="#{bundleProvision.ListProvisionTitle_quantiteFarine}" />
+                                <p:column colspan="2" headerText="#{bundleProvision.ListProvisionTitle_quantiteHuile}" />
+                                <p:column colspan="2" headerText="#{bundleProvision.ListProvisionTitle_quantiteSucre}" />
+                                <p:column colspan="2" headerText="#{bundleProvision.ListProvisionTitle_quantiteLentilles}" />
+                                <p:column colspan="2" headerText="#{bundleProvision.ListProvisionTitle_quantiteThe}" />
+                                <p:column colspan="2" headerText="#{bundleProvision.ListProvisionTitle_quantiteRiz}" />
+                                <p:column colspan="2" headerText="#{bundleProvision.ListProvisionTitle_quantiteDchicha}" />
+                                <p:column colspan="2" headerText="#{bundleProvision.ListProvisionTitle_quantiteMfelka}" />
+                                <p:column colspan="2" headerText="#{bundleProvision.ListProvisionTitle_quantiteBeurre}" />
+                                <p:column colspan="2" headerText="#{bundleProvision.ListProvisionTitle_quantiteOeuf}" />
+                                <p:column colspan="2" headerText="#{bundleProvision.ListProvisionTitle_quantiteOni}" />
+                                <p:column colspan="2" headerText="#{bundleProvision.ListProvisionTitle_quantiteShampooing}" />
+                                <p:column colspan="2" headerText="#{bundleProvision.ListProvisionTitle_quantiteSavon}" />
+                            </p:row>
+                            <p:row>
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteFamille}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteTotale}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteFamille}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteTotale}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteFamille}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteTotale}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteFamille}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteTotale}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteFamille}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteTotale}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteFamille}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteTotale}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteFamille}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteTotale}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteFamille}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteTotale}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteFamille}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteTotale}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteFamille}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteTotale}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteFamille}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteTotale}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteFamille}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteTotale}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteFamille}" />
+                                <p:column headerText="#{bundleProvision.ListProvisionTitle_quantiteTotale}" />
+                            </p:row>
+                        </p:columnGroup>
+                        <p:column>
+                            <h:outputText value="#{item.nombrePersonne}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.nombrePersonne}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteFarine}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteHuile}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteSucre}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteLentilles}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteThe}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteRiz}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteDchicha}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteMfelka}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteBeurre}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteOeuf}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteOni}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteShampooing}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteSavon}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteFarine}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteHuile}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteSucre}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteLentilles}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteThe}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteRiz}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteDchicha}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteMfelka}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteBeurre}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteOeuf}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteOni}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteShampooing}"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{item.quantiteSavon}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleProvision.Create}" actionListener="#{provisionController.prepareCreate}" update=":ProvisionCreateForm" oncomplete="PF('ProvisionCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundleProvision.View}" update=":ProvisionViewForm" oncomplete="PF('ProvisionViewDialog').show()" disabled="#{empty provisionController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundleProvision.Edit}" update=":ProvisionEditForm" oncomplete="PF('ProvisionEditDialog').show()" disabled="#{empty provisionController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundleProvision.Delete}" actionListener="#{provisionController.destroy}" update=":growl,datalist" disabled="#{empty provisionController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

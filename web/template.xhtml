@@ -3,39 +3,95 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
     <h:head>
         <title><ui:insert name="title">Default Title</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
-     
+
+
     </h:head>
 
     <h:body >
+        <f:event type="preRenderView" listener="#{userController.checkAuthentication1()}" />
 
         <p:growl id="growl" life="3000" />
 
         <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="65" header="#{bundle.AppName}">
+            <p:layoutUnit position="north" size="70" header="#{bundle.AppName}">
                 <h:form id="menuForm" >
                     <p:menubar>
-                        <p:menuitem value="#{bundle.Home}" outcome="/general/general.xhtml" icon="ui-icon-home"/>
-                        <p:submenu label="العائلات" >
-                            <p:menuitem value="جميع العائلات" outcome="/famille/List.xhtml" />
-                            <p:menuitem value="العائلات المكفولة" outcome="/famille/List_Makfoul.xhtml" />
-                            <p:menuitem value="العائلات في انتظار" outcome="/famille/List_Intidar.xhtml" />
-                            <p:menuitem value="العائلات الموسمية" outcome="/famille/List_Mawsimi.xhtml" />
-                            <p:menuitem value="العائلات الجديدة" outcome="/famille/List_Jadid.xhtml" />
-                            <p:menuitem value="العائلات المعوزة" outcome="/famille/List_Mouiz.xhtml" />
+                        <p:menuitem value="خروج" action="#{userController.seDeconnecter()}" />
+
+                        <p:submenu label="اعدادات" style="margin-left: 800px">
+                            <p:menuitem value="الحسابات" outcome="/user/List.xhtml" />
+                            <p:menuitem value="اصلاح المشاكل" outcome="/user/FixDataBaseErrors.xhtml" />
+                            <p:menuitem value="تغيير كلمة السر" outcome="/user/ChangePassword.xhtml" />
                         </p:submenu>
-                        <p:menuitem value="الارامل" outcome="/veuve/List.xhtml" />
-                        <p:menuitem value="الايتام" outcome="/orphelin/List.xhtml" />
-                        <p:menuitem value="الدراسات" outcome="/scolarite/List.xhtml" />
-                        <p:menuitem value="الاستفادات" outcome="/bonification/List.xhtml" />
-                        <p:menuitem value="الامراض" outcome="/maladie/List.xhtml" />
                         <p:menuitem value="الادوية" outcome="/medicament/List.xhtml" />
+                        <p:menuitem value="الامراض" outcome="/maladie/List.xhtml" />
+                        <p:menuitem value="الاستفادات" outcome="/bonification/List.xhtml" />
+                        <p:submenu label="الدراسات">
+                            <p:menuitem value="جميع الدراسات" outcome="/scolarite/List.xhtml" />
+                            <p:submenu label="حسب الوضعية">
+                                <p:menuitem value="جميع الدراسات" outcome="/scolarite/Lists/Situations/List.xhtml" />
+                                <p:menuitem value="الدراسات المكفولة" outcome="/scolarite/Lists/Situations/List_Makfoul.xhtml" />
+                                <p:menuitem value="الدراسات في انتظار" outcome="/scolarite/Lists/Situations/List_Intidar.xhtml" />
+                                <p:menuitem value="الدراسات الموسمية" outcome="/scolarite/Lists/Situations/List_Mawsimi.xhtml" />
+                                <p:menuitem value="الدراسات الجديدة" outcome="/scolarite/Lists/Situations/List_Jadid.xhtml" />
+                                <p:menuitem value="الدراسات المعوزة" outcome="/scolarite/Lists/Situations/List_Mouiz.xhtml" />
+                            </p:submenu>
+                            <p:submenu label="حسب المستويات">
+                                <p:submenu label="الابتدائي">
+                                    <p:menuitem value="أولى ابتدائى" outcome="/medicament/List.xhtml" />
+                                    <p:menuitem value="ثانية ابتدائى" outcome="/medicament/List.xhtml" />
+                                    <p:menuitem value="ثالثة ابتدائى" outcome="/medicament/List.xhtml" />
+                                    <p:menuitem value="رابعة ابتدائى" outcome="/medicament/List.xhtml" />
+                                    <p:menuitem value="خامسة ابتدائى" outcome="/medicament/List.xhtml" />
+                                    <p:menuitem value="سادسة ابتدائى" outcome="/medicament/List.xhtml" />
+                                </p:submenu>
+                                <p:submenu label="الاعدادي">
+                                    <p:menuitem value="أولى اعدادي" outcome="/medicament/List.xhtml" />
+                                    <p:menuitem value="ثانية اعدادي" outcome="/medicament/List.xhtml" />
+                                    <p:menuitem value="ثالثة اعدادي" outcome="/medicament/List.xhtml" />
+                                </p:submenu>
+                                <p:submenu label="التانوي">
+                                    <p:menuitem value="الجدع المشترك" outcome="/medicament/List.xhtml" />
+                                    <p:menuitem value="اولى باكالوريا" outcome="/medicament/List.xhtml" />
+                                    <p:menuitem value="ثانية باكالوريا" outcome="/medicament/List.xhtml" />
+                                </p:submenu>
+                                <p:menuitem value="الجامعي" outcome="/medicament/List.xhtml" />
+                            </p:submenu>
+                        </p:submenu>
+                        <p:submenu label="الايتام">
+                            <p:menuitem value="جميع الايتام" outcome="/orphelin/Lists/List.xhtml" />
+                            <p:menuitem value="الايتام المكفولة" outcome="/orphelin/Lists/List_Makfoul.xhtml" />
+                            <p:menuitem value="الايتام في انتظار" outcome="/orphelin/Lists/List_Intidar.xhtml" />
+                            <p:menuitem value="الايتام الموسمية" outcome="/orphelin/Lists/List_Mawsimi.xhtml" />
+                            <p:menuitem value="الايتام الجديدة" outcome="/orphelin/Lists/List_Jadid.xhtml" />
+                            <p:menuitem value="الايتام المعوزة" outcome="/orphelin/Lists/List_Mouiz.xhtml" />
+                        </p:submenu>
+                        <p:submenu label="الارامل" >
+                            <p:menuitem value="جميع الارامل" outcome="/veuve/Lists/List.xhtml" />
+                            <p:menuitem value="الارامل المكفولة" outcome="/veuve/Lists/List_Makfoul.xhtml" />
+                            <p:menuitem value="الارامل في انتظار" outcome="/veuve/Lists/List_Intidar.xhtml" />
+                            <p:menuitem value="الارامل الموسمية" outcome="/veuve/Lists/List_Mawsimi.xhtml" />
+                            <p:menuitem value="الارامل الجديدة" outcome="/veuve/Lists/List_Jadid.xhtml" />
+                            <p:menuitem value="الارامل المعوزة" outcome="/veuve/Lists/List_Mouiz.xhtml" />
+                        </p:submenu>
+                        <p:submenu label="العائلات" >
+                            <p:menuitem value="جميع العائلات" outcome="/famille/Lists/List.xhtml" />
+                            <p:menuitem value="العائلات المكفولة" outcome="/famille/Lists/List_Makfoul.xhtml" />
+                            <p:menuitem value="العائلات في انتظار" outcome="/famille/Lists/List_Intidar.xhtml" />
+                            <p:menuitem value="العائلات الموسمية" outcome="/famille/Lists/List_Mawsimi.xhtml" />
+                            <p:menuitem value="العائلات الجديدة" outcome="/famille/Lists/List_Jadid.xhtml" />
+                            <p:menuitem value="العائلات المعوزة" outcome="/famille/Lists/List_Mouiz.xhtml" />
+                        </p:submenu>
+                        <p:menuitem value="#{bundle.Home}" outcome="/general/general.xhtml" icon="ui-icon-home" />
+
                     </p:menubar>
                 </h:form>
             </p:layoutUnit>

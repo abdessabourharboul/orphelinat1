@@ -13,7 +13,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{orphelinController.selected != null}">
                         <p:outputLabel value="الرقم السري للحذف:" for="passwordConfirmation" />
-                        <p:inputText id="passwordConfirmation" value="#{orphelinController.passwordForDelete}" />
+                        <p:password id="passwordConfirmation" value="#{orphelinController.passwordForDelete}"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{orphelinController.destroy}" value="#{bundle.Save}" update="display,:OrphelinListForm:datalist,:growl" oncomplete="handleSubmit(args,'OrphelinDeleteDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="OrphelinDeleteDialog.hide()"/>

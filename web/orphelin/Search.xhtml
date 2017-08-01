@@ -6,66 +6,79 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <ui:composition>
+        <style>
+            .ui-selectonemenu{
+                width: 180px !important;
+            }
+            .ui-selectonemenu-label{
+                width: 180px !important;
+            }  
+        </style>
         <h:form id="OrphelinRechercheForm" dir="RTL">
             <p:fieldset legend="#{bundle.Criters_De_Recherche}" toggleable="true"  style="margin-bottom:20px">
                 <p:panelGrid id="panelRecherche" columns="8">
-                    <p:outputLabel value="#{bundle.ViewFamilleLabel_nomFamille}" for="nom" style="display:block;width:80px"/>
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_nomFamille}" for="nom" style="display:block;width:80px;font-weight: bold;"/>
                     <p:selectOneMenu id="nom" value="#{orphelinController.nomForSearch}" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{orphelinController.getItemsAvailableSelectOneString('nom')}"
+                        <f:selectItems value="#{orphelinController.getItemsAvailableSelectOneStringNoms()}"
+                                       var="Nom"
+                                       itemValue="#{Nom}" itemLabel="#{Nom}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_prenom}" for="prenom" style="display:block;width:80px;font-weight: bold;"/>
+                    <p:selectOneMenu id="prenom" value="#{orphelinController.prenomForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{orphelinController.getItemsAvailableSelectOneStringPrenoms()}"
                                        var="Nom"
                                        itemValue="#{Nom}" itemLabel="#{Nom}"/>
                     </p:selectOneMenu>
 
-                  
+                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_sexe}" for="sexe" style="display:block;width:80px;font-weight: bold;"/>
+                    <p:selectOneButton id="sexe" value="#{orphelinController.sexeForSearch}">
+                        <f:selectItem itemLabel="ذكر" itemValue="ذكر"/>
+                        <f:selectItem itemLabel="انثى" itemValue="انثى"/>
+                        <f:selectItem itemLabel="معا" itemValue="#{null}"/>
+                    </p:selectOneButton>
 
-                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_sexe}" for="sexe" style="display:block;width:80px"/>
-                    <p:selectOneMenu id="sexe" value="#{orphelinController.sexeForSearch}" filter="true" filterMatchMode="contains">
-                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{orphelinController.getItemsAvailableSelectOneString('sexe')}"
-                                       var="Sexe"
-                                       itemValue="#{Sexe}" itemLabel="#{Sexe}"/>
-                    </p:selectOneMenu>
-
-                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_codeMassar}" for="codeMassar" style="display:block;width:80px"/>
-                    <p:selectOneMenu id="codeMassar" value="#{orphelinController.codeMassarForSearch}" filter="true" filterMatchMode="contains">
+                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_codeMassar}" for="codeMassar" style="display:block;width:80px;font-weight: bold;"/>
+                    <p:selectOneMenu  id="codeMassar" value="#{orphelinController.codeMassarForSearch}" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
                         <f:selectItems value="#{orphelinController.getItemsAvailableSelectOneString('codeMassar')}"
                                        var="CodeMassar"
                                        itemValue="#{CodeMassar}" itemLabel="#{CodeMassar}"/>
                     </p:selectOneMenu>
 
-                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_description}" for="description" style="display:block;width:80px"/>
-                    <p:selectOneMenu id="description" value="#{orphelinController.descriptionForSearch}" filter="true" filterMatchMode="contains">
+                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_description}" for="description" style="display:block;width:80px;font-weight: bold;"/>
+                    <p:inputText id="description" value="#{orphelinController.descriptionForSearch}" style="display:block;width:80px;color: red;width: 100%"/>
+
+
+                    <h:outputText id="displayRangeAge" value="السن" />
+                    <p:slider for="txt1,txt2" display="displayRangeAge" style="width: 200px" 
+                              range="true" displayTemplate="السن بين {min} و {max}"  maxValue="40">
+                        <h:inputHidden id="txt1" value="#{orphelinController.ageMinForSearch}" />
+                        <h:inputHidden id="txt2" value="#{orphelinController.ageMaxForSearch}" />           
+                    </p:slider>
+
+                    <h:outputText id="displayRangeAnneeNaissance" value="سنة الازدياد" />
+                    <p:slider for="txt3,txt4" display="displayRangeAnneeNaissance" style="width: 200px" 
+                              range="true" displayTemplate="سنة الازدياد بين{min} و {max}" 
+                              minValue="1980"  maxValue="2050">
+                        <h:inputHidden id="txt3" value="#{orphelinController.anneeNaissanceMinForSearch}" />
+                        <h:inputHidden id="txt4" value="#{orphelinController.anneeNaissanceMaxForSearch}" />      
+                    </p:slider>
+
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_zoneGeographique}" for="zoneGeographique" style="display:block;width:80px;font-weight: bold;"/>
+                    <p:selectOneMenu  id="zoneGeographique" value="#{orphelinController.zoneGeographiqueForSearch}" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{orphelinController.getItemsAvailableSelectOneString('description')}"
-                                       var="Description"
-                                       itemValue="#{Description}" itemLabel="#{Description}"/>
+                        <f:selectItems value="#{orphelinController.getItemsAvailableSelectOneString('zoneGeographique')}"
+                                       var="ZoneGeographique"
+                                       itemValue="#{ZoneGeographique}" itemLabel="#{ZoneGeographique}"/>
                     </p:selectOneMenu>
 
-                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_anneeNaissanceMin}" for="anneeNaissanceMin" style="display:block;width:80px"/>
-                    <p:inputText id="anneeNaissanceMin" value="#{orphelinController.anneeNaissanceMinForSearch}" style="display:block;width:80px;color: red" />
 
-                    <p:outputLabel value="#{bundle.ViewOrphelinLabel_anneeNaissanceMax}" for="anneeNaissanceMax" style="display:block;width:80px"/>
-                    <p:inputText id="anneeNaissanceMax" value="#{orphelinController.anneeNaissanceMaxForSearch}" style="display:block;width:80px;color: red" />
 
-                    <p:outputLabel value="#{bundle.ViewVeuveLabel_ageMin}" for="ageMin" style="display:block;width:80px"/>
-                    <p:inputText id="ageMin" value="#{orphelinController.ageMinForSearch}" style="display:block;width:80px;color: red" />
 
-                    <p:outputLabel value="#{bundle.ViewVeuveLabel_ageMax}" for="ageMax" style="display:block;width:80px"/>
-                    <p:inputText id="ageMax" value="#{orphelinController.ageMaxForSearch}" style="display:block;width:80px;color: red" />
 
-                    <p:outputLabel value="#{bundle.ViewVeuveLabel_dateNaissanceMin}" for="dateNaissanceMin" style="display:block;width:80px"/>
-                    <p:calendar size="12" id="dateNaissanceMin" pattern="MM/dd/yyyy" value="#{orphelinController.dateNaissanceMinForSearch}"  showOn="button">
-                        <f:convertDateTime pattern="MM/dd/yyyy"  />
-                    </p:calendar>
-
-                    <p:outputLabel value="#{bundle.ViewVeuveLabel_dateNaissanceMax}" for="dateNaissanceMax" style="display:block;width:80px"/>
-                    <p:calendar size="12" id="dateNaissanceMax" pattern="MM/dd/yyyy" value="#{orphelinController.dateNaissanceMaxForSearch}"  showOn="button">
-                        <f:convertDateTime pattern="MM/dd/yyyy"  />
-                    </p:calendar>
-
-                    <p:commandButton id="rechercher" value="بحث" icon="ui-icon-search"  actionListener="#{orphelinController.rechercheOrphelinByQuery}" update=":OrphelinListForm:datalist" style="display:block;width:60px" />         
+                    <p:commandButton  id="rechercher" value="بحث" icon="ui-icon-search"  actionListener="#{orphelinController.rechercheOrphelinByQuery}" update=":OrphelinListForm:datalist" style="display:block;width:80px" />         
                 </p:panelGrid>
             </p:fieldset>
         </h:form>

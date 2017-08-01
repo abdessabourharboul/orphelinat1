@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        
+        
+        <p:column width="20">
+            <f:facet name="header">
+                <h:outputText value="#" />
+            </f:facet>
+            <h:outputText 
+                value="#{index + 1}" />
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListOrphelinTitle_prenom}"/>
+            </f:facet>
+            <h:outputText value="#{item.prenom}"/>
+        </p:column>
+        <p:column sortBy="#{item.veuve.famille.nomFamille}">
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListVeuveTitle_famille}"/>
+            </f:facet>
+            <h:outputText value="#{item.veuve.famille.nomFamille}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListOrphelinTitle_dateNaissance}"/>
+            </f:facet>
+            <h:outputText value="#{item.dateNaissance}">
+                <f:convertDateTime pattern="dd/MM/yyyy" />
+            </h:outputText>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListOrphelinTitle_anneeNaissance}"/>
+            </f:facet>
+            <h:outputText value="#{item.anneeNaissance}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListOrphelinTitle_age}"/>
+            </f:facet>
+            <h:outputText value="#{item.age}"/>
+        </p:column>
+        <p:column style="background-color: #{item.sexe eq 'ذكر' ? '#66afe9' : '#e4b9c0'}">
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListOrphelinTitle_sexe}" />
+            </f:facet>
+            <h:outputText value="#{item.sexe}" />
+        </p:column>
+        <p:column >
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListOrphelinTitle_codeMassar}"/>
+            </f:facet>
+            <h:outputText value="#{item.codeMassar}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListOrphelinTitle_tailleChaussures}"/>
+            </f:facet>
+            <h:outputText value="#{item.tailleChaussures}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListOrphelinTitle_description}"/>
+            </f:facet>
+            <h:outputText value="#{item.description}"/>
+        </p:column>
+
+    </ui:composition>
+
+</html>

@@ -16,8 +16,10 @@
                         <p:inputText id="id" value="#{userController.selected.id}" title="#{bundleUser.CreateUserTitle_id}" />
                         <p:outputLabel value="#{bundleUser.CreateUserLabel_password}" for="password" />
                         <p:inputText id="password" value="#{userController.selected.password}" title="#{bundleUser.CreateUserTitle_password}" />
-                        <p:outputLabel value="#{bundleUser.CreateUserLabel_passwordSuppresion}" for="passwordSuppresion" />
-                        <p:inputText id="passwordSuppresion" value="#{userController.selected.passwordSuppresion}" title="#{bundleUser.CreateUserTitle_passwordSuppresion}" />
+                        <p:outputLabel value="#{bundleUser.CreateUserLabel_passwordSuppresion}" for="zoneGeographique" />
+                        <p:inputText id="zoneGeographique" value="#{userController.selected.zoneGeographique}" title="#{bundleUser.CreateUserTitle_passwordSuppresion}" />
+                        <p:outputLabel value="#{bundleUser.CreateUserLabel_passwordSuppresion}" for="nom" />
+                        <p:inputText id="nom" value="#{userController.selected.nom}" title="#{bundleUser.CreateUserTitle_passwordSuppresion}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{userController.create}" value="#{bundleUser.Save}" update="display,:UserListForm:datalist,:growl" oncomplete="handleSubmit(args,'UserCreateDialog');"/>
                     <p:commandButton value="#{bundleUser.Cancel}" onclick="UserCreateDialog.hide()"/>

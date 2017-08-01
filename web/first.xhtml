@@ -16,6 +16,7 @@
 
 
     <h:body class="bodyLogin">
+                <f:event type="preRenderView" listener="#{userController.checkAuthentication1()}" />
 <!--        <div class="ui-grid-row" style="background: url(../resources/image/header3.jpg) no-repeat;background-size: cover;">-->
         <div class="ui-grid-row" >
             <div class="ui-grid-col-12" style="text-align: right; margin-top: 2px; padding-right: 10px">
@@ -37,7 +38,7 @@
                     <div class="col-md-12">
 
                         <p:panel class="col-md-3" style="border: 0px" >
-                            <a class="menu-link" href="famille/List.xhtml">
+                            <a class="menu-link" href="famille/Lists/List.xhtml">
                                 <div class="menu-card">
                                     <h1><span class="fa-3x fa fa-users"></span></h1>
                                     <h1>العائلات</h1>
@@ -45,7 +46,7 @@
                             </a>
                         </p:panel>
                         <p:panel class="col-md-3" style="border: 0px" >
-                            <a class="menu-link" href="veuve/List.xhtml">
+                            <a class="menu-link" href="veuve/Lists/List.xhtml">
                                 <div class="menu-card">
                                     <h1><span class="fa-3x fa fa-female"></span></h1>
                                     <h1>الارامل</h1>
@@ -54,10 +55,50 @@
                         </p:panel>
 
                         <p:panel class="col-md-3" style="border: 0px" >
-                            <a class="menu-link" href="orphelin/List.xhtml">
+                            <a class="menu-link" href="orphelin/Lists/List.xhtml">
                                 <div class="menu-card">
                                     <h1><span class="fa-3x fa fa-child"></span></h1>
                                     <h1>الايتام</h1>
+                                </div>
+                            </a>
+                        </p:panel>
+                        <p:panel class="col-md-3" style="border: 0px" >
+                            <a class="menu-link" href="scolarite/List.xhtml">
+                                <div class="menu-card">
+                                    <h1><span class="fa-3x fa fa-book"></span></h1>
+                                    <h1>الدراسات</h1>
+                                </div>
+                            </a>
+                        </p:panel>
+                        <p:panel class="col-md-3" style="border: 0px" >
+                            <a class="menu-link" href="bonification/List.xhtml">
+                                <div class="menu-card">
+                                    <h1><span class="fa-3x fa fa-shopping-basket"></span></h1>
+                                    <h1>الاستفادات</h1>
+                                </div>
+                            </a>
+                        </p:panel>
+                        <p:panel class="col-md-3" style="border: 0px" >
+                            <a class="menu-link" href="maladie/List.xhtml">
+                                <div class="menu-card">
+                                    <h1><span class="fa-3x fa fa-bed"></span></h1>
+                                    <h1>الامراض</h1>
+                                </div>
+                            </a>
+                        </p:panel>
+                        <p:panel class="col-md-3" style="border: 0px" >
+                            <a class="menu-link" href="medicament/List.xhtml">
+                                <div class="menu-card">
+                                    <h1><span class="fa-3x fa fa-medkit"></span></h1>
+                                    <h1>الادوية</h1>
+                                </div>
+                            </a>
+                        </p:panel>
+                        <p:panel class="col-md-3" style="border: 0px" >
+                            <a class="menu-link" href="user/List.xhtml">
+                                <div class="menu-card">
+                                    <h1><span class="fa-3x fa fa-user"></span></h1>
+                                    <h1>الحسابات</h1>
                                 </div>
                             </a>
                         </p:panel>

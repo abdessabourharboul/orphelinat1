@@ -23,8 +23,8 @@ public class User implements Serializable {
     @Id
     private String id;
     private String password;
-    private String passwordSuppresion;
     private String nom;
+    private String zoneGeographique;
     private boolean logged = false;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
@@ -62,12 +62,12 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getPasswordSuppresion() {
-        return passwordSuppresion;
+    public String getZoneGeographique() {
+        return zoneGeographique;
     }
 
-    public void setPasswordSuppresion(String passwordSuppresion) {
-        this.passwordSuppresion = passwordSuppresion;
+    public void setZoneGeographique(String zoneGeographique) {
+        this.zoneGeographique = zoneGeographique;
     }
 
     public List<Famille> getFamilles() {

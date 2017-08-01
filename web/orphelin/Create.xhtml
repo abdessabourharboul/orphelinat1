@@ -14,14 +14,21 @@
                     <p:panelGrid columns="2" rendered="#{orphelinController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateOrphelinLabel_prenom}" for="prenom" />
                         <p:inputText id="prenom" value="#{orphelinController.selected.prenom}" title="#{bundle.CreateOrphelinTitle_prenom}" />
+                        <p:outputLabel value="#{bundle.CreateVeuveTitle_famille}" for="famille" />
+                        <p:selectOneMenu id="famille" value="#{orphelinController.famille}" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{familleController.itemsAvailableSelectOne}"
+                                           var="familleItem"
+                                           itemValue="#{familleItem}"/>
+                            <p:ajax process="famille" update="veuve"/>
+                        </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateOrphelinLabel_veuve}" for="veuve" />
                         <p:selectOneMenu id="veuve" value="#{orphelinController.selected.veuve}" filter="true" filterMatchMode="contains">
-                            <f:selectItems value="#{veuveController.itemsAvailableSelectOne}"
+                            <f:selectItems value="#{orphelinController.getItemsVeuvesAvailableSelectOne(orphelinController.famille)}"
                                            var="veuveItem"
                                            itemValue="#{veuveItem}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateOrphelinLabel_dateNaissance}"  />
-                        <p:calendar  pattern="MM/dd/yyyy" value="#{orphelinController.selected.dateNaissance}" title="#{bundle.EditOrphelinTitle_dateNaissance}"  showOn="button"/>
+                        <p:calendar  pattern="dd/MM/yyyy" value="#{orphelinController.selected.dateNaissance}" title="#{bundle.EditOrphelinTitle_dateNaissance}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateOrphelinLabel_sexe}" for="sexe" />
                         <p:selectOneMenu id="sexe" value="#{orphelinController.selected.sexe}">
                             <f:selectItem itemLabel="اختيار الجنس" itemValue="#{null}"/>

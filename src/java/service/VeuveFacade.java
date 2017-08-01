@@ -11,7 +11,6 @@ import bean.Veuve;
 import controler.util.DateUtil;
 import controller.util.JsfUtil;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
@@ -32,10 +31,28 @@ public class VeuveFacade extends AbstractFacade<Veuve> {
     private FamilleFacade familleFacade;
     @EJB
     private OrphelinFacade orphelinFacade;
+    
+    public List<String> findNomVeuveForSearchBySituation(String situation) {
+        String requete = "SELECT DISTINCT  r.nomVeuve FROM Veuve r WHERE 1=1";
+        requete += " and r.famille.situation LIKE CONCAT('%','" + situation + "','%')";
+        return executerLaRequette(requete);
+    }
+    
+    public List<String> findNomForSearchBySituation(String situation) {
+        String requete = "SELECT DISTINCT  r.nomFamille FROM Famille r WHERE 1=1";
+        requete += " and r.situation LIKE CONCAT('%','" + situation + "','%')";
+        return executerLaRequette(requete);
+    }
 
     public List<String> executerLaRequette(String nomRequette) {
         System.out.println("haaa requette===>" + nomRequette);
         return em.createQuery(nomRequette).getResultList();
+    }
+
+    public List<Veuve> findVeuveBySituation(String situation) {
+        String requete = "SELECT r FROM Veuve r WHERE 1=1 and r.famille.situation LIKE CONCAT('%','" + situation + "','%')";
+        System.out.println("haaa requette===>" + requete);
+        return em.createQuery(requete).getResultList();
     }
 
     public List<String> findByQueryString(String nomVariable) {
@@ -57,30 +74,26 @@ public class VeuveFacade extends AbstractFacade<Veuve> {
         }
     }
 
-    public List<Veuve> findByQuery(String nomVeuve, String metierVeuve, String cin,
-            Long ageMin, Long ageMax, Date dateNaissanceMin, Date dateNaissanceMax) {
+    public List<Veuve> findByQuery(String nomVeuve, String cin, String nomFamille,
+            String zoneGeographique, String adresse, String situation) {
         String requete = "SELECT r FROM Veuve r WHERE 1=1 ";
+        requete += " and r.famille.situation LIKE CONCAT('%','" + situation + "','%')";
         if (nomVeuve != null && !nomVeuve.equals("")) {
             requete += " and r.nomVeuve='" + nomVeuve + "'";
-        }
-        if (metierVeuve != null && !metierVeuve.equals("")) {
-            requete += " and r.metierVeuve='" + metierVeuve + "'";
         }
         if (cin != null && !cin.equals("")) {
             requete += " and r.cin='" + cin + "'";
         }
-        if (ageMin != null && ageMin != 0) {
-            requete += " and r.age >='" + ageMin + "'";
+        if (nomFamille != null && !nomFamille.equals("")) {
+            requete += " and r.famille.nomFamille LIKE CONCAT('%','" + nomFamille + "','%')";
         }
-        if (ageMax != null && ageMax != 0) {
-            requete += " and r.age <='" + ageMax + "'";
+        if (zoneGeographique != null && !zoneGeographique.equals("")) {
+            requete += " and r.famille.user.zoneGeographique LIKE CONCAT('%','" + zoneGeographique + "','%')";
         }
-        if (dateNaissanceMin != null) {
-            requete += " and r.dateNaissance >='" + DateUtil.getSqlDateTime(dateNaissanceMin) + "'";
+        if (adresse != null && !adresse.equals("")) {
+            requete += " and r.famille.adresse LIKE CONCAT('%','" + adresse + "','%')";
         }
-        if (dateNaissanceMax != null) {
-            requete += " and r.dateNaissance <='" + DateUtil.getSqlDateTime(dateNaissanceMax) + "'";
-        }
+
         System.out.println("haaa requette===>" + requete);
         return em.createQuery(requete).getResultList();
     }
@@ -109,17 +122,20 @@ public class VeuveFacade extends AbstractFacade<Veuve> {
 
     private List<Veuve> listeVerificationCreation(String nomVeuve) {
         String requete = "SELECT r FROM Veuve r WHERE r.nomVeuve='" + nomVeuve + "'";
+        System.out.println("ha le nom de la veuve a cree" + nomVeuve);
         return em.createQuery(requete).getResultList();
     }
 
     @Override
     public void create(Veuve veuve) {
-        veuve.setAge(new Long(DateUtil.calculAge(veuve.getDateNaissance())));
+        if (veuve.getDateNaissance() != null) {
+            veuve.setAge(new Long(DateUtil.calculAge(veuve.getDateNaissance())));
+        }
         veuve.getFamille().setNombrePersonnes(familleFacade.nombrePersonne(veuve.getFamille()) + 1);
 //        veuve.getFamille().setNombrePersonnes(veuve.getFamille().getNombrePersonnes() + 1);
         List<Veuve> listVerification = listeVerificationCreation(veuve.getNomVeuve());
         System.out.println("ha lista de verification :" + listVerification);
-        if (listVerification != null) {
+        if (!listVerification.isEmpty()) {
             JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("VeuveExisteDeja"));
         } else {
             familleFacade.edit(veuve.getFamille());
@@ -130,7 +146,9 @@ public class VeuveFacade extends AbstractFacade<Veuve> {
 
     @Override
     public void edit(Veuve veuve) {
-        veuve.setAge(new Long(DateUtil.calculAge(veuve.getDateNaissance())));
+        if (veuve.getDateNaissance() != null) {
+            veuve.setAge(new Long(DateUtil.calculAge(veuve.getDateNaissance())));
+        }
         super.edit(veuve);
     }
 

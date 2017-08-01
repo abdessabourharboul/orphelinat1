@@ -6,13 +6,21 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <ui:composition>
+        <style>
+            .ui-selectonemenu{
+                width: 100px !important;
+            }
+            .ui-selectonemenu-label{
+                width: 100px !important;
+            }  
+        </style>
         <h:form id="FamilleRechercheForm" dir="RTL">
             <p:fieldset legend="#{bundle.Criters_De_Recherche}" toggleable="true"  style="margin-bottom:20px">
                 <p:panelGrid id="panelRecherche" columns="8" >
                     <p:outputLabel value="#{bundle.ViewFamilleLabel_nomFamille}" for="nomFamille" style="display:block;width:80px"/>
                     <p:selectOneMenu id="nomFamille" value="#{familleController.nomFamilleForSearch}" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{familleController.getItemsAvailableSelectOneString('nomFamille')}"
+                        <f:selectItems value="#{familleController.getItemsAvailableSelectOneStringNoms()}"
                                        var="NomFamille"
                                        itemValue="#{NomFamille}" itemLabel="#{NomFamille}"/>
                     </p:selectOneMenu>
@@ -23,20 +31,13 @@
                     <p:inputText id="adresse" value="#{familleController.adresseForSearch}" style="display:block;width:80px;color: red" />
 
 
-                    <p:outputLabel value="#{bundle.ViewFamilleLabel_situation}" for="situation" style="display:block;width:80px"/>
-                    <p:selectOneMenu id="situation" value="#{familleController.situationForSearch}" filter="true" filterMatchMode="contains">
-                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{familleController.getItemsAvailableSelectOneString('situation')}"
-                                       var="Situation"
-                                       itemValue="#{Situation}" itemLabel="#{Situation}"/>
-                    </p:selectOneMenu>
+                    <h:outputText id="displayRangeAge" value="عدد الافراد" />
+                    <p:slider for="txt1,txt2" display="displayRangeAge" style="width: 200px" 
+                              range="true" displayTemplate="عدد الافراد بين {min} و {max}"  maxValue="100">
+                        <h:inputHidden id="txt1" value="#{familleController.nombrePersonnesMinForSearch}" />
+                        <h:inputHidden id="txt2" value="#{familleController.nombrePersonnesMaxForSearch}" />           
+                    </p:slider>
 
-
-                    <p:outputLabel value="#{bundle.ViewFamilleLabel_nombrePersonnesMin}" for="nombrePersonnesMin" style="display:block;width:80px"/>
-                    <p:inputText id="nombrePersonnesMin" value="#{familleController.nombrePersonnesMinForSearch}" style="display:block;width:80px;color: red" />
-
-                    <p:outputLabel value="#{bundle.ViewFamilleLabel_nombrePersonnesMax}" for="nombrePersonnesMax" style="display:block;width:80px"/>
-                    <p:inputText id="nombrePersonnesMax" value="#{familleController.nombrePersonnesMaxForSearch}" style="display:block;width:80px;color: red" />
 
                     <p:outputLabel value="#{bundle.ViewFamilleLabel_telephone}" for="telephone" style="display:block;width:80px"/>
                     <p:selectOneMenu id="telephone" value="#{familleController.telephoneForSearch}" filter="true" filterMatchMode="contains">
@@ -62,8 +63,8 @@
                                        itemValue="#{ResponsableZone}" itemLabel="#{ResponsableZone}"/>
                     </p:selectOneMenu>
 
-                    <p:commandButton id="rechercher" value="بحث" icon="ui-icon-search"  actionListener="#{familleController.rechercheFamilleByQuery}" update=":FamilleListForm:datalist" style="display:block;width:60px" />         
-                </p:panelGrid>
+                    <p:commandButton id="rechercher" value="بحث" icon="ui-icon-search"  actionListener="#{familleController.rechercheFamilleByQuery}" update=":FamilleListForm:datalist" style="display:block;width:60px"/>         
+                     </p:panelGrid>
             </p:fieldset>
         </h:form>
     </ui:composition>

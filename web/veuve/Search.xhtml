@@ -6,18 +6,32 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <ui:composition>
+        <style>
+            .ui-selectonemenu{
+                width: 180px !important;
+            }
+            .ui-selectonemenu-label{
+                width: 180px !important;
+            }  
+        </style>
         <h:form id="VeuveRechercheForm" dir="RTL">
             <p:fieldset legend="#{bundle.Criters_De_Recherche}" toggleable="true"  style="margin-bottom:20px">
-                <p:panelGrid id="panelRecherche" columns="8">
+                <p:panelGrid id="panelRecherche" columns="6">
                     <p:outputLabel value="#{bundle.ViewVeuveLabel_nomVeuve}" for="nomVeuve" style="display:block;width:80px"/>
                     <p:selectOneMenu id="nomVeuve" value="#{veuveController.nomVeuveForSearch}" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{veuveController.getItemsAvailableSelectOneString('nomVeuve')}"
+                        <f:selectItems value="#{veuveController.getItemsAvailableSelectOneStringNomVeuves()}"
                                        var="NomVeuve"
                                        itemValue="#{NomVeuve}" itemLabel="#{NomVeuve}"/>
                     </p:selectOneMenu>
 
-                    
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_nomFamille}" for="nomFamille" style="display:block;width:80px"/>
+                    <p:selectOneMenu id="nomFamille" value="#{veuveController.nomFamilleForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{veuveController.getItemsAvailableSelectOneStringNoms()}"
+                                       var="NomFamille"
+                                       itemValue="#{NomFamille}" itemLabel="#{NomFamille}"/>
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewVeuveLabel_cin}" for="cin" style="display:block;width:80px"/>
                     <p:selectOneMenu id="cin" value="#{veuveController.cinForSearch}" filter="true" filterMatchMode="contains">
@@ -27,7 +41,20 @@
                                        itemValue="#{Cin}" itemLabel="#{Cin}"/>
                     </p:selectOneMenu>
 
-                
+
+
+
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_zoneGeographique}" for="zoneGeographique" style="display:block;width:80px"/>
+                    <p:selectOneMenu id="zoneGeographique" value="#{veuveController.zoneGeographiqueForSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{familleController.getItemsAvailableSelectOneString('zoneGeographique')}"
+                                       var="ZoneGeographique"
+                                       itemValue="#{ZoneGeographique}" itemLabel="#{ZoneGeographique}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_adresse}" for="adresse" style="display:block;width:80px"/>
+                    <p:inputText id="adresse" value="#{veuveController.adresseForSearch}" style="display:block;width:80px;color: red" />
+
+
 
                     <p:commandButton id="rechercher" value="بحث" icon="ui-icon-search"  actionListener="#{veuveController.rechercheVeuveByQuery}" update=":VeuveListForm:datalist" style="display:block;width:60px" />         
                 </p:panelGrid>

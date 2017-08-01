@@ -6,6 +6,7 @@
 package service;
 
 import bean.Scolarite;
+import bean.Veuve;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -22,7 +23,44 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
     @PersistenceContext(unitName = "Orphelinat1PU")
     private EntityManager em;
 
-   
+    public String yearPlusOneString(String anneeString) {
+        Integer foo = Integer.parseInt(anneeString);
+        foo++;
+        String fooString = foo.toString();
+        return fooString;
+    }
+
+    public void passButtonActionListener(Scolarite scolarite) {
+        scolarite.setResultat(true);
+        super.edit(scolarite);
+        Scolarite newScolarite = scolarite;
+        String first = yearPlusOneString(scolarite.getAnneeScolaireFirst());
+        String second = yearPlusOneString(scolarite.getAnneeScolaireSecond());
+        newScolarite.setAnneeScolaireFirst(first);
+        newScolarite.setAnneeScolaireSecond(second);
+        newScolarite.setId(null);
+        newScolarite.setMoyenne1(null);
+        newScolarite.setMoyenne2(null);
+        newScolarite.setMoyenneAnnee(null);
+        newScolarite.setResultat(null);
+        super.create(newScolarite);
+    }
+
+    public void notPassButtonActionListener(Scolarite scolarite) {
+        scolarite.setResultat(false);
+        super.edit(scolarite);
+        Scolarite newScolarite = scolarite;
+        String first = yearPlusOneString(scolarite.getAnneeScolaireFirst());
+        String second = yearPlusOneString(scolarite.getAnneeScolaireSecond());
+        newScolarite.setAnneeScolaireFirst(first);
+        newScolarite.setAnneeScolaireSecond(second);
+        newScolarite.setId(null);
+        newScolarite.setMoyenne1(null);
+        newScolarite.setMoyenne2(null);
+        newScolarite.setMoyenneAnnee(null);
+        newScolarite.setResultat(null);
+        super.create(newScolarite);
+    }
 
     public List<String> executerLaRequette(String nomRequette) {
         System.out.println("haaa requette===>" + nomRequette);
@@ -58,8 +96,10 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
 
     public List<Scolarite> findByQuery(String nomOrphelin, String etablissement, String anneeScolaire,
             String niveauScolaire, String filiere, Float moyenne1, Float moyenne2,
-            Float moyenneAnneeMin, Float moyenneAnneeMax, Float moyenneAnneeExact, Boolean resultat, Boolean soutienScolaire) {
+            Float moyenneAnneeMin, Float moyenneAnneeMax, Float moyenneAnneeExact,
+            Boolean resultat, Boolean soutienScolaire,String situation) {
         String requete = "SELECT r FROM Scolarite r WHERE 1=1 ";
+        requete += " and r.orphelin.veuve.famille.situation LIKE CONCAT('%','" + situation + "','%')";
         if (nomOrphelin != null && !nomOrphelin.equals("")) {
             requete += " and r.orphelin.veuve.famille.nomFamille='" + nomOrphelin + "'";
         }
@@ -100,6 +140,18 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
         return em.createQuery(requete).getResultList();
     }
 
+    public List<Scolarite> findScolariteBySituation(String situation) {
+        String requete = "SELECT r FROM Scolarite r WHERE 1=1 and r.orphelin.veuve.famille.situation LIKE CONCAT('%','" + situation + "','%')";
+        System.out.println("haaa requette===>" + requete);
+        return em.createQuery(requete).getResultList();
+    }
+    
+    public List<Scolarite> findScolariteByNiveaux(String niveauScolaire) {
+        String requete = "SELECT r FROM Scolarite r WHERE 1=1 and r.niveauScolaire LIKE CONCAT('%','" + niveauScolaire + "','%')";
+        System.out.println("haaa requette===>" + requete);
+        return em.createQuery(requete).getResultList();
+    }
+
     @Override
     public void create(Scolarite scolarite) {
         super.create(calculMoyEtAfficherResultat(scolarite));
@@ -117,11 +169,6 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
         } else {
             float moy = (scolarite.getMoyenne1() + scolarite.getMoyenne2()) / 2;
             scolarite.setMoyenneAnnee(moy);
-            if (moy >= 10) {
-                scolarite.setResultat(true);
-            } else {
-                scolarite.setResultat(false);
-            }
         }
         return scolarite;
     }

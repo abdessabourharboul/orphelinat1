@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProvisionViewDlg" widgetVar="ProvisionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleProvision.ViewProvisionTitle}">
+            <h:form id="ProvisionViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{provisionController.selected != null}">
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_id}"/>
+                        <h:outputText value="#{provisionController.selected.id}" title="#{bundleProvision.ViewProvisionTitle_id}"/>
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_annee}"/>
+                        <h:outputText value="#{provisionController.selected.annee}" title="#{bundleProvision.ViewProvisionTitle_annee}"/>
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_nombrePersonne}"/>
+                        <h:outputText value="#{provisionController.selected.nombrePersonne}" title="#{bundleProvision.ViewProvisionTitle_nombrePersonne}"/>
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_quantiteFarine}"/>
+                        <h:outputText value="#{provisionController.selected.quantiteFarine}" title="#{bundleProvision.ViewProvisionTitle_quantiteFarine}"/>
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_quantiteHuile}"/>
+                        <h:outputText value="#{provisionController.selected.quantiteHuile}" title="#{bundleProvision.ViewProvisionTitle_quantiteHuile}"/>
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_quantiteSucre}"/>
+                        <h:outputText value="#{provisionController.selected.quantiteSucre}" title="#{bundleProvision.ViewProvisionTitle_quantiteSucre}"/>
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_quantiteLentilles}"/>
+                        <h:outputText value="#{provisionController.selected.quantiteLentilles}" title="#{bundleProvision.ViewProvisionTitle_quantiteLentilles}"/>
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_quantiteThe}"/>
+                        <h:outputText value="#{provisionController.selected.quantiteThe}" title="#{bundleProvision.ViewProvisionTitle_quantiteThe}"/>
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_quantiteRiz}"/>
+                        <h:outputText value="#{provisionController.selected.quantiteRiz}" title="#{bundleProvision.ViewProvisionTitle_quantiteRiz}"/>
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_quantiteDchicha}"/>
+                        <h:outputText value="#{provisionController.selected.quantiteDchicha}" title="#{bundleProvision.ViewProvisionTitle_quantiteDchicha}"/>
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_quantiteMfelka}"/>
+                        <h:outputText value="#{provisionController.selected.quantiteMfelka}" title="#{bundleProvision.ViewProvisionTitle_quantiteMfelka}"/>
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_quantiteBeurre}"/>
+                        <h:outputText value="#{provisionController.selected.quantiteBeurre}" title="#{bundleProvision.ViewProvisionTitle_quantiteBeurre}"/>
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_quantiteOeuf}"/>
+                        <h:outputText value="#{provisionController.selected.quantiteOeuf}" title="#{bundleProvision.ViewProvisionTitle_quantiteOeuf}"/>
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_quantiteOni}"/>
+                        <h:outputText value="#{provisionController.selected.quantiteOni}" title="#{bundleProvision.ViewProvisionTitle_quantiteOni}"/>
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_quantiteShampooing}"/>
+                        <h:outputText value="#{provisionController.selected.quantiteShampooing}" title="#{bundleProvision.ViewProvisionTitle_quantiteShampooing}"/>
+                        <h:outputText value="#{bundleProvision.ViewProvisionLabel_quantiteSavon}"/>
+                        <h:outputText value="#{provisionController.selected.quantiteSavon}" title="#{bundleProvision.ViewProvisionTitle_quantiteSavon}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleProvision.Close}" onclick="ProvisionViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

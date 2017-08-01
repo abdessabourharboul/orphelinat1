@@ -40,13 +40,13 @@
                     <p:inputText id="prixMax" value="#{medicamentController.prixMaxForSearch}" style="display:block;width:80px;color: red" />
 
                     <p:outputLabel value="#{bundle.ViewMedicamentLabel_datePriseMin}" for="datePriseMin" style="display:block;width:80px"/>
-                    <p:calendar size="12" id="datePriseMin" pattern="MM/dd/yyyy" value="#{medicamentController.datePriseMinForSearch}"  showOn="button">
-                        <f:convertDateTime pattern="MM/dd/yyyy"  />
+                    <p:calendar size="12" id="datePriseMin" pattern="dd/MM/yyyy" value="#{medicamentController.datePriseMinForSearch}"  showOn="button">
+                        <f:convertDateTime pattern="dd/MM/yyyy"  />
                     </p:calendar>
 
                     <p:outputLabel value="#{bundle.ViewMedicamentLabel_datePriseMax}" for="datePriseMax" style="display:block;width:80px"/>
-                    <p:calendar size="12" id="datePriseMax" pattern="MM/dd/yyyy" value="#{medicamentController.datePriseMaxForSearch}"  showOn="button">
-                        <f:convertDateTime pattern="MM/dd/yyyy"  />
+                    <p:calendar size="12" id="datePriseMax" pattern="dd/MM/yyyy" value="#{medicamentController.datePriseMaxForSearch}"  showOn="button">
+                        <f:convertDateTime pattern="dd/MM/yyyy"  />
                     </p:calendar>
 
                     <p:commandButton id="rechercher" value="بحث" icon="ui-icon-search"  actionListener="#{medicamentController.rechercheMedicamentByQuery}" update=":MedicamentListForm:datalist" style="display:block;width:60px" />         

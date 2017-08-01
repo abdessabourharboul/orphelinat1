@@ -11,8 +11,8 @@
         <h:outputStylesheet name="css/loginStyle.css"/>
         <link rel="shortcut icon" href="../resources/image/logo.png" type="image/png" sizes="16x16"/>
     </h:head>
-    <!--#/{userController.isConnected()}-->
     <h:body class="bodyLogin">
+        <f:event type="preRenderView" listener="#{userController.checkAuthentication()}" />
         <img src="resources/image/logo.png"/>
         <h3 style="text-align: center">Connectez-vous à votre compte</h3>
         <div class="login-card">
@@ -40,8 +40,11 @@
                 </h:panelGrid>
             </h:form>
         </div>
-     
-      
+
+
+        <br />
+        <h:link outcome="/provision/List" value="Show All Provision Items"/>
     </h:body>
+
 </html>
 

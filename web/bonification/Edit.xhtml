@@ -21,7 +21,7 @@
                         <p:outputLabel value="#{bundle.EditBonificationLabel_nomBonification}" for="nomBonification" />
                         <p:inputText id="nomBonification" value="#{bonificationController.selected.nomBonification}" title="#{bundle.EditBonificationTitle_nomBonification}" />
                         <p:outputLabel value="#{bundle.EditBonificationLabel_dateBonification}" for="dateBonification" />
-                        <p:calendar id="dateBonification" pattern="MM/dd/yyyy" value="#{bonificationController.selected.dateBonification}" title="#{bundle.EditBonificationTitle_dateBonification}"  showOn="button"/>
+                        <p:calendar id="dateBonification" pattern="dd/MM/yyyy" value="#{bonificationController.selected.dateBonification}" title="#{bundle.EditBonificationTitle_dateBonification}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.EditOrphelinLabel_description}" for="description" />
                         <p:inputText id="description" value="#{bonificationController.selected.description}" title="#{bundle.EditOrphelinTitle_description}" />
                     </p:panelGrid>

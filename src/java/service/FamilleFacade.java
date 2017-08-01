@@ -26,6 +26,38 @@ public class FamilleFacade extends AbstractFacade<Famille> {
 
     @PersistenceContext(unitName = "Orphelinat1PU")
     private EntityManager em;
+    
+    public List<String> findNomForSearchBySituation(String situation) {
+        String requete = "SELECT DISTINCT  r.nomFamille FROM Famille r WHERE 1=1";
+        requete += " and r.situation LIKE CONCAT('%','" + situation + "','%')";
+        return executerLaRequette(requete);
+    }
+
+    public int checkTypeOfSearchButton(String nomSearch, int searchButtonNumber) {
+        if (nomSearch.equals("makfoul")) {
+            searchButtonNumber = 1;
+        } else if (nomSearch.equals("intidar")) {
+            searchButtonNumber = 2;
+        } else if (nomSearch.equals("mawsimi")) {
+            searchButtonNumber = 3;
+        } else if (nomSearch.equals("jadid")) {
+            searchButtonNumber = 4;
+        } else if (nomSearch.equals("mouiz")) {
+            searchButtonNumber = 5;
+        } else if (nomSearch.equals("general")) {
+            searchButtonNumber = 0;
+        }
+        return searchButtonNumber;
+    }
+
+    public void rectifierNombrePersonnes() {
+        List<Famille> tous = findAll();
+        for (int i = 0; i < tous.size(); i++) {
+            Famille get = tous.get(i);
+            get.setNombrePersonnes(nombrePersonne(get));
+            super.edit(get);
+        }
+    }
 
     public Long nombrePersonne(Famille famille) {
         int nombre = 0;
@@ -65,7 +97,7 @@ public class FamilleFacade extends AbstractFacade<Famille> {
                 return executerLaRequette(requete);
             }
             case "zoneGeographique": {
-                String requete = "SELECT DISTINCT  r.zoneGeographique FROM Famille r";
+                String requete = "SELECT DISTINCT  u.zoneGeographique FROM User u";
                 return executerLaRequette(requete);
             }
             case "situation": {
@@ -90,6 +122,7 @@ public class FamilleFacade extends AbstractFacade<Famille> {
             Long nombrePersonnesMin, Long nombrePersonnesMax,
             String telephone, Float coutMin, Float coutMax) {
         String requete = "SELECT r FROM Famille r WHERE 1=1 ";
+        requete += " and r.situation LIKE CONCAT('%','" + situation + "','%')";
         if (nomFamille != null && !nomFamille.equals("")) {
             requete += " and r.nomFamille='" + nomFamille + "'";
         }
@@ -97,15 +130,10 @@ public class FamilleFacade extends AbstractFacade<Famille> {
             requete += " and r.typeLogement='" + typeLogement + "'";
         }
         if (adresse != null && !adresse.equals("")) {
-//            requete += " and r.adresse='" + adresse + "'";
-
             requete += " and r.adresse LIKE CONCAT('%','" + adresse + "','%')";
         }
         if (zoneGeographique != null && !zoneGeographique.equals("")) {
-            requete += " and r.zoneGeographique='" + zoneGeographique + "'";
-        }
-        if (situation != null && !situation.equals("")) {
-            requete += " and r.situation='" + situation + "'";
+            requete += " and r.user.zoneGeographique='" + zoneGeographique + "'";
         }
         if (responsableZone != null && !responsableZone.equals("")) {
             requete += " and r.user.nom='" + responsableZone + "'";

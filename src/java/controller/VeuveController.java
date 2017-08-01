@@ -33,13 +33,34 @@ public class VeuveController implements Serializable {
     private List<Veuve> items = null;
     private Veuve selected;
     private String nomVeuveForSearch;
-    private String metierVeuveForSearch;
     private String cinForSearch;
-    private Long ageMinForSearch;
-    private Long ageMaxForSearch;
-    private Date dateNaissanceMinForSearch;
-    private Date dateNaissanceMaxForSearch;
+    private String nomFamilleForSearch;
+    private String zoneGeographiqueForSearch;
+    private String adresseForSearch;
     private String passwordForDelete;
+    private Integer size = 0;
+    private String situationDeSearch;
+
+    public List<String> getItemsAvailableSelectOneStringNoms() {
+        return getFacade().findNomForSearchBySituation(getSituationDeSearch());
+    }
+
+    public List<String> getItemsAvailableSelectOneStringNomVeuves() {
+        return getFacade().findNomVeuveForSearchBySituation(getSituationDeSearch());
+    }
+
+    public void setSituationForPage(String situation) {
+        setSituationDeSearch(situation);
+        System.out.println("hahia situation de search ::::" + getSituationDeSearch());
+    }
+
+    public String getSituationDeSearch() {
+        return situationDeSearch;
+    }
+
+    public void setSituationDeSearch(String situationDeSearch) {
+        this.situationDeSearch = situationDeSearch;
+    }
 
     public String getPasswordForDelete() {
         return passwordForDelete;
@@ -58,6 +79,29 @@ public class VeuveController implements Serializable {
         ServerConfigUtil.upload(event.getFile(), ServerConfigUtil.getPhotoOrphelinPath(true), getSelected().getPhoto());
     }
 
+    public void uploadEdit(FileUploadEvent event) {
+        if (getSelected().getPhoto() == null) {
+            upload(event);
+            size = 1;
+        } else {
+            getSelected().getAncienPhotos().add(getSelected().getPhoto());
+            getSelected().setPhoto("Veuve-" + new Date().getTime() + ".png");
+            ServerConfigUtil.upload(event.getFile(), ServerConfigUtil.getPhotoOrphelinPath(true), getSelected().getPhoto());
+            size = 2;
+        }
+    }
+
+    public void cancelEditOrphelin() {
+        if (size == 1) {
+            ServerConfigUtil.delete(ServerConfigUtil.getPhotoOrphelinPath(true), getSelected().getPhoto());
+            getSelected().setPhoto(null);
+        } else if (size == 2) {
+            ServerConfigUtil.delete(ServerConfigUtil.getPhotoOrphelinPath(true), getSelected().getPhoto());
+            getSelected().setPhoto(getSelected().getAncienPhotos().get(getSelected().getAncienPhotos().size() - 1));
+            getSelected().getAncienPhotos().remove(getSelected().getAncienPhotos().size() - 1);
+        }
+    }
+
     public String findPath(Veuve veuve) {
         if (veuve != null) {
             if (veuve.getPhoto() != null) {
@@ -74,8 +118,8 @@ public class VeuveController implements Serializable {
     }
 
     public void rechercheVeuveByQuery() {
-        items = ejbFacade.findByQuery(nomVeuveForSearch, metierVeuveForSearch, cinForSearch, ageMinForSearch,
-                ageMaxForSearch, dateNaissanceMinForSearch, dateNaissanceMaxForSearch);
+        items = ejbFacade.findByQuery(nomVeuveForSearch, cinForSearch, nomFamilleForSearch,
+                zoneGeographiqueForSearch, adresseForSearch, getSituationDeSearch());
         System.out.println(items);
     }
 
@@ -86,20 +130,20 @@ public class VeuveController implements Serializable {
         }
     }
 
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
     public String getNomVeuveForSearch() {
         return nomVeuveForSearch;
     }
 
     public void setNomVeuveForSearch(String nomVeuveForSearch) {
         this.nomVeuveForSearch = nomVeuveForSearch;
-    }
-
-    public String getMetierVeuveForSearch() {
-        return metierVeuveForSearch;
-    }
-
-    public void setMetierVeuveForSearch(String metierVeuveForSearch) {
-        this.metierVeuveForSearch = metierVeuveForSearch;
     }
 
     public String getCinForSearch() {
@@ -110,36 +154,28 @@ public class VeuveController implements Serializable {
         this.cinForSearch = cinForSearch;
     }
 
-    public Long getAgeMinForSearch() {
-        return ageMinForSearch;
+    public String getNomFamilleForSearch() {
+        return nomFamilleForSearch;
     }
 
-    public void setAgeMinForSearch(Long ageMinForSearch) {
-        this.ageMinForSearch = ageMinForSearch;
+    public void setNomFamilleForSearch(String nomFamilleForSearch) {
+        this.nomFamilleForSearch = nomFamilleForSearch;
     }
 
-    public Long getAgeMaxForSearch() {
-        return ageMaxForSearch;
+    public String getZoneGeographiqueForSearch() {
+        return zoneGeographiqueForSearch;
     }
 
-    public void setAgeMaxForSearch(Long ageMaxForSearch) {
-        this.ageMaxForSearch = ageMaxForSearch;
+    public void setZoneGeographiqueForSearch(String zoneGeographiqueForSearch) {
+        this.zoneGeographiqueForSearch = zoneGeographiqueForSearch;
     }
 
-    public Date getDateNaissanceMinForSearch() {
-        return dateNaissanceMinForSearch;
+    public String getAdresseForSearch() {
+        return adresseForSearch;
     }
 
-    public void setDateNaissanceMinForSearch(Date dateNaissanceMinForSearch) {
-        this.dateNaissanceMinForSearch = dateNaissanceMinForSearch;
-    }
-
-    public Date getDateNaissanceMaxForSearch() {
-        return dateNaissanceMaxForSearch;
-    }
-
-    public void setDateNaissanceMaxForSearch(Date dateNaissanceMaxForSearch) {
-        this.dateNaissanceMaxForSearch = dateNaissanceMaxForSearch;
+    public void setAdresseForSearch(String adresseForSearch) {
+        this.adresseForSearch = adresseForSearch;
     }
 
     public VeuveController() {
@@ -188,6 +224,14 @@ public class VeuveController implements Serializable {
         }
     }
 
+    public List<Veuve> getItemsBySituations() {
+        if (items == null) {
+            items = getFacade().findVeuveBySituation(getSituationDeSearch());
+        }
+        System.out.println("Hani f la Methode getItemsBySituations()");
+        return items;
+    }
+
     public List<Veuve> getItems() {
         if (items == null) {
             items = getFacade().findAll();
@@ -203,6 +247,7 @@ public class VeuveController implements Serializable {
                     getFacade().create(selected);
                 } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
+                    size = 0;
                     JsfUtil.addSuccessMessage(successMessage);
                 } else {
                     getFacade().removeItem(selected, passwordForDelete, getConnectedUser());

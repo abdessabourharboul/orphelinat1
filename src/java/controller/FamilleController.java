@@ -59,14 +59,50 @@ public class FamilleController implements Serializable {
     private Float coutMinForSearch;
     private Float coutMaxForSearch;
     private String passwordForDelete;
+    private int searchButtonNumber;
+    private String situationDeSearch;
+
+    public List<String> getItemsAvailableSelectOneStringNoms() {
+        return getFacade().findNomForSearchBySituation(getSituationDeSearch());
+    }
+
+    public void setSituationForPage(String situation) {
+        setSituationDeSearch(situation);
+        System.out.println("hahia situation de search ::::" + getSituationDeSearch());
+    }
+
+    public String getSituationDeSearch() {
+        return situationDeSearch;
+    }
+
+    public void setSituationDeSearch(String situationDeSearch) {
+        this.situationDeSearch = situationDeSearch;
+    }
+
+    public void rectifierNombrePersonnes() {
+        getFacade().rectifierNombrePersonnes();
+    }
+
+    public int getSearchButtonNumber() {
+        return searchButtonNumber;
+    }
+
+    public void setSearchButtonNumber(int searchButtonNumber) {
+        this.searchButtonNumber = searchButtonNumber;
+    }
 
     public List<String> getItemsAvailableSelectOneString(String nomVariable) {
         return getFacade().findByQueryString(nomVariable);
     }
 
+    public void rechercheFamilleByQueryAndSituation(String situation) {
+        setSituationForSearch(situation);
+        rechercheFamilleByQuery();
+    }
+
     public void rechercheFamilleByQuery() {
         items = ejbFacade.findByQuery(nomFamilleForSearch, typeLogementForSearch, adresseForSearch,
-                zoneGeographiqueForSearch, situationForSearch, responsableZoneForSearch,
+                zoneGeographiqueForSearch, getSituationDeSearch(), responsableZoneForSearch,
                 nombrePersonnesMinForSearch, nombrePersonnesMaxForSearch,
                 telephoneForSearch, coutMinForSearch, coutMaxForSearch);
         System.out.println(items);
@@ -216,10 +252,12 @@ public class FamilleController implements Serializable {
         items = getFacade().findByQuery(null, null, null, zoneGeo, null, null, null, null, null, null, null);
     }
 
+//    public void checkTypeOfSearchButton(String nomSearch) {
+//        setSearchButtonNumber(ejbFacade.checkTypeOfSearchButton(nomSearch, searchButtonNumber));
+//    }
     public void nullerLaListe() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
             items = null;
-//            System.out.println("hanooo");
         }
     }
 
@@ -312,9 +350,9 @@ public class FamilleController implements Serializable {
         }
     }
 
-    public List<Famille> getItemsBySituations(String situation) {
+    public List<Famille> getItemsBySituations() {
         if (items == null) {
-            items = getFacade().findBySituation(situation);
+            items = getFacade().findBySituation(getSituationDeSearch());
         }
         System.out.println("Hani f la Methode getItemsBySituations()");
         return items;

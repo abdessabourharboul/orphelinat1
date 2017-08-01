@@ -34,13 +34,13 @@
                     </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewBonificationLabel_dateNaissanceMin}" for="dateBonificationMin" style="display:block;width:80px"/>
-                    <p:calendar size="12" id="dateBonificationMin" pattern="MM/dd/yyyy" value="#{bonificationController.dateBonificationMinForSearch}"  showOn="button">
-                        <f:convertDateTime pattern="MM/dd/yyyy"  />
+                    <p:calendar size="12" id="dateBonificationMin" pattern="dd/MM/yyyy" value="#{bonificationController.dateBonificationMinForSearch}"  showOn="button">
+                        <f:convertDateTime pattern="dd/MM/yyyy"  />
                     </p:calendar>
 
                     <p:outputLabel value="#{bundle.ViewBonificationLabel_dateNaissanceMax}" for="dateBonificationMax" style="display:block;width:80px"/>
-                    <p:calendar size="12" id="dateBonificationMax" pattern="MM/dd/yyyy" value="#{bonificationController.dateBonificationMaxForSearch}"  showOn="button">
-                        <f:convertDateTime pattern="MM/dd/yyyy"  />
+                    <p:calendar size="12" id="dateBonificationMax" pattern="dd/MM/yyyy" value="#{bonificationController.dateBonificationMaxForSearch}"  showOn="button">
+                        <f:convertDateTime pattern="dd/MM/yyyy"  />
                     </p:calendar>
 
                     <P1></P1>

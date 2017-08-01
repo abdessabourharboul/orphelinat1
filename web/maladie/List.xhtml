@@ -16,7 +16,7 @@
         <ui:define name="body">
             <f:event type="preRenderView" listener="#{maladieController.nullerLaListe()}" />
             <ui:include src="Search.xhtml"/>
-            <p:outputPanel autoUpdate="true">
+<!--            <p:outputPanel autoUpdate="true">-->
                 <h:form id="MaladieListForm">
                     <p:panel header="#{bundle.ListMaladieTitle}">
                         <p:dataTable id="datalist" value="#{maladieController.items}" var="item"
@@ -69,7 +69,7 @@
                         </p:dataTable>
                     </p:panel>
                 </h:form>
-            </p:outputPanel>
+<!--            </p:outputPanel>-->
 
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>

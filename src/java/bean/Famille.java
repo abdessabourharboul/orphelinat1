@@ -29,12 +29,12 @@ public class Famille implements Serializable {
     private String nomFamille;
     private String typeLogement;
     private String adresse;
-    private String zoneGeographique;
     private String situation;
-    private String responsableZone;
     private Long nombrePersonnes;
     private String telephone;
     private Float cout;
+    private String zoneGeographique;
+    private String responsableZone;
 
     @OneToMany(mappedBy = "famille", orphanRemoval = true)
     private List<Veuve> veuves;

@@ -32,6 +32,12 @@ public class OrphelinFacade extends AbstractFacade<Orphelin> {
     @EJB
     private FamilleFacade familleFacade;
 
+    public List<Orphelin> findOrphelinBySituation(String situation) {
+        String requete = "SELECT r FROM Orphelin r WHERE 1=1 and r.veuve.famille.situation LIKE CONCAT('%','" + situation + "','%')";
+        System.out.println("haaa requette===>" + requete);
+        return em.createQuery(requete).getResultList();
+    }
+
     public List<String> executerLaRequette(String nomRequette) {
         System.out.println("haaa requette===>" + nomRequette);
         return em.createQuery(nomRequette).getResultList();
@@ -43,6 +49,18 @@ public class OrphelinFacade extends AbstractFacade<Orphelin> {
         }
         String requete = "SELECT r.ancienPhotos FROM Orphelin r WHERE 1=1 AND "
                 + " r.id='" + orphelin.getId() + "'";
+        return executerLaRequette(requete);
+    }
+
+    public List<String> findNomForSearchBySituation(String situation) {
+        String requete = "SELECT DISTINCT  r.nomFamille FROM Famille r WHERE 1=1";
+        requete += " and r.situation LIKE CONCAT('%','" + situation + "','%')";
+        return executerLaRequette(requete);
+    }
+
+    public List<String> findPrenomForSearchBySituation(String situation) {
+        String requete = "SELECT DISTINCT  r.prenom FROM Orphelin r WHERE 1=1";
+        requete += " and r.veuve.famille.situation LIKE CONCAT('%','" + situation + "','%')";
         return executerLaRequette(requete);
     }
 
@@ -72,20 +90,26 @@ public class OrphelinFacade extends AbstractFacade<Orphelin> {
                 String requete = "SELECT DISTINCT  r.description FROM Orphelin r";
                 return executerLaRequette(requete);
             }
+            case "zoneGeographique": {
+                String requete = "SELECT DISTINCT  r.zoneGeographique FROM User r";
+                return executerLaRequette(requete);
+            }
             default:
                 return new ArrayList<>();
         }
     }
 
-    public List<Orphelin> findByQuery(String nom, String tailleChaussures, String sexe,
+    public List<Orphelin> findByQuery(String nom, String prenom, String sexe,
             String codeMassar, String description, Long anneeNaissanceMin, Long anneeNaissanceMax,
-            Long ageMin, Long ageMax, Date dateNaissanceMin, Date dateNaissanceMax) {
+            Long ageMin, Long ageMax, String zoneGeographique, String situation) {
         String requete = "SELECT r FROM Orphelin r WHERE 1=1 ";
+        requete += " and r.veuve.famille.situation LIKE CONCAT('%','" + situation + "','%')";
+
         if (nom != null && !nom.equals("")) {
             requete += " and r.veuve.famille.nomFamille='" + nom + "'";
         }
-        if (tailleChaussures != null && !tailleChaussures.equals("")) {
-            requete += " and r.tailleChaussures='" + tailleChaussures + "'";
+        if (prenom != null && !prenom.equals("")) {
+            requete += " and r.prenom='" + prenom + "'";
         }
         if (sexe != null && !sexe.equals("")) {
             requete += " and r.sexe='" + sexe + "'";
@@ -94,7 +118,7 @@ public class OrphelinFacade extends AbstractFacade<Orphelin> {
             requete += " and r.codeMassar='" + codeMassar + "'";
         }
         if (description != null && !description.equals("")) {
-            requete += " and r.description='" + description + "'";
+            requete += " and r.description LIKE CONCAT('%','" + description + "','%')";
         }
         if (anneeNaissanceMin != null && anneeNaissanceMin != 0) {
             requete += " and r.anneeNaissance >='" + anneeNaissanceMin + "'";
@@ -108,11 +132,8 @@ public class OrphelinFacade extends AbstractFacade<Orphelin> {
         if (ageMax != null && ageMax != 0) {
             requete += " and r.age <='" + ageMax + "'";
         }
-        if (dateNaissanceMin != null) {
-            requete += " and r.dateNaissance >='" + DateUtil.getSqlDateTime(dateNaissanceMin) + "'";
-        }
-        if (dateNaissanceMax != null) {
-            requete += " and r.dateNaissance <='" + DateUtil.getSqlDateTime(dateNaissanceMax) + "'";
+        if (zoneGeographique != null && !zoneGeographique.equals("")) {
+            requete += " and r.veuve.famille.user.zoneGeographique='" + zoneGeographique + "'";
         }
         System.out.println("haaa requette===>" + requete);
         return em.createQuery(requete).getResultList();
@@ -129,8 +150,10 @@ public class OrphelinFacade extends AbstractFacade<Orphelin> {
 
     @Override
     public void create(Orphelin orphelin) {
-        orphelin.setAnneeNaissance(new Long(DateUtil.getYear(orphelin.getDateNaissance())));
-        orphelin.setAge(new Long(DateUtil.calculAge(orphelin.getDateNaissance())));
+        if (orphelin.getDateNaissance() != null) {
+            orphelin.setAnneeNaissance(new Long(DateUtil.getYear(orphelin.getDateNaissance())));
+            orphelin.setAge(new Long(DateUtil.calculAge(orphelin.getDateNaissance())));
+        }
         orphelin.getVeuve().getFamille().setNombrePersonnes(familleFacade.nombrePersonne(orphelin.getVeuve().getFamille()) + 1);
 //        orphelin.getVeuve().getFamille().setNombrePersonnes(orphelin.getVeuve().getFamille().getNombrePersonnes() + 1);
         familleFacade.edit(orphelin.getVeuve().getFamille());
@@ -139,8 +162,10 @@ public class OrphelinFacade extends AbstractFacade<Orphelin> {
 
     @Override
     public void edit(Orphelin orphelin) {
-        orphelin.setAnneeNaissance(new Long(DateUtil.getYear(orphelin.getDateNaissance())));
-        orphelin.setAge(new Long(DateUtil.calculAge(orphelin.getDateNaissance())));
+        if (orphelin.getDateNaissance() != null) {
+            orphelin.setAnneeNaissance(new Long(DateUtil.getYear(orphelin.getDateNaissance())));
+            orphelin.setAge(new Long(DateUtil.calculAge(orphelin.getDateNaissance())));
+        }
         super.edit(orphelin);
     }
 

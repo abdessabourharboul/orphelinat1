@@ -23,7 +23,7 @@
                         <p:outputLabel value="#{bundle.EditMedicamentLabel_prix}" for="prix" />
                         <p:inputText id="prix" value="#{medicamentController.selected.prix}" title="#{bundle.EditMedicamentTitle_prix}" />
                         <p:outputLabel value="#{bundle.EditMedicamentLabel_datePrise}" for="datePrise" />
-                        <p:calendar id="datePrise" pattern="MM/dd/yyyy" value="#{medicamentController.selected.datePrise}" title="#{bundle.EditMedicamentTitle_datePrise}"  showOn="button"/>
+                        <p:calendar id="datePrise" pattern="dd/MM/yyyy" value="#{medicamentController.selected.datePrise}" title="#{bundle.EditMedicamentTitle_datePrise}"  showOn="button"/>
                         <p:outputLabel value="#{bundle.EditOrphelinLabel_description}" for="description" />
                         <p:inputText id="description" value="#{medicamentController.selected.description}" title="#{bundle.EditOrphelinTitle_description}" />
                     </p:panelGrid>

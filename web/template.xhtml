@@ -26,7 +26,7 @@
                     <p:menubar>
                         <p:menuitem value="خروج" action="#{userController.seDeconnecter()}" />
 
-                        <p:submenu label="اعدادات" style="margin-left: 800px">
+                        <p:submenu label="اعدادات" style="margin-left: 700px">
                             <p:menuitem value="الحسابات" outcome="/user/List.xhtml" />
                             <p:menuitem value="اصلاح المشاكل" outcome="/user/FixDataBaseErrors.xhtml" />
                             <p:menuitem value="تغيير كلمة السر" outcome="/user/ChangePassword.xhtml" />
@@ -46,24 +46,24 @@
                             </p:submenu>
                             <p:submenu label="حسب المستويات">
                                 <p:submenu label="الابتدائي">
-                                    <p:menuitem value="أولى ابتدائى" outcome="/medicament/List.xhtml" />
-                                    <p:menuitem value="ثانية ابتدائى" outcome="/medicament/List.xhtml" />
-                                    <p:menuitem value="ثالثة ابتدائى" outcome="/medicament/List.xhtml" />
-                                    <p:menuitem value="رابعة ابتدائى" outcome="/medicament/List.xhtml" />
-                                    <p:menuitem value="خامسة ابتدائى" outcome="/medicament/List.xhtml" />
-                                    <p:menuitem value="سادسة ابتدائى" outcome="/medicament/List.xhtml" />
+                                    <p:menuitem value="أولى ابتدائى" outcome="/scolarite/Lists/Niveaux/1Primaire/1ereAnnee.xhtml" />
+                                    <p:menuitem value="ثانية ابتدائى" outcome="/scolarite/Lists/Niveaux/1Primaire/2emeAnnee.xhtml" />
+                                    <p:menuitem value="ثالثة ابتدائى" outcome="/scolarite/Lists/Niveaux/1Primaire/3emeAnnee.xhtml"/>
+                                    <p:menuitem value="رابعة ابتدائى" outcome="/scolarite/Lists/Niveaux/1Primaire/4emeAnnee.xhtml" />
+                                    <p:menuitem value="خامسة ابتدائى" outcome="/scolarite/Lists/Niveaux/1Primaire/5emeAnnee.xhtml" />
+                                    <p:menuitem value="سادسة ابتدائى" outcome="/scolarite/Lists/Niveaux/1Primaire/6emeAnnee.xhtml" />
                                 </p:submenu>
                                 <p:submenu label="الاعدادي">
-                                    <p:menuitem value="أولى اعدادي" outcome="/medicament/List.xhtml" />
-                                    <p:menuitem value="ثانية اعدادي" outcome="/medicament/List.xhtml" />
-                                    <p:menuitem value="ثالثة اعدادي" outcome="/medicament/List.xhtml" />
+                                    <p:menuitem value="أولى اعدادي" outcome="/scolarite/Lists/Niveaux/2College/1ereAnneeCollege.xhtml" />
+                                    <p:menuitem value="ثانية اعدادي" outcome="/scolarite/Lists/Niveaux/2College/2emeAnneeCollege.xhtml" />
+                                    <p:menuitem value="ثالثة اعدادي" outcome="/scolarite/Lists/Niveaux/2College/3emeAnneeCollege.xhtml" />
                                 </p:submenu>
                                 <p:submenu label="التانوي">
-                                    <p:menuitem value="الجدع المشترك" outcome="/medicament/List.xhtml" />
-                                    <p:menuitem value="اولى باكالوريا" outcome="/medicament/List.xhtml" />
-                                    <p:menuitem value="ثانية باكالوريا" outcome="/medicament/List.xhtml" />
+                                    <p:menuitem value="الجدع المشترك" outcome="/scolarite/Lists/Niveaux/3Lycee/TroncCommun.xhtml" />
+                                    <p:menuitem value="اولى باكالوريا" outcome="/scolarite/Lists/Niveaux/3Lycee/1ereAnneeBac.xhtml" />
+                                    <p:menuitem value="ثانية باكالوريا" outcome="/scolarite/Lists/Niveaux/3Lycee/2emeAnneeBac.xhtml" />
                                 </p:submenu>
-                                <p:menuitem value="الجامعي" outcome="/medicament/List.xhtml" />
+                                <p:menuitem value="الجامعي" outcome="/scolarite/Lists/Niveaux/4Universite/Universite.xhtml" />
                             </p:submenu>
                         </p:submenu>
                         <p:submenu label="الايتام">
@@ -83,7 +83,9 @@
                             <p:menuitem value="الارامل المعوزة" outcome="/veuve/Lists/List_Mouiz.xhtml" />
                         </p:submenu>
                         <p:submenu label="العائلات" >
+                            
                             <p:menuitem value="جميع العائلات" outcome="/famille/Lists/List.xhtml" />
+                            <p:menuitem value="الخاصة بالجزيرةالعائلاتtajribi " outcome="/famille/Lists/ListMaZone.xhtml" />
                             <p:menuitem value="العائلات المكفولة" outcome="/famille/Lists/List_Makfoul.xhtml" />
                             <p:menuitem value="العائلات في انتظار" outcome="/famille/Lists/List_Intidar.xhtml" />
                             <p:menuitem value="العائلات الموسمية" outcome="/famille/Lists/List_Mawsimi.xhtml" />

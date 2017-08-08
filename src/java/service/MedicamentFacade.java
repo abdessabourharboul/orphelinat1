@@ -7,7 +7,7 @@ package service;
 
 import bean.Famille;
 import bean.Medicament;
-import controler.util.DateUtil;
+import controller.util.DateUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,8 +27,6 @@ public class MedicamentFacade extends AbstractFacade<Medicament> {
     private EntityManager em;
     @EJB
     private FamilleFacade familleFacade;
-    
-   
 
     public List<String> executerLaRequette(String nomRequette) {
         System.out.println("haaa requette===>" + nomRequette);
@@ -84,8 +82,6 @@ public class MedicamentFacade extends AbstractFacade<Medicament> {
 
     @Override
     public void create(Medicament medicament) {
-        medicament.getOrphelin().getVeuve().getFamille().setCout(medicament.getOrphelin().getVeuve().getFamille().getCout() + medicament.getPrix());
-        familleFacade.edit(medicament.getOrphelin().getVeuve().getFamille());
         super.create(medicament);
     }
 
@@ -98,8 +94,6 @@ public class MedicamentFacade extends AbstractFacade<Medicament> {
     @Override
     public void edit(Medicament medicament) {
         super.edit(medicament);
-        medicament.getOrphelin().getVeuve().getFamille().setCout(calculerCoutFamille(medicament.getOrphelin().getVeuve().getFamille()));
-        familleFacade.edit(medicament.getOrphelin().getVeuve().getFamille());
     }
 
     @Override

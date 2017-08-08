@@ -12,6 +12,12 @@
             <h:form id="FamilleViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{familleController.selected != null}">
+                        <p:panel>                           
+                            <h:commandLink id="viewButton1" disabled="#{empty familleController.selected}">
+                                <p:ajax update=":Famille1ViewForm" oncomplete="PF('Famille1ViewDialog').show()"/>
+                                <p:graphicImage  style="height:200px;width:200px;" value="#{familleController.findPath(familleController.selected)}"/>
+                            </h:commandLink>
+                        </p:panel>
                         <h:outputText value="#{bundle.ViewFamilleLabel_nomFamille}"/>
                         <h:outputText value="#{familleController.selected.nomFamille}" title="#{bundle.ViewFamilleTitle_nomFamille}"/>
                         <h:outputText value="#{bundle.ViewFamilleLabel_situation}"/>
@@ -35,6 +41,6 @@
                 </h:panelGroup>
             </h:form>
         </p:dialog>
-
+        <ui:include src="View_Image.xhtml"/>
     </ui:composition>
 </html>

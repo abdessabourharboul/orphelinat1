@@ -17,14 +17,13 @@
                             <h:commandLink id="viewButton1" disabled="#{empty orphelinController.selected}">
                                 <p:ajax update=":Orphelin1ViewForm" oncomplete="PF('Orphelin1ViewDialog').show()"/>
                                 <p:graphicImage  style="height:200px;width:200px;" value="#{orphelinController.findPath(orphelinController.selected)}"/>
-<!--                                <p:graphicImage value="# {orphelinController.image}">
-                                    <f:param name="filename" value="# {orphelinController.selected.photo}" />
-                                </p:graphicImage>-->
-
                             </h:commandLink>
-                            <!--                            <h:commandLink id="viewButton2" value="autres" disabled="# {empty orphelinController.selected}">
-                                                            <p:ajax update=":Orphelin2ViewForm" oncomplete="PF('Orphelin2ViewDialog').show()"/>
-                                                        </h:commandLink> -->
+                            <br></br>
+                            <center>
+                                <p:commandButton id="viewButton2" value="صور قديمة" disabled="#{empty orphelinController.selected}">
+                                    <p:ajax update=":Orphelin2ViewForm" oncomplete="PF('Orphelin2ViewDialog').show()"/>
+                                </p:commandButton> 
+                            </center>
                         </p:panel>                        
                         <h:outputText value="#{bundle.ViewOrphelinLabel_prenom}"/>
                         <h:outputText value="#{orphelinController.selected.prenom}" title="#{bundle.ViewOrphelinTitle_prenom}"/>
@@ -52,6 +51,6 @@
             </h:form>
         </p:dialog>
         <ui:include src="View_Image.xhtml"/>
-        <!--        <ui:include src="View_Image_Changer.xhtml"/>-->
+        <ui:include src="View_Image_Changer.xhtml"/>
     </ui:composition>
 </html>

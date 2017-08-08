@@ -10,11 +10,13 @@ import bean.User;
 import bean.Veuve;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
+import controller.util.ServerConfigUtil;
 import controller.util.SessionUtil;
 import service.FamilleFacade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -27,6 +29,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.event.FileUploadEvent;
 import service.OrphelinFacade;
 import service.VeuveFacade;
 
@@ -61,6 +64,43 @@ public class FamilleController implements Serializable {
     private String passwordForDelete;
     private int searchButtonNumber;
     private String situationDeSearch;
+    private Integer size = 0;
+
+    public String findPath(Famille famille) {
+        if (famille != null) {
+            if (famille.getPhoto() != null) {
+                System.out.println("ha b true" + ServerConfigUtil.getPhotoOrphelinPath(true) + "/" + famille.getPhoto());
+                System.out.println("ha b false" + ServerConfigUtil.getPhotoOrphelinPath(false) + "/" + famille.getPhoto());
+                return ServerConfigUtil.getPhotoOrphelinPath(false) + "/" + famille.getPhoto();
+            }
+        }
+        return ServerConfigUtil.getPhotoOrphelinPath(false) + "/noOne.png";
+    }
+
+    public void upload(FileUploadEvent event) {
+        getSelected().setPhoto("Famille-" + new Date().getTime() + ".png");
+        ServerConfigUtil.upload(event.getFile(), ServerConfigUtil.getPhotoOrphelinPath(true), getSelected().getPhoto());
+    }
+
+    public void uploadEdit(FileUploadEvent event) {
+        if (getSelected().getPhoto() == null) {
+            upload(event);
+            size = 1;
+        } else {
+            getSelected().getAncienPhotos().add(getSelected().getPhoto());
+            getSelected().setPhoto("Orphelin-" + new Date().getTime() + ".png");
+            ServerConfigUtil.upload(event.getFile(), ServerConfigUtil.getPhotoOrphelinPath(true), getSelected().getPhoto());
+            size = 2;
+        }
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
 
     public List<String> getItemsAvailableSelectOneStringNoms() {
         return getFacade().findNomForSearchBySituation(getSituationDeSearch());
@@ -379,6 +419,7 @@ public class FamilleController implements Serializable {
 //                    JsfUtil.addSuccessMessage(successMessage);
                 } else if (persistAction == PersistAction.UPDATE) {
                     getFacade().edit(selected);
+                    size = 0;
                     JsfUtil.addSuccessMessage(successMessage);
                 } else {
                     getFacade().removeItem(selected, passwordForDelete, getConnectedUser());

@@ -39,6 +39,15 @@
                             <f:selectItem itemLabel="رهن" itemValue="رهن"/>
                             <f:selectItem itemLabel="اخر" itemValue="اخر"/>
                         </p:selectOneMenu>
+                        <p:outputLabel value="Photo :" for="photo" />
+                        <p:panel>
+                            <p:fileUpload id="photo" fileUploadListener="#{familleController.uploadEdit}"
+                                          mode="advanced"
+                                          dragDropSupport="true" multiple="false"
+                                          update="messages" sizeLimit="10000000"
+                                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                            <p:growl id="messages" showDetail="true"/>
+                        </p:panel>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{familleController.update}" value="#{bundle.Save}" update="display,:FamilleListForm:datalist,:growl" oncomplete="handleSubmit(args, 'FamilleEditDialog');"/>
                     <p:commandButton immediate="true" value="#{bundle.Cancel}" onclick="FamilleEditDialog.hide()"/>

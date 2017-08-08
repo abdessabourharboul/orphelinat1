@@ -32,6 +32,7 @@ public class ServerConfigUtil {
         if (!write) {
             path = path.replace("\\", "/");
         }
+        System.out.println("c'est le path:" + path);
         return path;
     }
 
@@ -58,5 +59,15 @@ public class ServerConfigUtil {
             System.out.println("No delete !!!!");
             e.printStackTrace();
         }
+    }
+
+    private static int createFile(File file) {
+        if (!file.exists()) {
+            if (file.mkdir()) {
+                return 1; //file.getName() + " Directory is created!";
+            }
+            return -1;//"Failed to create " + file.getName() + " directory!";
+        }
+        return -2; //file.getName() + " Directory already existe!";
     }
 }

@@ -14,19 +14,19 @@
         </ui:define>
 
         <ui:define name="body">
-             <f:event type="preRenderView" listener="#{scolariteController.setSituationForPage('')}" />
+            <f:event type="preRenderView" listener="#{scolariteController.setSituationForPage('')}" />
             <f:event type="preRenderView" listener="#{scolariteController.nullerLaListe()}" />
             <ui:include src="Search.xhtml"/>
             <!--            <p:outputPanel autoUpdate="true">-->
             <h:form id="ScolariteListForm">
                 <p:panel header="#{bundle.ListScolariteTitle}">
-                    <p:dataTable id="datalist" value="#{scolariteController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{scolariteController.itemsThisYear}" var="item"
                                  selectionMode="single" selection="#{scolariteController.selected}"
                                  paginator="true"
                                  rowKey="#{item.id}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
-                                 rowIndexVar="index"
+                                 rowIndexVar="index" sortBy="#{item.orphelin.veuve.famille.nomFamille}"
                                  >
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>

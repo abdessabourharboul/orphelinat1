@@ -63,11 +63,17 @@
             </f:facet>
             <h:outputText value="#{item.moyenneAnnee}"/>
         </p:column>
-        <p:column>
+        <p:column style="background-color: ">
             <f:facet name="header">
                 <h:outputText value="#{bundle.ListScolariteTitle_soutienScolaire}"/>
             </f:facet>
             <h:outputText value="#{item.soutienScolaire ? 'نعم': 'لا'}"/>
+        </p:column>
+        <p:column style="background-color: #{scolariteController.couleurResultatBoolean(item.resultat)}">
+            <f:facet name="header">
+                <h:outputText value="#{bundle.ListScolariteTitle_resultat}"/>
+            </f:facet>
+            <h:outputText value="#{scolariteController.passOrNot(item)}"/>
         </p:column>
         <p:column>
             <f:facet name="header">
@@ -75,10 +81,13 @@
             </f:facet>
             <p:commandButton value="ينتقل" rendered="#{!scolariteController.resultatBoolean(item)}" 
                              actionListener="#{scolariteController.passButtonActionListener(item)}" 
-                             update=":ScolariteListForm:datalist"/>
+                             update=":ScolariteListForm:datalist,:growl"/>
             <p:commandButton value="يكرر" rendered="#{!scolariteController.resultatBoolean(item)}"
-                             actionListener="#{scolariteController.notPassButtonActionListener(item)}" update=":ScolariteListForm:datalist"/>
-            <h:outputText value="#{scolariteController.passOrNot(item)}" rendered="#{scolariteController.resultatBoolean(item)}"/>
+                             actionListener="#{scolariteController.notPassButtonActionListener(item)}" 
+                             update=":ScolariteListForm:datalist,:growl"/>
+            <p:commandButton value="تراجع" rendered="#{scolariteController.resultatBoolean(item)}"
+                             actionListener="#{scolariteController.annulerDecision(item)}" 
+                             update=":ScolariteListForm:datalist"/>
         </p:column>
 
 

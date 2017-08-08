@@ -4,7 +4,8 @@ import bean.Famille;
 import bean.Orphelin;
 import bean.User;
 import bean.Veuve;
-import controler.util.DateUtil;
+import controller.util.DateUtil;
+import controller.util.ImageClassUtil;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
 import controller.util.ServerConfigUtil;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import service.OrphelinFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -57,6 +59,15 @@ public class OrphelinController implements Serializable {
     private String passwordForDelete;
     private Famille famille;
     private String situationDeSearch;
+    private List<String> photos;
+
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
+    }
 
     public List<Veuve> getItemsVeuvesAvailableSelectOne(Famille famille) {
         return veuveFacade.findVeuveByFamille(famille);
@@ -174,15 +185,31 @@ public class OrphelinController implements Serializable {
         return ServerConfigUtil.getPhotoOrphelinPath(false) + "/noOne.png";
     }
 
-    public String findPathByString(String nomPic) {
-        if (nomPic != null) {
-            return ServerConfigUtil.getPhotoOrphelinPath(false) + "/" + nomPic;
-        }
-        return ServerConfigUtil.getPhotoOrphelinPath(false) + "/noOne.png";
+    public String findPathByString() {
+        return ServerConfigUtil.getPhotoOrphelinPath(false);
     }
 
-    public List<String> findPathByString1() {
-        return getFacade().findPathByString(getSelected());
+    public List<String> findPathByString2() {
+        System.out.println("HAHIA STRIIIIIIIIING:" + getFacade().findPathByString(getSelected()));
+//        System.out.println("HAHIA LWLA:" + getFacade().findPathByString(getSelected()).get(0));
+//        System.out.println("HAHIA TANIA:" + getFacade().findPathByString(getSelected()).get(1));
+        setPhotos(getFacade().findPathByString(getSelected()));
+        return photos;
+    }
+
+    public List<ImageClassUtil> findPathByString1() {
+//        System.out.println("HAHWA STRING:" + getFacade().findPathByString(getSelected()));
+//        setPhotos(getFacade().findPathByString(getSelected()));
+        System.out.println("ha liste des anciens" + getSelected().getAncienPhotos());
+        List<ImageClassUtil> res = new ArrayList<>();
+//        for (int i = 0; i < getSelected().getAncienPhotos().size(); i++) {
+//            String get = getPhotos().get(i);
+//            System.out.println("ha get:" + get);
+//            ImageClassUtil icu = new ImageClassUtil();
+//            icu.setNamePhoto(get);
+//        }
+//        System.out.println("ha RESSSSSS" + res);
+        return res;
     }
 
     public String getSituationDeSearch() {

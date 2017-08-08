@@ -8,7 +8,7 @@ package service;
 import bean.Famille;
 import bean.Orphelin;
 import bean.Veuve;
-import controler.util.DateUtil;
+import controller.util.DateUtil;
 import controller.util.JsfUtil;
 import java.util.ArrayList;
 import java.util.List;

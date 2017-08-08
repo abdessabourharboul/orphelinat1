@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controler.util;
+package controller.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,6 +21,16 @@ import java.util.logging.Logger;
  * @author Younes
  */
 public class DateUtil {
+
+    public static int getMonthInt(Date date) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM");
+        return Integer.parseInt(dateFormat.format(date));
+    }
+
+    public static void main(String[] args) {
+        System.out.println("ha l month " + getMonthInt(new Date()));
+    }
 
     public static int calculAge(Date dateNaissance) {
         int age = 0;
@@ -37,6 +48,12 @@ public class DateUtil {
             }
         }
         return age;
+    }
+
+    public static int getMonth() {
+        Calendar born = Calendar.getInstance();
+        born.setTime(new Date());
+        return born.get(Calendar.MONTH);
     }
 
     public static int getYear(Date dateNaissance) {
@@ -298,6 +315,25 @@ public class DateUtil {
 
     public static java.sql.Timestamp getSqlDateTime(java.util.Date date) {
         return new java.sql.Timestamp(date.getTime());
+    }
+
+    public static String getPreviousYearString() {
+        return Integer.toString(getPreviousYear());
+    }
+
+    public static String getCurrentYearString() {
+        return Integer.toString(getCurrentYear());
+    }
+
+    public static int getPreviousYear() {
+        Calendar prevYear = Calendar.getInstance();
+        prevYear.add(Calendar.YEAR, -1);
+        return prevYear.get(Calendar.YEAR);
+    }
+
+    public static int getCurrentYear() {
+        Calendar prevYear = Calendar.getInstance();
+        return prevYear.get(Calendar.YEAR);
     }
 
     public static String getYearOfCurrentDate() {

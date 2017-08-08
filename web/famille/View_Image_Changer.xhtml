@@ -8,13 +8,10 @@
 
     <ui:composition>
 
-        <p:dialog id="Orphelin2ViewDlg" widgetVar="Orphelin2ViewDialog" modal="true"
-                  fitViewport="true" resizable="true" appendTo="@(body)"  header="#{bundle.ViewOrphelinTitle}">
+        <p:dialog id="Orphelin2ViewDlg" widgetVar="Orphelin2ViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewOrphelinTitle}">
             <h:form id="Orphelin2ViewForm">
-                <p:galleria value="#{orphelinController.selected.ancienPhotos}" var="image"
-                            panelWidth="500" panelHeight="500">
-                    <p:graphicImage style="height:100%;width:100%;"
-                                    value="#{orphelinController.findPathByString()}/#{image}"/>
+                <p:galleria value="#{orphelinController.findPathByString1()}" var="image" panelWidth="500" panelHeight="313" showCaption="true">
+                    <p:graphicImage name="#{orphelinController.findPathByString(image)}" />
                 </p:galleria>
             </h:form>
         </p:dialog>

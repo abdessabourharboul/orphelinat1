@@ -6,11 +6,7 @@
 package service;
 
 import bean.Bonification;
-import bean.Maladie;
-import bean.User;
-import controler.util.DateUtil;
-import controller.util.HashPasswords;
-import controller.util.JsfUtil;
+import controller.util.DateUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

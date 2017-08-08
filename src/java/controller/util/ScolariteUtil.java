@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author abdessabour
  */
-public class ScolariteStrings {
+public class ScolariteUtil {
 
     private String premiereAnnee;
     private String deuxiemeAnnee;
@@ -49,7 +49,7 @@ public class ScolariteStrings {
     }
 
     public static List<String> niveauxScolarite() {
-        ScolariteStrings scolariteStrings = getNiveauxScolarite();
+        ScolariteUtil scolariteStrings = getNiveauxScolarite();
         List<String> list = new ArrayList<>();
         list.add(scolariteStrings.premiereAnnee);
         list.add(scolariteStrings.deuxiemeAnnee);
@@ -68,7 +68,7 @@ public class ScolariteStrings {
     }
 
     private static List<String> niveauxScolaritePrimaire() {
-        ScolariteStrings scolariteStrings = getNiveauxScolarite();
+        ScolariteUtil scolariteStrings = getNiveauxScolarite();
         List<String> list = new ArrayList<>();
         list.add(scolariteStrings.premiereAnnee);
         list.add(scolariteStrings.deuxiemeAnnee);
@@ -80,7 +80,7 @@ public class ScolariteStrings {
     }
 
     private static List<String> niveauxScolariteCollege() {
-        ScolariteStrings scolariteStrings = getNiveauxScolarite();
+        ScolariteUtil scolariteStrings = getNiveauxScolarite();
         List<String> list = new ArrayList<>();
         list.add(scolariteStrings.premiereAnneeCollege);
         list.add(scolariteStrings.deuxiemeAnneeCollege);
@@ -89,7 +89,7 @@ public class ScolariteStrings {
     }
 
     private static List<String> niveauxScolariteLycee() {
-        ScolariteStrings scolariteStrings = getNiveauxScolarite();
+        ScolariteUtil scolariteStrings = getNiveauxScolarite();
         List<String> list = new ArrayList<>();
         list.add(scolariteStrings.troncCommun);
         list.add(scolariteStrings.premiereAnneeBac);
@@ -98,17 +98,17 @@ public class ScolariteStrings {
     }
 
     private static List<String> niveauxScolariteUniversitaire() {
-        ScolariteStrings scolariteStrings = getNiveauxScolarite();
+        ScolariteUtil scolariteStrings = getNiveauxScolarite();
         List<String> list = new ArrayList<>();
         list.add(scolariteStrings.universite);
         return list;
     }
 
-    private static ScolariteStrings getNiveauxScolarite() {
-        return new ScolariteStrings();
+    private static ScolariteUtil getNiveauxScolarite() {
+        return new ScolariteUtil();
     }
 
-    private ScolariteStrings() {
+    private ScolariteUtil() {
         premiereAnnee = "أولى ابتدائى";
         deuxiemeAnnee = "ثانية ابتدائى";
         troisiemeAnnee = "ثالثة ابتدائى";
@@ -122,6 +122,82 @@ public class ScolariteStrings {
         premiereAnneeBac = "اولى باكالوريا";
         deuxiemeAnneeBac = "ثانية باكالوريا";
         universite = "الجامعي";
+    }
+
+    public static String succesNiveauScolaire(String niveauActuel) {
+        return succesNiveauScolairePrivate(niveauActuel);
+    }
+
+    private static String succesNiveauScolairePrivate(String niveauActuel) {
+        ScolariteUtil scolariteUtil = new ScolariteUtil();
+        String niveauSuivant = "";
+        if (niveauActuel.equals(scolariteUtil.premiereAnnee)) {
+            niveauSuivant = scolariteUtil.deuxiemeAnnee;
+        } else if (niveauActuel.equals(scolariteUtil.deuxiemeAnnee)) {
+            niveauSuivant = scolariteUtil.troisiemeAnnee;
+        } else if (niveauActuel.equals(scolariteUtil.troisiemeAnnee)) {
+            niveauSuivant = scolariteUtil.quatriemeAnnee;
+        } else if (niveauActuel.equals(scolariteUtil.quatriemeAnnee)) {
+            niveauSuivant = scolariteUtil.cinquiemeAnnee;
+        } else if (niveauActuel.equals(scolariteUtil.cinquiemeAnnee)) {
+            niveauSuivant = scolariteUtil.sixiemeAnnee;
+        } else if (niveauActuel.equals(scolariteUtil.sixiemeAnnee)) {
+            niveauSuivant = scolariteUtil.premiereAnneeCollege;
+        } else if (niveauActuel.equals(scolariteUtil.premiereAnneeCollege)) {
+            niveauSuivant = scolariteUtil.deuxiemeAnneeCollege;
+        } else if (niveauActuel.equals(scolariteUtil.deuxiemeAnneeCollege)) {
+            niveauSuivant = scolariteUtil.troisiemeAnneeCollege;
+        } else if (niveauActuel.equals(scolariteUtil.troisiemeAnneeCollege)) {
+            niveauSuivant = scolariteUtil.troncCommun;
+        } else if (niveauActuel.equals(scolariteUtil.troncCommun)) {
+            niveauSuivant = scolariteUtil.premiereAnneeBac;
+        } else if (niveauActuel.equals(scolariteUtil.premiereAnneeBac)) {
+            niveauSuivant = scolariteUtil.deuxiemeAnneeBac;
+        } else if (niveauActuel.equals(scolariteUtil.deuxiemeAnneeBac)) {
+            niveauSuivant = scolariteUtil.universite;
+        } else if (niveauActuel.equals(scolariteUtil.universite)) {
+            niveauSuivant = scolariteUtil.universite;
+        }
+        return niveauSuivant;
+    }
+
+    public static String succesSilkScolaire(String niveauActuel) {
+        return succesSilkScolairePrivate(niveauActuel);
+    }
+
+    private static String succesSilkScolairePrivate(String niveauActuel) {
+        ScolariteUtil scolariteUtil = new ScolariteUtil();
+        String silkScolaire = "";
+        if (niveauActuel.equals(scolariteUtil.premiereAnnee) || niveauActuel.equals(scolariteUtil.deuxiemeAnnee)
+                || niveauActuel.equals(scolariteUtil.troisiemeAnnee) || niveauActuel.equals(scolariteUtil.quatriemeAnnee)
+                || niveauActuel.equals(scolariteUtil.cinquiemeAnnee) || niveauActuel.equals(scolariteUtil.sixiemeAnnee)) {
+            silkScolaire = getPimaire();
+        } else if (niveauActuel.equals(scolariteUtil.premiereAnneeCollege) || niveauActuel.equals(scolariteUtil.deuxiemeAnneeCollege)
+                || niveauActuel.equals(scolariteUtil.troisiemeAnneeCollege)) {
+            silkScolaire = getCollege();
+        } else if (niveauActuel.equals(scolariteUtil.troncCommun) || niveauActuel.equals(scolariteUtil.premiereAnneeBac)
+                || niveauActuel.equals(scolariteUtil.deuxiemeAnneeBac)) {
+            silkScolaire = getLycee();
+        } else if (niveauActuel.equals(scolariteUtil.universite)) {
+            silkScolaire = getUniversiteName();
+        }
+        return silkScolaire;
+    }
+
+    public static String getPimaire() {
+        return "ابتدائي";
+    }
+
+    public static String getCollege() {
+        return "اعدادي";
+    }
+
+    public static String getLycee() {
+        return "ثانوي";
+    }
+
+    public static String getUniversiteName() {
+        return "جامعي";
     }
 
     public String getPremiereAnnee() {

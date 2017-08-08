@@ -33,14 +33,6 @@
                                        itemValue="#{Etablissement}" itemLabel="#{Etablissement}"/>
                     </p:selectOneMenu>
 
-                    <p:outputLabel value="#{bundle.ViewScolariteLabel_anneeScolaire}" for="anneeScolaire" style="display:block;width:80px"/>
-                    <p:selectOneMenu id="anneeScolaire" value="#{scolariteController.anneeScolaireForSearch}" filter="true" filterMatchMode="contains">
-                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{scolariteController.getItemsAvailableSelectOneString('anneeScolaire')}"
-                                       var="AnneeScolaire"
-                                       itemValue="#{AnneeScolaire}" itemLabel="#{AnneeScolaire}"/>
-                    </p:selectOneMenu>
-
                     <p:outputLabel value="#{bundle.ViewScolariteLabel_niveauScolaire}" for="niveauScolaire" style="display:block;width:80px"/>
                     <p:selectOneMenu id="niveauScolaire" value="#{scolariteController.niveauScolaireForSearch}" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>

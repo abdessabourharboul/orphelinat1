@@ -32,9 +32,8 @@ public class Famille implements Serializable {
     private String situation;
     private Long nombrePersonnes;
     private String telephone;
-    private Float cout;
-    private String zoneGeographique;
-    private String responsableZone;
+    private String photo;
+    private List<String> ancienPhotos;
 
     @OneToMany(mappedBy = "famille", orphanRemoval = true)
     private List<Veuve> veuves;
@@ -58,20 +57,20 @@ public class Famille implements Serializable {
         this.id = id;
     }
 
-    public Float getCout() {
-        return cout;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setCout(Float cout) {
-        this.cout = cout;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
-    public String getZoneGeographique() {
-        return zoneGeographique;
+    public List<String> getAncienPhotos() {
+        return ancienPhotos;
     }
 
-    public void setZoneGeographique(String zoneGeographique) {
-        this.zoneGeographique = zoneGeographique;
+    public void setAncienPhotos(List<String> ancienPhotos) {
+        this.ancienPhotos = ancienPhotos;
     }
 
     public String getSituation() {
@@ -80,14 +79,6 @@ public class Famille implements Serializable {
 
     public void setSituation(String situation) {
         this.situation = situation;
-    }
-
-    public String getResponsableZone() {
-        return responsableZone;
-    }
-
-    public void setResponsableZone(String responsableZone) {
-        this.responsableZone = responsableZone;
     }
 
     public String getTelephone() {

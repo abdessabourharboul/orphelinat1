@@ -5,11 +5,12 @@ import bean.User;
 import bean.Veuve;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
-import controller.util.ScolariteStrings;
+import controller.util.ScolariteUtil;
 import controller.util.SessionUtil;
 import service.ScolariteFacade;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -33,7 +34,6 @@ public class ScolariteController implements Serializable {
     private Scolarite selected;
     private String nomOrphelinForSearch;
     private String etablissementForSearch;
-    private String anneeScolaireForSearch;
     private String niveauScolaireForSearch;
     private String filiereForSearch;
     private Float moyenne1ForSearch;
@@ -74,7 +74,9 @@ public class ScolariteController implements Serializable {
     }
 
     public String passOrNot(Scolarite scolarite) {
-        if (scolarite.getResultat().equals(true)) {
+        if (scolarite.getResultat() == null) {
+            return "لم يحدد بعد";
+        } else if (scolarite.getResultat().equals(true)) {
             return "انتقل";
         } else if (scolarite.getResultat().equals(false)) {
             return "كرر";
@@ -90,6 +92,17 @@ public class ScolariteController implements Serializable {
         }
     }
 
+    public String couleurResultatBoolean(Boolean res) {
+        if (res != null) {
+            if (res.equals(true)) {
+                return "#13CD35";
+            } else if (res.equals(false)) {
+                return "#E76262";
+            }
+        }
+        return "";
+    }
+
     public void passButtonActionListener(Scolarite scolarite) {
         ejbFacade.passButtonActionListener(scolarite);
         items = null;
@@ -100,12 +113,17 @@ public class ScolariteController implements Serializable {
         items = null;
     }
 
+    public void annulerDecision(Scolarite scolarite) {
+        ejbFacade.annulerDecision(scolarite);
+        items = null;
+    }
+
     public List<String> getNiveauxScolaires() {
-        return ScolariteStrings.findNiveauxBySilk(getSelected().getSilkScolaire());
+        return ScolariteUtil.findNiveauxBySilk(getSelected().getSilkScolaire());
     }
 
     public List<String> niveauxScolairesList() {
-        return ScolariteStrings.niveauxScolarite();
+        return ScolariteUtil.niveauxScolarite();
     }
 
     public void setAnneSecondaireAjax() {
@@ -134,7 +152,7 @@ public class ScolariteController implements Serializable {
 
     public void rechercheScolariteByQuery() {
         items = ejbFacade.findByQuery(
-                nomOrphelinForSearch, etablissementForSearch, anneeScolaireForSearch,
+                nomOrphelinForSearch, etablissementForSearch,
                 niveauScolaireForSearch, filiereForSearch, moyenne1ForSearch,
                 moyenne2ForSearch, moyenneAnneeMinForSearch, moyenneAnneeMaxForSearch, moyenneAnneeExact,
                 resultatForSearch, soutienScolaireForSearch, getSituationDeSearch());
@@ -170,14 +188,6 @@ public class ScolariteController implements Serializable {
 
     public void setEtablissementForSearch(String etablissementForSearch) {
         this.etablissementForSearch = etablissementForSearch;
-    }
-
-    public String getAnneeScolaireForSearch() {
-        return anneeScolaireForSearch;
-    }
-
-    public void setAnneeScolaireForSearch(String anneeScolaireForSearch) {
-        this.anneeScolaireForSearch = anneeScolaireForSearch;
     }
 
     public String getNiveauScolaireForSearch() {
@@ -293,6 +303,13 @@ public class ScolariteController implements Serializable {
     public List<Scolarite> getItems() {
         if (items == null) {
             items = getFacade().findAll();
+        }
+        return items;
+    }
+
+    public List<Scolarite> getItemsThisYear() {
+        if (items == null) {
+            items = getFacade().findScolariteThisYear();
         }
         return items;
     }

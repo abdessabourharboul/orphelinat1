@@ -26,7 +26,7 @@ public class FamilleFacade extends AbstractFacade<Famille> {
 
     @PersistenceContext(unitName = "Orphelinat1PU")
     private EntityManager em;
-    
+
     public List<String> findNomForSearchBySituation(String situation) {
         String requete = "SELECT DISTINCT  r.nomFamille FROM Famille r WHERE 1=1";
         requete += " and r.situation LIKE CONCAT('%','" + situation + "','%')";
@@ -164,17 +164,21 @@ public class FamilleFacade extends AbstractFacade<Famille> {
     private List<Famille> listeVerificationCreation(String nomFamille, String nomResponsable) {
         String requete = "SELECT r FROM Famille r WHERE r.nomFamille='" + nomFamille + "' "
                 + "AND r.user.nom='" + nomResponsable + "'";
-        return em.createQuery(requete).getResultList();
+        List<Famille> list = em.createQuery(requete).getResultList();
+        if (list.isEmpty()) {
+            return null;
+        } else {
+            return list;
+        }
     }
 
     @Override
     public void create(Famille famille) {
         famille.setUser(getConnectedUser());
-        famille.setCout(0F);
         famille.setNombrePersonnes(0L);
         List<Famille> listVerification = listeVerificationCreation(famille.getNomFamille(), famille.getUser().getNom());
-        System.out.println("ha lista de verification :" + listVerification);
         if (listVerification != null) {
+            System.out.println("ha lista de verification :" + listVerification);
             JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("FamilleExisteDeja"));
         } else {
             super.create(famille);

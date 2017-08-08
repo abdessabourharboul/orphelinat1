@@ -24,7 +24,6 @@ public class Scolarite implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String etablissement;
-    private String anneeScolaire;
     private String anneeScolaireFirst;
     private String anneeScolaireSecond;
     private String silkScolaire;
@@ -53,14 +52,6 @@ public class Scolarite implements Serializable {
 
     public void setSilkScolaire(String silkScolaire) {
         this.silkScolaire = silkScolaire;
-    }
-
-    public String getAnneeScolaire() {
-        return anneeScolaire;
-    }
-
-    public void setAnneeScolaire(String anneeScolaire) {
-        this.anneeScolaire = anneeScolaire;
     }
 
     public String getAnneeScolaireFirst() {

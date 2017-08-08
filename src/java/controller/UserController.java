@@ -1,6 +1,7 @@
 package controller;
 
 import bean.User;
+import controller.util.CreateFileUtil;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
 import controller.util.SessionUtil;
@@ -33,6 +34,10 @@ public class UserController implements Serializable {
     private String confNewPassword;
 
     public UserController() {
+    }
+
+    public void createFilesIfNotExists() throws Exception {
+        CreateFileUtil.createFilesIfNotExists();
     }
 
     public String changePassword() {

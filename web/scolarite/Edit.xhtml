@@ -21,10 +21,22 @@
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditScolariteLabel_etablissement}" for="etablissement" />
                         <p:inputText id="etablissement" value="#{scolariteController.selected.etablissement}" title="#{bundle.EditScolariteTitle_etablissement}" />
-                        <p:outputLabel value="#{bundle.EditScolariteLabel_anneeScolaire}" for="anneeScolaire" />
-                        <p:inputText id="anneeScolaire" value="#{scolariteController.selected.anneeScolaire}" title="#{bundle.EditScolariteTitle_anneeScolaire}" />
-                        <p:outputLabel value="#{bundle.EditScolariteLabel_niveauScolaire}" for="niveauScolaire" />
-                        <p:inputText id="niveauScolaire" value="#{scolariteController.selected.niveauScolaire}" title="#{bundle.EditScolariteTitle_niveauScolaire}" />
+                        <p:outputLabel value="#{bundle.CreateScolariteLabel_niveauScolaire}" for="silkScolaire" />
+                        <p:selectOneMenu id="silkScolaire" value="#{scolariteController.selected.silkScolaire}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemValue="#{null}" itemLabel="--اختيار--"/>
+                            <f:selectItem itemValue="ابتدائي" itemLabel="ابتدائي"/>
+                            <f:selectItem itemValue="اعدادي" itemLabel="اعدادي"/>
+                            <f:selectItem itemValue="ثانوي" itemLabel="ثانوي"/>
+                            <f:selectItem itemValue="جامعي" itemLabel="جامعي"/>
+                            <p:ajax process="silkScolaire" update="niveauScolaire"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateScolariteLabel_niveauScolaire}" for="niveauScolaire" />
+                        <p:selectOneMenu id="niveauScolaire" value="#{scolariteController.selected.niveauScolaire}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemValue="#{null}" itemLabel="--اختيار--"/>
+                            <f:selectItems value="#{scolariteController.niveauxScolaires}"
+                                           var="niveauItem" itemLabel="#{niveauItem}"
+                                           itemValue="#{niveauItem}"/>
+                        </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.EditScolariteLabel_filiere}" for="filiere" />
                         <p:inputText id="filiere" value="#{scolariteController.selected.filiere}" title="#{bundle.EditScolariteTitle_filiere}" />
                         <p:outputLabel value="#{bundle.EditScolariteLabel_moyenne1}" for="moyenne1" />

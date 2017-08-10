@@ -9,19 +9,19 @@ import java.util.List;
  */
 public class ScolariteUtil {
 
-    private String premiereAnnee;
-    private String deuxiemeAnnee;
-    private String troisiemeAnnee;
-    private String quatriemeAnnee;
-    private String cinquiemeAnnee;
-    private String sixiemeAnnee;
-    private String premiereAnneeCollege;
-    private String deuxiemeAnneeCollege;
-    private String troisiemeAnneeCollege;
-    private String troncCommun;
-    private String premiereAnneeBac;
-    private String deuxiemeAnneeBac;
-    private String universite;
+    private final String premiereAnnee;
+    private final String deuxiemeAnnee;
+    private final String troisiemeAnnee;
+    private final String quatriemeAnnee;
+    private final String cinquiemeAnnee;
+    private final String sixiemeAnnee;
+    private final String premiereAnneeCollege;
+    private final String deuxiemeAnneeCollege;
+    private final String troisiemeAnneeCollege;
+    private final String troncCommun;
+    private final String premiereAnneeBac;
+    private final String deuxiemeAnneeBac;
+    private final String universite;
 
     public static void main(String[] args) {
         List<String> loaded = niveauxScolarite();
@@ -109,18 +109,18 @@ public class ScolariteUtil {
     }
 
     private ScolariteUtil() {
-        premiereAnnee = "أولى ابتدائى";
-        deuxiemeAnnee = "ثانية ابتدائى";
-        troisiemeAnnee = "ثالثة ابتدائى";
-        quatriemeAnnee = "رابعة ابتدائى";
-        cinquiemeAnnee = "خامسة ابتدائى";
-        sixiemeAnnee = "سادسة ابتدائى";
-        premiereAnneeCollege = "أولى اعدادي";
-        deuxiemeAnneeCollege = "ثانية اعدادي";
-        troisiemeAnneeCollege = "ثالثة اعدادي";
+        premiereAnnee = "الاول ابتدائى";
+        deuxiemeAnnee = "الثاني ابتدائى";
+        troisiemeAnnee = "الثالث ابتدائى";
+        quatriemeAnnee = "الرابع ابتدائى";
+        cinquiemeAnnee = "الخامس ابتدائى";
+        sixiemeAnnee = "السادس ابتدائى";
+        premiereAnneeCollege = "الاولى اعدادي";
+        deuxiemeAnneeCollege = "الثانية اعدادي";
+        troisiemeAnneeCollege = "الثالثة اعدادي";
         troncCommun = "الجدع المشترك";
-        premiereAnneeBac = "اولى باكالوريا";
-        deuxiemeAnneeBac = "ثانية باكالوريا";
+        premiereAnneeBac = "الاولى باكالوريا";
+        deuxiemeAnneeBac = "الثانية باكالوريا";
         universite = "الجامعي";
     }
 
@@ -182,6 +182,15 @@ public class ScolariteUtil {
             silkScolaire = getUniversiteName();
         }
         return silkScolaire;
+    }
+    
+    public static List<String> getSilkScolaires() {
+        List<String> list = new ArrayList<>();
+        list.add(ScolariteUtil.getPimaire());
+        list.add(ScolariteUtil.getCollege());
+        list.add(ScolariteUtil.getLycee());
+        list.add(ScolariteUtil.getUniversiteName());
+        return list;
     }
 
     public static String getPimaire() {

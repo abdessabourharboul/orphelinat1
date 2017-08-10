@@ -13,7 +13,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{scolariteController.selected != null}">
                         <p:outputLabel value="الرقم السري للحذف:" for="passwordConfirmation" />
-                        <p:inputText id="passwordConfirmation" value="#{scolariteController.passwordForDelete}" />
+                        <p:password id="passwordConfirmation" value="#{scolariteController.passwordForDelete}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{scolariteController.destroy}" value="#{bundle.Save}" update="display,:ScolariteListForm:datalist,:growl" oncomplete="handleSubmit(args,'ScolariteDeleteDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ScolariteDeleteDialog.hide()"/>

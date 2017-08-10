@@ -13,7 +13,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{familleController.selected != null}">
                         <p:outputLabel value="الرقم السري للحذف:" for="passwordConfirmation" />
-                        <p:inputText id="passwordConfirmation" value="#{familleController.passwordForDelete}" title="#{bundle.CreateFamilleTitle_nomFamille}" />
+                        <p:password id="passwordConfirmation" value="#{familleController.passwordForDelete}" title="#{bundle.CreateFamilleTitle_nomFamille}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{familleController.destroy}" value="#{bundle.Save}" update="display,:FamilleListForm:datalist,:growl" oncomplete="handleSubmit(args,'FamilleDeleteDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="FamilleDeleteDialog.hide()"/>

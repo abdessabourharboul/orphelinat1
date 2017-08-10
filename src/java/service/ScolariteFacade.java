@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package service;
 
 import bean.Orphelin;
@@ -10,8 +5,6 @@ import bean.Scolarite;
 import controller.util.DateUtil;
 import controller.util.JsfUtil;
 import controller.util.ScolariteUtil;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,19 +22,69 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
     @PersistenceContext(unitName = "Orphelinat1PU")
     private EntityManager em;
 
-    public String succesNiveauScolaire(String niveauActuel) {
-        return ScolariteUtil.succesNiveauScolaire(niveauActuel);
+    @Override
+    public void create(Scolarite scolarite) {
+        super.create(toDoBeforeCreate(scolarite));
     }
 
-    public String succesSilkScolaire(String niveauActuel) {
-        return ScolariteUtil.succesSilkScolaire(niveauActuel);
+    @Override
+    public void edit(Scolarite scolarite) {
+        super.edit(toDoBeforeEdit(scolarite));
     }
 
-    public String yearPlusOneString(String anneeString) {
-        Integer foo = Integer.parseInt(anneeString);
-        foo++;
-        String fooString = foo.toString();
-        return fooString;
+    public Scolarite toDoBeforeCreate(Scolarite scolarite) {
+        checkAndCalculMoyenneForSilkScolaires(scolarite);
+        checkBeforeCreate(scolarite);
+        return scolarite;
+    }
+
+    public Scolarite toDoBeforeEdit(Scolarite scolarite) {
+        checkAndCalculMoyenneForSilkScolaires(scolarite);
+        checkBeforeEdit(scolarite);
+        return scolarite;
+    }
+
+    public void checkAndCalculMoyenneForSilkScolaires(Scolarite scolarite) {
+        if (scolarite.getMoyenne1() == null || scolarite.getMoyenne2() == null) {
+            scolarite.setMoyenneAnnee(null);
+            scolarite.setResultat(null);
+        } else {
+            float moy = (scolarite.getMoyenne1() + scolarite.getMoyenne2()) / 2;
+            scolarite.setMoyenneAnnee(moy);
+        }
+        if (scolarite.getMoyenneAnnee() != null) {
+            if (scolarite.getSilkScolaire() != null) {
+                if (scolarite.getSilkScolaire().equals(ScolariteUtil.getPimaire())) {
+                    if (scolarite.getMoyenneAnnee() >= 5) {
+                        scolarite.setResultat(true);
+                    }
+                } else {
+                    if (scolarite.getMoyenneAnnee() >= 10) {
+                        scolarite.setResultat(true);
+                    }
+                }
+            }
+        }
+    }
+
+    private void checkBeforeCreate(Scolarite scolarite) {
+        List<Scolarite> list = findByOrphelinAndScolarYear(scolarite.getOrphelin(), scolarite.getAnneeScolaireFirst());
+        if (list.isEmpty()) {
+            super.create(scolarite);
+        } else {
+            if (scolarite.getResultat() == true) {
+                passButtonActionListener(scolarite);
+            }
+            JsfUtil.addSuccessMessage("تذكير: الدراسة موجودة");
+        }
+    }
+
+    private void checkBeforeEdit(Scolarite scolarite) {
+        if (scolarite.getResultat() != null) {
+            if (scolarite.getResultat() == true) {
+                passButtonActionListener(scolarite);
+            }
+        }
     }
 
     public void passButtonActionListener(Scolarite scolarite) {
@@ -105,68 +148,105 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
         super.edit(scolarite);
     }
 
-    public List<String> executerLaRequette(String nomRequette) {
-        System.out.println("haaa requette===>" + nomRequette);
+    public List<String> executerLaRequetteString(String nomRequette) {
         return em.createQuery(nomRequette).getResultList();
     }
 
-    public List<String> findByQueryString(String nomVariable) {
-        switch (nomVariable) {
-            case "nomOrphelin": {
-                String requete = "SELECT DISTINCT  r.nomFamille FROM Famille r";
-                return executerLaRequette(requete);
-            }
-            case "etablissement": {
-                String requete = "SELECT DISTINCT  r.etablissement FROM Scolarite r";
-                return executerLaRequette(requete);
-            }
-            case "anneeScolaire": {
-                String requete = "SELECT DISTINCT  r.anneeScolaire FROM Scolarite r";
-                return executerLaRequette(requete);
-            }
-            case "niveauScolaire": {
-                String requete = "SELECT DISTINCT  r.niveauScolaire FROM Scolarite r";
-                return executerLaRequette(requete);
-            }
-            case "filiere": {
-                String requete = "SELECT DISTINCT  r.filiere FROM Scolarite r";
-                return executerLaRequette(requete);
-            }
-            default:
-                return new ArrayList<>();
+    public String succesNiveauScolaire(String niveauActuel) {
+        return ScolariteUtil.succesNiveauScolaire(niveauActuel);
+    }
+
+    public String succesSilkScolaire(String niveauActuel) {
+        return ScolariteUtil.succesSilkScolaire(niveauActuel);
+    }
+
+    public List<String> getSilkScolaires() {
+        return ScolariteUtil.getSilkScolaires();
+    }
+
+    public List<Scolarite> findScolariteThisYear() {
+        Date d = new Date();
+        List<Scolarite> loaded = new ArrayList();
+        int month = DateUtil.getMonth();
+        if (month >= 0 && month <= 6) {
+            loaded = findScolariteThisYearPrevious();
+        } else {
+            loaded = findScolariteThisYearCurrent();
+        }
+        return loaded;
+    }
+
+    public List<Scolarite> findScolariteBySituation(String situation) {
+        String requete = "SELECT r FROM Scolarite r WHERE 1=1 and r.orphelin.veuve.famille.situation LIKE CONCAT('%','" + situation + "','%')";
+        return executeQuery(requete);
+    }
+
+    public List<Scolarite> findScolariteBySituationThisYear(String situation) {
+        String requettePrevious = "SELECT r FROM Scolarite r WHERE 1=1 ";
+        requettePrevious += " and r.anneeScolaireFirst='" + DateUtil.getPreviousYearString() + "'";
+        requettePrevious += " and r.orphelin.veuve.famille.situation LIKE CONCAT('%','" + situation + "','%')";
+        List<Scolarite> listPrevious = executeQuery(requettePrevious);
+        String requetteCurrent = "SELECT r FROM Scolarite r WHERE 1=1 ";
+        requetteCurrent += " and r.anneeScolaireFirst='" + DateUtil.getCurrentYearString() + "'";
+        requetteCurrent += " and r.orphelin.veuve.famille.situation LIKE CONCAT('%','" + situation + "','%')";
+        List<Scolarite> listCurrent = executeQuery(requetteCurrent);
+        int month = DateUtil.getMonth();
+        if (month >= 0 && month <= 6) {
+            return listPrevious;
+        } else {
+            return listCurrent;
         }
     }
 
-    public List<Scolarite> findByQuery(String nomOrphelin, String etablissement,
-            String niveauScolaire, String filiere, Float moyenne1, Float moyenne2,
-            Float moyenneAnneeMin, Float moyenneAnneeMax, Float moyenneAnneeExact,
-            Boolean resultat, Boolean soutienScolaire, String situation) {
+    public List<Scolarite> findScolariteByNiveaux(String niveauScolaire) {
+        String requete = "SELECT r FROM Scolarite r WHERE 1=1 and r.niveauScolaire LIKE CONCAT('%','" + niveauScolaire + "','%')";
+        return executeQuery(requete);
+    }
+
+    public List<Scolarite> findScolariteByNiveauxThisYear(String niveauScolaire) {
+        String requettePrevious = "SELECT r FROM Scolarite r WHERE 1=1 ";
+        requettePrevious += " and r.anneeScolaireFirst='" + DateUtil.getPreviousYearString() + "'";
+        requettePrevious += " and r.niveauScolaire='" + niveauScolaire + "'";
+        List<Scolarite> listPrevious = executeQuery(requettePrevious);
+        String requetteCurrent = "SELECT r FROM Scolarite r WHERE 1=1 ";
+        requetteCurrent += " and r.anneeScolaireFirst='" + DateUtil.getCurrentYearString() + "'";
+        requetteCurrent += " and r.niveauScolaire='" + niveauScolaire + "'";
+        List<Scolarite> listCurrent = executeQuery(requetteCurrent);
+        int month = DateUtil.getMonth();
+        if (month >= 0 && month <= 6) {
+            return listPrevious;
+        } else {
+            return listCurrent;
+        }
+    }
+
+    public List<Scolarite> findByQuery(String nomOrphelin, String etablissement,String niveauScolaire, 
+            String filiere, Float moyenne1, Float moyenne2,Float moyenneAnneeExact,
+            Boolean resultat, Boolean soutienScolaire,String situation, String anneeScolaireFirst) {
         String requete = "SELECT r FROM Scolarite r WHERE 1=1 ";
-        requete += " and r.orphelin.veuve.famille.situation LIKE CONCAT('%','" + situation + "','%')";
+        if (situation != null && !situation.equals("")) {
+            requete += " and r.orphelin.veuve.famille.situation LIKE CONCAT('%','" + situation + "','%')";
+        }
+        if (niveauScolaire != null && !niveauScolaire.equals("")) {
+            requete += " and r.niveauScolaire='" + niveauScolaire + "'";
+        }
         if (nomOrphelin != null && !nomOrphelin.equals("")) {
             requete += " and r.orphelin.veuve.famille.nomFamille='" + nomOrphelin + "'";
         }
         if (etablissement != null && !etablissement.equals("")) {
-            requete += " and r.etablissement='" + etablissement + "'";
-        }
-
-        if (niveauScolaire != null && !niveauScolaire.equals("")) {
-            requete += " and r.niveauScolaire='" + niveauScolaire + "'";
+            requete += " and r.etablissement LIKE CONCAT('%','" + etablissement + "','%')";
         }
         if (filiere != null && !filiere.equals("")) {
-            requete += " and r.filiere='" + filiere + "'";
+            requete += " and r.filiere LIKE CONCAT('%','" + filiere + "','%')";
+        }
+        if (anneeScolaireFirst != null && !anneeScolaireFirst.equals("")) {
+            requete += " and r.anneeScolaireFirst='" + anneeScolaireFirst + "'";
         }
         if (moyenne1 != null && moyenne1 != 0) {
-            requete += " and r.moyenne1='" + moyenne1 + "'";
+            requete += " and r.moyenne1 =" + " " + moyenne1;
         }
         if (moyenne2 != null && moyenne2 != 0) {
             requete += " and r.moyenne2='" + moyenne2 + "'";
-        }
-        if (moyenneAnneeMin != null && moyenneAnneeMin != 0) {
-            requete += " and r.moyenneAnnee >='" + moyenneAnneeMin + "'";
-        }
-        if (moyenneAnneeMax != null && moyenneAnneeMax != 0) {
-            requete += " and r.moyenneAnnee <='" + moyenneAnneeMax + "'";
         }
         if (moyenneAnneeExact != null && moyenneAnneeExact != 0) {
             requete += " and r.moyenneAnnee ='" + moyenneAnneeExact + "'";
@@ -177,68 +257,32 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
         if (soutienScolaire != null) {
             requete += " AND r.soutienScolaire=" + soutienScolaire;
         }
-        System.out.println("haaa requette===>" + requete);
-        return em.createQuery(requete).getResultList();
+        return super.executeQuery(requete);
     }
 
-    public List<Scolarite> findScolariteBySituation(String situation) {
-        String requete = "SELECT r FROM Scolarite r WHERE 1=1 and r.orphelin.veuve.famille.situation LIKE CONCAT('%','" + situation + "','%')";
-        System.out.println("haaa requette===>" + requete);
-        return em.createQuery(requete).getResultList();
-    }
-
-    public List<Scolarite> findScolariteByNiveaux(String niveauScolaire) {
-        String requete = "SELECT r FROM Scolarite r WHERE 1=1 and r.niveauScolaire LIKE CONCAT('%','" + niveauScolaire + "','%')";
-        System.out.println("haaa requette===>" + requete);
-        return em.createQuery(requete).getResultList();
-    }
-
-    private List<Scolarite> findScolariteThisYearPrevious() {
-        String requete = "SELECT r FROM Scolarite r WHERE 1=1 ";
-        requete += " and r.anneeScolaireFirst='" + DateUtil.getPreviousYearString() + "'";
-        System.out.println("haaa requette===>" + requete);
-        return em.createQuery(requete).getResultList();
-    }
-
-    private List<Scolarite> findScolariteThisYearCurrent() {
-        String requete = "SELECT r FROM Scolarite r WHERE 1=1 ";
-        requete += " and r.anneeScolaireFirst='" + DateUtil.getCurrentYearString() + "'";
-        System.out.println("haaa requette===>" + requete);
-        return em.createQuery(requete).getResultList();
-    }
-
-    public List<Scolarite> findScolariteThisYear() {
-        Date d = new Date();
-        List<Scolarite> loaded = new ArrayList();
-        int month = DateUtil.getMonth();
-//        System.out.println("month " + month);
-        if (month >= 0 && month <= 6) {
-            loaded = findScolariteThisYearPrevious();
-        } else {
-            loaded = findScolariteThisYearCurrent();
+    public List<String> findByQueryString(String nomVariable) {
+        switch (nomVariable) {
+            case "nomOrphelin": {
+                String requete = "SELECT DISTINCT  r.nomFamille FROM Famille r";
+                return executerLaRequetteString(requete);
+            }
+            case "anneeScolaire": {
+                String requete = "SELECT DISTINCT  r.anneeScolaireFirst FROM Scolarite r";
+                return executerLaRequetteString(requete);
+            }
+            case "niveauScolaire": {
+                return ScolariteUtil.niveauxScolarite();
+            }
+            default:
+                return new ArrayList<>();
         }
-        return loaded;
     }
 
-    @Override
-    public void create(Scolarite scolarite) {
-        super.create(calculMoyEtAfficherResultat(scolarite));
-    }
-
-    @Override
-    public void edit(Scolarite scolarite) {
-        super.edit(calculMoyEtAfficherResultat(scolarite));
-    }
-
-    public Scolarite calculMoyEtAfficherResultat(Scolarite scolarite) {
-        if (scolarite.getMoyenne1() == null || scolarite.getMoyenne2() == null) {
-            scolarite.setMoyenneAnnee(null);
-            scolarite.setResultat(null);
-        } else {
-            float moy = (scolarite.getMoyenne1() + scolarite.getMoyenne2()) / 2;
-            scolarite.setMoyenneAnnee(moy);
-        }
-        return scolarite;
+    public String yearPlusOneString(String anneeString) {
+        Integer foo = Integer.parseInt(anneeString);
+        foo++;
+        String fooString = foo.toString();
+        return fooString;
     }
 
     public List<Scolarite> findByOrphelinAndScolarYear(Orphelin orphelin, String firstYear) {
@@ -247,10 +291,21 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
             requette += " and s.orphelin.prenom='" + orphelin.getPrenom() + "'";
             requette += " and s.orphelin.veuve.famille.nomFamille='" + orphelin.getVeuve().getFamille().getNomFamille() + "'";
             requette += " and s.anneeScolaireFirst='" + firstYear + "'";
-            System.out.println("findByOrphelinAndScolarYear ==> " + requette);
-            return em.createQuery(requette).getResultList();
+            return executeQuery(requette);
         }
         return new ArrayList();
+    }
+
+    private List<Scolarite> findScolariteThisYearPrevious() {
+        String requete = "SELECT r FROM Scolarite r WHERE 1=1 ";
+        requete += " and r.anneeScolaireFirst='" + DateUtil.getPreviousYearString() + "'";
+        return executeQuery(requete);
+    }
+
+    private List<Scolarite> findScolariteThisYearCurrent() {
+        String requete = "SELECT r FROM Scolarite r WHERE 1=1 ";
+        requete += " and r.anneeScolaireFirst='" + DateUtil.getCurrentYearString() + "'";
+        return executeQuery(requete);
     }
 
     @Override

@@ -45,6 +45,11 @@ public abstract class AbstractFacade<T> {
         }
     }
 
+    public List<T> executeQuery(String nomRequette) {
+        System.out.println("haaa requette===>" + nomRequette);
+        return getEntityManager().createQuery(nomRequette).getResultList();
+    }
+
     public T find(Object id) {
         return getEntityManager().find(entityClass, id);
     }

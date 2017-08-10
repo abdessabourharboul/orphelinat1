@@ -5,36 +5,26 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-
     <ui:composition template="/template.xhtml">
-
-
         <ui:define name="title">
             <h:outputText value="#{bundle.ListScolariteTitle}"></h:outputText>
         </ui:define>
-
         <ui:define name="body">
-             <f:event type="preRenderView" listener="#{scolariteController.setSituationForPage('')}" />
             <f:event type="preRenderView" listener="#{scolariteController.nullerLaListe()}" />
             <ui:include src="Search.xhtml"/>
-            <!--            <p:outputPanel autoUpdate="true">-->
             <h:form id="ScolariteListForm">
                 <p:panel header="#{bundle.ListScolariteTitle}">
-                    <p:dataTable id="datalist" value="#{scolariteController.items}" var="item"
+                    <p:dataTable id="datalist" value="#{scolariteController.itemsByType}" var="item"
                                  selectionMode="single" selection="#{scolariteController.selected}"
                                  paginator="true"
                                  rowKey="#{item.id}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
-                                 rowIndexVar="index"
+                                 rowIndexVar="index" sortBy="#{item.orphelin.veuve.famille.nomFamille}"
                                  >
-
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
                         <ui:include src="Columns.xhtml"/>
-
-
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{scolariteController.prepareCreate}" update=":ScolariteCreateForm" oncomplete="PF('ScolariteCreateDialog').show()"/>
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ScolariteViewForm" oncomplete="PF('ScolariteViewDialog').show()" disabled="#{empty scolariteController.selected}"/>
@@ -48,13 +38,10 @@
                     </p:dataTable>
                 </p:panel>
             </h:form>
-            <!--            </p:outputPanel>-->
-
             <ui:include src="Create.xhtml"/>
             <ui:include src="Edit.xhtml"/>
             <ui:include src="View.xhtml"/>
             <ui:include src="Delete.xhtml"/>
         </ui:define>
     </ui:composition>
-
 </html>

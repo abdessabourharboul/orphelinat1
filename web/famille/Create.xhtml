@@ -14,9 +14,6 @@
                     <p:panelGrid columns="2" rendered="#{familleController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateFamilleLabel_nomFamille}" for="nomFamille" />
                         <p:inputText id="nomFamille" value="#{familleController.selected.nomFamille}" title="#{bundle.CreateFamilleTitle_nomFamille}" />
-                        <p:outputLabel value="#{bundle.CreateFamilleLabel_zoneGeographique}" for="zoneGeographique" />
-                        <p:inputText id="zoneGeographique" value="#{familleController.selected.zoneGeographique}" title="#{bundle.CreateFamilleTitle_zoneGeographique}" />
-                        
                         <p:outputLabel value="#{bundle.CreateFamilleLabel_situation}" for="situation" />
                         <p:selectOneMenu id="situation" value="#{familleController.selected.situation}">
                             <f:selectItem itemLabel="اختيار الوضعية" itemValue="#{null}"/>
@@ -24,6 +21,7 @@
                             <f:selectItem itemLabel="في انتظار" itemValue="في انتظار"/>
                             <f:selectItem itemLabel="موسمي" itemValue="موسمي"/>
                             <f:selectItem itemLabel="معوز" itemValue="معوز"/>
+                            <f:selectItem itemLabel="جديد" itemValue="جديد"/>
                             <f:selectItem itemLabel="اخر" itemValue="اخر"/>
                         </p:selectOneMenu>
                         

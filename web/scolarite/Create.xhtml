@@ -28,13 +28,12 @@
                                 <p:ajax event="keyup" update="anneeScolaireSecond" listener="#{scolariteController.setAnneSecondaireAjax()}"/>
                             </p:inputText>
                         </p:row>
-                        <p:outputLabel value="#{bundle.CreateScolariteLabel_niveauScolaire}" for="silkScolaire" />
+                        <p:outputLabel value="#{bundle.CreateScolariteLabel_silkScolaire}" for="silkScolaire" />
                         <p:selectOneMenu id="silkScolaire" value="#{scolariteController.selected.silkScolaire}" filter="true" filterMatchMode="contains">
                             <f:selectItem itemValue="#{null}" itemLabel="--اختيار--"/>
-                            <f:selectItem itemValue="ابتدائي" itemLabel="ابتدائي"/>
-                            <f:selectItem itemValue="اعدادي" itemLabel="اعدادي"/>
-                            <f:selectItem itemValue="ثانوي" itemLabel="ثانوي"/>
-                            <f:selectItem itemValue="جامعي" itemLabel="جامعي"/>
+                            <f:selectItems value="#{scolariteController.silkScolaires}"
+                                           var="silkItem" itemLabel="#{silkItem}"
+                                           itemValue="#{silkItem}"/>
                             <p:ajax process="silkScolaire" update="niveauScolaire"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="#{bundle.CreateScolariteLabel_niveauScolaire}" for="niveauScolaire" />

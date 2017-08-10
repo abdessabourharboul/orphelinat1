@@ -35,35 +35,35 @@
                         <p:menuitem value="الامراض" outcome="/maladie/List.xhtml" />
                         <p:menuitem value="الاستفادات" outcome="/bonification/List.xhtml" />
                         <p:submenu label="الدراسات">
-                            <p:menuitem value="جميع الدراسات" outcome="/scolarite/List.xhtml" />
+                            <p:menuitem value="جميع الدراسات" action="#{scolariteController.generalListenerTemplate('general')}" />
+                            <p:menuitem value="الدراسات الحالية" action="#{scolariteController.currentYearListenerTemplate('currentYear')}" />
                             <p:submenu label="حسب الوضعية">
-                                <p:menuitem value="جميع الدراسات" outcome="/scolarite/Lists/Situations/List.xhtml" />
-                                <p:menuitem value="الدراسات المكفولة" outcome="/scolarite/Lists/Situations/List_Makfoul.xhtml" />
-                                <p:menuitem value="الدراسات في انتظار" outcome="/scolarite/Lists/Situations/List_Intidar.xhtml" />
-                                <p:menuitem value="الدراسات الموسمية" outcome="/scolarite/Lists/Situations/List_Mawsimi.xhtml" />
-                                <p:menuitem value="الدراسات الجديدة" outcome="/scolarite/Lists/Situations/List_Jadid.xhtml" />
-                                <p:menuitem value="الدراسات المعوزة" outcome="/scolarite/Lists/Situations/List_Mouiz.xhtml" />
+                                <p:menuitem  value="الدراسات المكفولة" action="#{scolariteController.situationListenerTemplate('مكفول','situation')}" />
+                                <p:menuitem  value="الدراسات في انتظار" action="#{scolariteController.situationListenerTemplate('انتظار','situation')}" />
+                                <p:menuitem  value="الدراسات الموسمية" action="#{scolariteController.situationListenerTemplate('موسمي','situation')}" />
+                                <p:menuitem  value="الدراسات الجديدة" action="#{scolariteController.situationListenerTemplate('جديد','situation')}" />
+                                <p:menuitem  value="الدراسات المعوزة"   action="#{scolariteController.situationListenerTemplate('معوز','situation')}" />
                             </p:submenu>
                             <p:submenu label="حسب المستويات">
                                 <p:submenu label="الابتدائي">
-                                    <p:menuitem value="أولى ابتدائى" outcome="/scolarite/Lists/Niveaux/1Primaire/1ereAnnee.xhtml" />
-                                    <p:menuitem value="ثانية ابتدائى" outcome="/scolarite/Lists/Niveaux/1Primaire/2emeAnnee.xhtml" />
-                                    <p:menuitem value="ثالثة ابتدائى" outcome="/scolarite/Lists/Niveaux/1Primaire/3emeAnnee.xhtml"/>
-                                    <p:menuitem value="رابعة ابتدائى" outcome="/scolarite/Lists/Niveaux/1Primaire/4emeAnnee.xhtml" />
-                                    <p:menuitem value="خامسة ابتدائى" outcome="/scolarite/Lists/Niveaux/1Primaire/5emeAnnee.xhtml" />
-                                    <p:menuitem value="سادسة ابتدائى" outcome="/scolarite/Lists/Niveaux/1Primaire/6emeAnnee.xhtml" />
+                                    <p:menuitem value="أولى ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(0),'niveau')}" />
+                                    <p:menuitem value="ثانية ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(1),'niveau')}" />
+                                    <p:menuitem value="ثالثة ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(2),'niveau')}"/>
+                                    <p:menuitem value="رابعة ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(3),'niveau')}" />
+                                    <p:menuitem value="خامسة ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(4),'niveau')}" />
+                                    <p:menuitem value="سادسة ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(5),'niveau')}" />
                                 </p:submenu>
                                 <p:submenu label="الاعدادي">
-                                    <p:menuitem value="أولى اعدادي" outcome="/scolarite/Lists/Niveaux/2College/1ereAnneeCollege.xhtml" />
-                                    <p:menuitem value="ثانية اعدادي" outcome="/scolarite/Lists/Niveaux/2College/2emeAnneeCollege.xhtml" />
-                                    <p:menuitem value="ثالثة اعدادي" outcome="/scolarite/Lists/Niveaux/2College/3emeAnneeCollege.xhtml" />
+                                    <p:menuitem value="أولى اعدادي" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(6),'niveau')}" />
+                                    <p:menuitem value="ثانية اعدادي" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(7),'niveau')}" />
+                                    <p:menuitem value="ثالثة اعدادي" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(8),'niveau')}" />
                                 </p:submenu>
                                 <p:submenu label="التانوي">
-                                    <p:menuitem value="الجدع المشترك" outcome="/scolarite/Lists/Niveaux/3Lycee/TroncCommun.xhtml" />
-                                    <p:menuitem value="اولى باكالوريا" outcome="/scolarite/Lists/Niveaux/3Lycee/1ereAnneeBac.xhtml" />
-                                    <p:menuitem value="ثانية باكالوريا" outcome="/scolarite/Lists/Niveaux/3Lycee/2emeAnneeBac.xhtml" />
+                                    <p:menuitem value="الجدع المشترك" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(9),'niveau')}" />
+                                    <p:menuitem value="اولى باكالوريا" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(10),'niveau')}" />
+                                    <p:menuitem value="ثانية باكالوريا" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(11),'niveau')}" />
                                 </p:submenu>
-                                <p:menuitem value="الجامعي" outcome="/scolarite/Lists/Niveaux/4Universite/Universite.xhtml" />
+                                <p:menuitem value="الجامعي" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(12),'niveau')}" />
                             </p:submenu>
                         </p:submenu>
                         <p:submenu label="الايتام">
@@ -83,7 +83,7 @@
                             <p:menuitem value="الارامل المعوزة" outcome="/veuve/Lists/List_Mouiz.xhtml" />
                         </p:submenu>
                         <p:submenu label="العائلات" >
-                            
+
                             <p:menuitem value="جميع العائلات" outcome="/famille/Lists/List.xhtml" />
                             <p:menuitem value="الخاصة بالجزيرةالعائلاتtajribi " outcome="/famille/Lists/ListMaZone.xhtml" />
                             <p:menuitem value="العائلات المكفولة" outcome="/famille/Lists/List_Makfoul.xhtml" />

@@ -26,37 +26,36 @@
                     </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewScolariteLabel_etablissement}" for="etablissement" style="display:block;width:80px"/>
-                    <p:selectOneMenu id="etablissement" value="#{scolariteController.etablissementForSearch}" filter="true" filterMatchMode="contains">
-                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{scolariteController.getItemsAvailableSelectOneString('etablissement')}"
-                                       var="Etablissement"
-                                       itemValue="#{Etablissement}" itemLabel="#{Etablissement}"/>
-                    </p:selectOneMenu>
+                    <p:inputText id="etablissement" value="#{scolariteController.etablissementForSearch}" style="display:block;width:80px;color: red;width: 100%" />
 
                     <p:outputLabel value="#{bundle.ViewScolariteLabel_niveauScolaire}" for="niveauScolaire" style="display:block;width:80px"/>
-                    <p:selectOneMenu id="niveauScolaire" value="#{scolariteController.niveauScolaireForSearch}" filter="true" filterMatchMode="contains">
+                    <p:selectOneMenu id="niveauScolaire" value="#{scolariteController.niveauScolaireDeSearch}" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
                         <f:selectItems value="#{scolariteController.getItemsAvailableSelectOneString('niveauScolaire')}"
                                        var="NiveauScolaire"
                                        itemValue="#{NiveauScolaire}" itemLabel="#{NiveauScolaire}"/>
                     </p:selectOneMenu>
 
-                    <p:outputLabel value="#{bundle.ViewScolariteLabel_filiere}" for="filiere" style="display:block;width:80px"/>
-                    <p:selectOneMenu id="filiere" value="#{scolariteController.filiereForSearch}" filter="true" filterMatchMode="contains">
+                    <p:outputLabel value="#{bundle.ViewScolariteLabel_anneeScolaire}" for="anneeScolaire" style="display:block;width:80px"/>
+                    <p:selectOneMenu id="anneeScolaire" value="#{scolariteController.anneeScolaireFirstForSearch}" filter="true" filterMatchMode="contains">
                         <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{scolariteController.getItemsAvailableSelectOneString('filiere')}"
-                                       var="Filiere"
-                                       itemValue="#{Filiere}" itemLabel="#{Filiere}"/>
+                        <f:selectItems value="#{scolariteController.getItemsAvailableSelectOneString('anneeScolaire')}"
+                                       var="AnneeScolaire" itemValue="#{AnneeScolaire}"
+                                       itemLabel="#{AnneeScolaire}/#{scolariteController.stringToIntToString(AnneeScolaire)}"/>
                     </p:selectOneMenu>
 
+                    <p:outputLabel value="#{bundle.ViewScolariteLabel_filiere}" for="filiere" style="display:block;width:80px"/>
+                    <p:inputText id="filiere" value="#{scolariteController.filiereForSearch}" style="display:block;width:80px;color: red;width: 100%" />
+
+
                     <p:outputLabel value="#{bundle.ViewScolariteLabel_moyenne1}" for="moyenne1" style="display:block;width:80px"/>
-                    <p:inputText id="moyenne1" value="#{scolariteController.moyenne1ForSearch}" style="display:block;width:80px;color: red" />
+                    <p:inputText id="moyenne1" value="#{scolariteController.moyenne1ForSearch}" style="display:block;width:80px;color: red;width: 100%" />
 
                     <p:outputLabel value="#{bundle.ViewScolariteLabel_moyenne2}" for="moyenne2" style="display:block;width:80px"/>
-                    <p:inputText id="moyenne2" value="#{scolariteController.moyenne2ForSearch}" style="display:block;width:80px;color: red" />
+                    <p:inputText id="moyenne2" value="#{scolariteController.moyenne2ForSearch}" style="display:block;width:80px;color: red;width: 100%" />
 
                     <p:outputLabel value="#{bundle.ViewScolariteLabel_moyenneAnnee}" for="moyenneAnneeExact" style="display:block;width:80px"/>
-                    <p:inputText id="moyenneAnneeExact" value="#{scolariteController.moyenneAnneeExact}" style="display:block;width:80px;color: red" />
+                    <p:inputText id="moyenneAnneeExact" value="#{scolariteController.moyenneAnneeExact}" style="display:block;width:80px;color: red;width: 100%" />
 
                     <p:outputLabel value="#{bundle.ViewScolariteLabel_resultat}" for="resultat" style="display:block;width:80px"/>
                     <p:selectOneMenu  id="resultat"  value="#{scolariteController.resultatForSearch}" >

@@ -67,7 +67,9 @@
             <f:facet name="header">
                 <h:outputText value="#{bundle.ListScolariteTitle_soutienScolaire}"/>
             </f:facet>
-            <h:outputText value="#{item.soutienScolaire ? 'نعم': 'لا'}"/>
+            <p:graphicImage  value ="../../resources/image/Thumbs-up.gif" rendered="#{item.soutienScolaire}"/>
+            <p:graphicImage  value ="../../resources/image/Thumbs-down.gif" rendered="#{!item.soutienScolaire}"/>
+<!--            <h:outputText  value="# {item.soutienScolaire ? 'نعم': 'لا'}"/>-->
         </p:column>
         <p:column style="background-color: #{scolariteController.couleurResultatBoolean(item.resultat)}">
             <f:facet name="header">

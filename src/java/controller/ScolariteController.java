@@ -2,15 +2,12 @@ package controller;
 
 import bean.Scolarite;
 import bean.User;
-import bean.Veuve;
 import controller.util.JsfUtil;
 import controller.util.JsfUtil.PersistAction;
 import controller.util.ScolariteUtil;
 import controller.util.SessionUtil;
 import service.ScolariteFacade;
-
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -36,6 +33,7 @@ public class ScolariteController implements Serializable {
     private String etablissementForSearch;
     private String niveauScolaireForSearch;
     private String filiereForSearch;
+    private String anneeScolaireFirstForSearch;
     private Float moyenne1ForSearch;
     private Float moyenne2ForSearch;
     private Float moyenneAnneeMinForSearch;
@@ -46,31 +44,52 @@ public class ScolariteController implements Serializable {
     private String passwordForDelete;
     private String situationDeSearch;
     private String niveauScolaireDeSearch;
+    private String typeOfItems;
+
+    public String stringToIntToString(String a) {
+        int foo = Integer.parseInt(a);
+        foo++;
+        String str = Integer.toString(foo);
+        return str;
+    }
+
+    public String generalListenerTemplate(String type) {
+        setTypeOfItems(type);
+        setSituationDeSearch("");
+        setNiveauScolaireDeSearch("");
+        return "/scolarite/List?faces-redirect=true";
+    }
+
+    public String currentYearListenerTemplate(String type) {
+        setTypeOfItems(type);
+        setSituationDeSearch("");
+        setNiveauScolaireDeSearch("");
+        return "/scolarite/List?faces-redirect=true";
+    }
+
+    public String situationListenerTemplate(String situation, String type) {
+        setTypeOfItems(type);
+        setSituationDeSearch(situation);
+        setNiveauScolaireDeSearch("");
+        System.out.println("hahia " + getSituationDeSearch());
+        return "/scolarite/List?faces-redirect=true";
+    }
+
+    public String niveauListenerTemplate(String niveau, String type) {
+        setTypeOfItems(type);
+        setNiveauScolaireDeSearch(niveau);
+        setSituationDeSearch("");
+        System.out.println("hahia " + getNiveauScolaireDeSearch());
+        return "/scolarite/List?faces-redirect=true";
+    }
 
     public void setSituationForPage(String situation) {
         setSituationDeSearch(situation);
-        System.out.println("hahia situation de search ::::" + getSituationDeSearch());
+        System.out.println("hahia " + getSituationDeSearch());
     }
 
     public void setNiveauScolaireForPage(String niveauScolaire) {
         setNiveauScolaireDeSearch(niveauScolaire);
-        System.out.println("hahwa niveauScolaire de search ::::" + getNiveauScolaireDeSearch());
-    }
-
-    public String getSituationDeSearch() {
-        return situationDeSearch;
-    }
-
-    public void setSituationDeSearch(String situationDeSearch) {
-        this.situationDeSearch = situationDeSearch;
-    }
-
-    public String getNiveauScolaireDeSearch() {
-        return niveauScolaireDeSearch;
-    }
-
-    public void setNiveauScolaireDeSearch(String niveauScolaireDeSearch) {
-        this.niveauScolaireDeSearch = niveauScolaireDeSearch;
     }
 
     public String passOrNot(Scolarite scolarite) {
@@ -118,6 +137,10 @@ public class ScolariteController implements Serializable {
         items = null;
     }
 
+    public List<String> getSilkScolaires() {
+        return ejbFacade.getSilkScolaires();
+    }
+
     public List<String> getNiveauxScolaires() {
         return ScolariteUtil.findNiveauxBySilk(getSelected().getSilkScolaire());
     }
@@ -134,14 +157,6 @@ public class ScolariteController implements Serializable {
         getSelected().setAnneeScolaireSecond(fooString);
     }
 
-    public String getPasswordForDelete() {
-        return passwordForDelete;
-    }
-
-    public void setPasswordForDelete(String passwordForDelete) {
-        this.passwordForDelete = passwordForDelete;
-    }
-
     public User getConnectedUser() {
         return SessionUtil.getConnectedUser();
     }
@@ -151,19 +166,193 @@ public class ScolariteController implements Serializable {
     }
 
     public void rechercheScolariteByQuery() {
-        items = ejbFacade.findByQuery(
-                nomOrphelinForSearch, etablissementForSearch,
-                niveauScolaireForSearch, filiereForSearch, moyenne1ForSearch,
-                moyenne2ForSearch, moyenneAnneeMinForSearch, moyenneAnneeMaxForSearch, moyenneAnneeExact,
-                resultatForSearch, soutienScolaireForSearch, getSituationDeSearch());
-        System.out.println(items);
+        items = ejbFacade.findByQuery(nomOrphelinForSearch, etablissementForSearch, getNiveauScolaireDeSearch(),
+                filiereForSearch, moyenne1ForSearch, moyenne2ForSearch, moyenneAnneeExact,
+                resultatForSearch, soutienScolaireForSearch, getSituationDeSearch(), anneeScolaireFirstForSearch);
     }
 
     public void nullerLaListe() {
         if (!FacesContext.getCurrentInstance().isPostback()) {
-            items = null;
-//            System.out.println("hanooo");
+            if (items != null) {
+                items = null;
+            }
         }
+    }
+
+    public ScolariteController() {
+    }
+
+    public Scolarite getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Scolarite selected) {
+        this.selected = selected;
+    }
+
+    protected void setEmbeddableKeys() {
+    }
+
+    protected void initializeEmbeddableKey() {
+    }
+
+    private ScolariteFacade getFacade() {
+        return ejbFacade;
+    }
+
+    public Scolarite prepareCreate() {
+        selected = new Scolarite();
+        initializeEmbeddableKey();
+        return selected;
+    }
+
+    public void create() {
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ScolariteCreated"));
+        if (!JsfUtil.isValidationFailed()) {
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
+    }
+
+    public void update() {
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ScolariteUpdated"));
+    }
+
+    public void destroy() {
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ScolariteDeleted"));
+        if (!JsfUtil.isValidationFailed()) {
+            selected = null; // Remove selection
+            items = null;    // Invalidate list of items to trigger re-query.
+        }
+    }
+
+    public List<Scolarite> getItemsByType() {
+        switch (getTypeOfItems()) {
+            case "general":
+                return getItems();
+            case "currentYear":
+                return getItemsThisYear();
+            case "situation":
+                return getItemsBySituations();
+            case "niveau":
+                return getItemsByNiveaux();
+            default:
+                return getItems();
+        }
+    }
+
+    public List<Scolarite> getItems() {
+        if (items == null) {
+            items = getFacade().findAll();
+        }
+        return items;
+    }
+
+    public List<Scolarite> getItemsThisYear() {
+        if (items == null) {
+            items = getFacade().findScolariteThisYear();
+        }
+        return items;
+    }
+
+    public List<Scolarite> getItemsByNiveaux() {
+        if (items == null) {
+            items = getFacade().findScolariteByNiveauxThisYear(getNiveauScolaireDeSearch());
+        }
+        return items;
+    }
+
+    public List<Scolarite> getItemsBySituations() {
+        if (items == null) {
+            items = getFacade().findScolariteBySituationThisYear(getSituationDeSearch());
+        }
+        return items;
+    }
+
+    private void persist(PersistAction persistAction, String successMessage) {
+        if (selected != null) {
+            setEmbeddableKeys();
+            try {
+                if (persistAction == PersistAction.CREATE) {
+                    getFacade().create(selected);
+                    items = null;
+                    JsfUtil.addSuccessMessage(successMessage);
+                } else if (persistAction == PersistAction.UPDATE) {
+                    getFacade().edit(selected);
+                    items = null;
+                    JsfUtil.addSuccessMessage(successMessage);
+                } else {
+                    getFacade().removeItem(selected, passwordForDelete, getConnectedUser());
+//                  getFacade().remove(selected);
+                }
+            } catch (EJBException ex) {
+                String msg = "";
+                Throwable cause = ex.getCause();
+                if (cause != null) {
+                    msg = cause.getLocalizedMessage();
+                }
+                if (msg.length() > 0) {
+                    JsfUtil.addErrorMessage(msg);
+                } else {
+                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            }
+        }
+    }
+
+    public Scolarite getScolarite(java.lang.Long id) {
+        return getFacade().find(id);
+    }
+
+    public List<Scolarite> getItemsAvailableSelectMany() {
+        return getFacade().findAll();
+    }
+
+    public List<Scolarite> getItemsAvailableSelectOne() {
+        return getFacade().findAll();
+    }
+
+    @FacesConverter(forClass = Scolarite.class)
+    public static class ScolariteControllerConverter implements Converter {
+
+        @Override
+        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            ScolariteController controller = (ScolariteController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "scolariteController");
+            return controller.getScolarite(getKey(value));
+        }
+
+        java.lang.Long getKey(String value) {
+            java.lang.Long key;
+            key = Long.valueOf(value);
+            return key;
+        }
+
+        String getStringKey(java.lang.Long value) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(value);
+            return sb.toString();
+        }
+
+        @Override
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof Scolarite) {
+                Scolarite o = (Scolarite) object;
+                return getStringKey(o.getId());
+            } else {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Scolarite.class.getName()});
+                return null;
+            }
+        }
+
     }
 
     public Float getMoyenneAnneeExact() {
@@ -254,165 +443,47 @@ public class ScolariteController implements Serializable {
         this.soutienScolaireForSearch = soutienScolaireForSearch;
     }
 
-    public ScolariteController() {
+    public String getPasswordForDelete() {
+        return passwordForDelete;
     }
 
-    public Scolarite getSelected() {
-        return selected;
+    public void setPasswordForDelete(String passwordForDelete) {
+        this.passwordForDelete = passwordForDelete;
     }
 
-    public void setSelected(Scolarite selected) {
-        this.selected = selected;
+    public String getSituationDeSearch() {
+        return situationDeSearch;
     }
 
-    protected void setEmbeddableKeys() {
+    public void setSituationDeSearch(String situationDeSearch) {
+        this.situationDeSearch = situationDeSearch;
     }
 
-    protected void initializeEmbeddableKey() {
+    public String getNiveauScolaireDeSearch() {
+        return niveauScolaireDeSearch;
     }
 
-    private ScolariteFacade getFacade() {
-        return ejbFacade;
+    public void setNiveauScolaireDeSearch(String niveauScolaireDeSearch) {
+        this.niveauScolaireDeSearch = niveauScolaireDeSearch;
     }
 
-    public Scolarite prepareCreate() {
-        selected = new Scolarite();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("ScolariteCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+    public String getTypeOfItems() {
+        if (typeOfItems == null) {
+            typeOfItems = "";
         }
+        return typeOfItems;
     }
 
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("ScolariteUpdated"));
+    public void setTypeOfItems(String typeOfItems) {
+        this.typeOfItems = typeOfItems;
     }
 
-    public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ScolariteDeleted"));
-        if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
+    public String getAnneeScolaireFirstForSearch() {
+        return anneeScolaireFirstForSearch;
     }
 
-    public List<Scolarite> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
-        return items;
-    }
-
-    public List<Scolarite> getItemsThisYear() {
-        if (items == null) {
-            items = getFacade().findScolariteThisYear();
-        }
-        return items;
-    }
-
-    public List<Scolarite> getItemsByNiveaux() {
-        if (items == null) {
-            items = getFacade().findScolariteByNiveaux(getNiveauScolaireDeSearch());
-        }
-        System.out.println("Hani f la Methode getItemsBySituations()");
-        return items;
-    }
-
-    public List<Scolarite> getItemsBySituations() {
-        if (items == null) {
-            items = getFacade().findScolariteBySituation(getSituationDeSearch());
-        }
-        System.out.println("Hani f la Methode getItemsBySituations()");
-        return items;
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction == PersistAction.CREATE) {
-                    getFacade().create(selected);
-                    JsfUtil.addSuccessMessage(successMessage);
-                } else if (persistAction == PersistAction.UPDATE) {
-                    getFacade().edit(selected);
-                    JsfUtil.addSuccessMessage(successMessage);
-                } else {
-                    getFacade().removeItem(selected, passwordForDelete, getConnectedUser());
-//                  getFacade().remove(selected);
-                }
-            } catch (EJBException ex) {
-                String msg = "";
-                Throwable cause = ex.getCause();
-                if (cause != null) {
-                    msg = cause.getLocalizedMessage();
-                }
-                if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
-                } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
-        }
-    }
-
-    public Scolarite getScolarite(java.lang.Long id) {
-        return getFacade().find(id);
-    }
-
-    public List<Scolarite> getItemsAvailableSelectMany() {
-        return getFacade().findAll();
-    }
-
-    public List<Scolarite> getItemsAvailableSelectOne() {
-        return getFacade().findAll();
-    }
-
-    @FacesConverter(forClass = Scolarite.class)
-    public static class ScolariteControllerConverter implements Converter {
-
-        @Override
-        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
-            if (value == null || value.length() == 0) {
-                return null;
-            }
-            ScolariteController controller = (ScolariteController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "scolariteController");
-            return controller.getScolarite(getKey(value));
-        }
-
-        java.lang.Long getKey(String value) {
-            java.lang.Long key;
-            key = Long.valueOf(value);
-            return key;
-        }
-
-        String getStringKey(java.lang.Long value) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(value);
-            return sb.toString();
-        }
-
-        @Override
-        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-            if (object == null) {
-                return null;
-            }
-            if (object instanceof Scolarite) {
-                Scolarite o = (Scolarite) object;
-                return getStringKey(o.getId());
-            } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Scolarite.class.getName()});
-                return null;
-            }
-        }
-
+    public void setAnneeScolaireFirstForSearch(String anneeScolaireFirstForSearch) {
+        this.anneeScolaireFirstForSearch = anneeScolaireFirstForSearch;
     }
 
 }

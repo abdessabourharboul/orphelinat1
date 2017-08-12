@@ -22,10 +22,11 @@
                                  rowKey="#{item.id}"
                                  rows="10"
                                  rowsPerPageTemplate="10,20,30,40,50"
+                                 sortBy="#{item.nombrePersonne}"
                                  >
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowSelect"   update="editButton"/>
+                        <p:ajax event="rowUnselect" update="editButton"/>
 
 
 
@@ -77,7 +78,7 @@
                             </p:row>
                         </p:columnGroup>
                         <p:column>
-                            <h:outputText value="#{item.nombrePersonne}"/>
+                            <h:outputText value="#{provisionController.nombreFamilles(item.nombrePersonne)}"/>
                         </p:column>
                         <p:column>
                             <h:outputText value="#{item.nombrePersonne}"/>
@@ -86,93 +87,81 @@
                             <h:outputText value="#{item.quantiteFarine}"/>
                         </p:column>
                         <p:column>
-                            <h:outputText value="#{item.quantiteHuile}"/>
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{item.quantiteSucre}"/>
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{item.quantiteLentilles}"/>
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{item.quantiteThe}"/>
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{item.quantiteRiz}"/>
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{item.quantiteDchicha}"/>
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{item.quantiteMfelka}"/>
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{item.quantiteBeurre}"/>
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{item.quantiteOeuf}"/>
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{item.quantiteOni}"/>
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{item.quantiteShampooing}"/>
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{item.quantiteSavon}"/>
-                        </p:column>
-                        <p:column>
-                            <h:outputText value="#{item.quantiteFarine}"/>
+                            <h:outputText value="#{(item.quantiteFarine)*provisionController.nombreFamilles(item.nombrePersonne)}"/>
                         </p:column>
                         <p:column>
                             <h:outputText value="#{item.quantiteHuile}"/>
                         </p:column>
                         <p:column>
+                            <h:outputText value="#{(item.quantiteHuile)*provisionController.nombreFamilles(item.nombrePersonne)}"/>                        </p:column>
+                        <p:column>
                             <h:outputText value="#{item.quantiteSucre}"/>
                         </p:column>
+                        <p:column>
+                            <h:outputText value="#{(item.quantiteSucre)*provisionController.nombreFamilles(item.nombrePersonne)}"/>                        </p:column>
                         <p:column>
                             <h:outputText value="#{item.quantiteLentilles}"/>
                         </p:column>
                         <p:column>
+                            <h:outputText value="#{(item.quantiteLentilles)*provisionController.nombreFamilles(item.nombrePersonne)}"/>                        </p:column>
+                        <p:column>
                             <h:outputText value="#{item.quantiteThe}"/>
                         </p:column>
+                        <p:column>
+                            <h:outputText value="#{(item.quantiteThe)*provisionController.nombreFamilles(item.nombrePersonne)}"/>                        </p:column>
                         <p:column>
                             <h:outputText value="#{item.quantiteRiz}"/>
                         </p:column>
                         <p:column>
+                            <h:outputText value="#{(item.quantiteRiz)*provisionController.nombreFamilles(item.nombrePersonne)}"/>                        </p:column>
+                        <p:column>
                             <h:outputText value="#{item.quantiteDchicha}"/>
                         </p:column>
+                        <p:column>
+                            <h:outputText value="#{(item.quantiteDchicha)*provisionController.nombreFamilles(item.nombrePersonne)}"/>                        </p:column>
                         <p:column>
                             <h:outputText value="#{item.quantiteMfelka}"/>
                         </p:column>
                         <p:column>
+                            <h:outputText value="#{(item.quantiteMfelka)*provisionController.nombreFamilles(item.nombrePersonne)}"/>                        </p:column>
+                        <p:column>
                             <h:outputText value="#{item.quantiteBeurre}"/>
                         </p:column>
+                        <p:column>
+                            <h:outputText value="#{(item.quantiteBeurre)*provisionController.nombreFamilles(item.nombrePersonne)}"/>                        </p:column>
                         <p:column>
                             <h:outputText value="#{item.quantiteOeuf}"/>
                         </p:column>
                         <p:column>
+                            <h:outputText value="#{(item.quantiteOeuf)*provisionController.nombreFamilles(item.nombrePersonne)}"/>                        </p:column>
+                        <p:column>
                             <h:outputText value="#{item.quantiteOni}"/>
                         </p:column>
+                        <p:column>
+                            <h:outputText value="#{(item.quantiteOni)*provisionController.nombreFamilles(item.nombrePersonne)}"/>                        </p:column>
                         <p:column>
                             <h:outputText value="#{item.quantiteShampooing}"/>
                         </p:column>
                         <p:column>
+                            <h:outputText value="#{(item.quantiteShampooing)*provisionController.nombreFamilles(item.nombrePersonne)}"/>                        </p:column>
+                        <p:column>
                             <h:outputText value="#{item.quantiteSavon}"/>
                         </p:column>
+                        <p:column>
+                            <h:outputText value="#{(item.quantiteSavon)*provisionController.nombreFamilles(item.nombrePersonne)}"/>                        </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleProvision.Create}" actionListener="#{provisionController.prepareCreate}" update=":ProvisionCreateForm" oncomplete="PF('ProvisionCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundleProvision.View}" update=":ProvisionViewForm" oncomplete="PF('ProvisionViewDialog').show()" disabled="#{empty provisionController.selected}"/>
+                            <!--                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="# {bundleProvision.Create}" actionListener="# {provisionController.prepareCreate}" update=":ProvisionCreateForm" oncomplete="PF('ProvisionCreateDialog').show()"/>-->
+                            <!--                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="# {bundleProvision.View}" update=":ProvisionViewForm" oncomplete="PF('ProvisionViewDialog').show()" disabled="# {empty provisionController.selected}"/>-->
                             <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundleProvision.Edit}" update=":ProvisionEditForm" oncomplete="PF('ProvisionEditDialog').show()" disabled="#{empty provisionController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundleProvision.Delete}" actionListener="#{provisionController.destroy}" update=":growl,datalist" disabled="#{empty provisionController.selected}"/>
+                            <!--                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="# {bundleProvision.Delete}" actionListener="# {provisionController.destroy}" update=":growl,datalist" disabled="# {empty provisionController.selected}"/>-->
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
             </h:form>
 
-            <ui:include src="Create.xhtml"/>
+            <!--<ui:include src="Create.xhtml"/>-->
             <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/>
+            <!--<ui:include src="View.xhtml"/>-->
         </ui:define>
     </ui:composition>
 

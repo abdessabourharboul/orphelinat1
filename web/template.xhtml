@@ -25,12 +25,15 @@
                 <h:form id="menuForm" >
                     <p:menubar>
                         <p:menuitem value="خروج" action="#{userController.seDeconnecter()}" />
+                        
 
                         <p:submenu label="اعدادات" style="margin-left: 700px">
                             <p:menuitem value="الحسابات" outcome="/user/List.xhtml" />
                             <p:menuitem value="اصلاح المشاكل" outcome="/user/FixDataBaseErrors.xhtml" />
                             <p:menuitem value="تغيير كلمة السر" outcome="/user/ChangePassword.xhtml" />
+                            <p:menuitem value="تغيير الشكل" outcome="/user/ChangeTheme.xhtml" />
                         </p:submenu>
+                        <p:menuitem value="التموين" outcome="/provision/List.xhtml" />
                         <p:menuitem value="الادوية" outcome="/medicament/List.xhtml" />
                         <p:menuitem value="الامراض" outcome="/maladie/List.xhtml" />
                         <p:menuitem value="الاستفادات" outcome="/bonification/List.xhtml" />
@@ -39,10 +42,11 @@
                             <p:menuitem value="الدراسات الحالية" action="#{scolariteController.currentYearListenerTemplate('currentYear')}" />
                             <p:submenu label="حسب الوضعية">
                                 <p:menuitem  value="الدراسات المكفولة" action="#{scolariteController.situationListenerTemplate('مكفول','situation')}" />
-                                <p:menuitem  value="الدراسات في انتظار" action="#{scolariteController.situationListenerTemplate('انتظار','situation')}" />
+                                <p:menuitem  value="الدراسات في انتظار" action="#{scolariteController.situationListenerTemplate('في انتظار','situation')}" />
                                 <p:menuitem  value="الدراسات الموسمية" action="#{scolariteController.situationListenerTemplate('موسمي','situation')}" />
                                 <p:menuitem  value="الدراسات الجديدة" action="#{scolariteController.situationListenerTemplate('جديد','situation')}" />
                                 <p:menuitem  value="الدراسات المعوزة"   action="#{scolariteController.situationListenerTemplate('معوز','situation')}" />
+                                <p:menuitem  value="الدراسات المعوزة"   action="#{scolariteController.situationListenerTemplate('اخر','situation')}" />
                             </p:submenu>
                             <p:submenu label="حسب المستويات">
                                 <p:submenu label="الابتدائي">

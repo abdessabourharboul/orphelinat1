@@ -7,10 +7,8 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-
         <f:event type="preRenderView" listener="#{orphelinController.nullerLaListe()}" />
         <ui:include src="../Search.xhtml"/>
-        <!--            <p:outputPanel autoUpdate="true">-->
         <h:form id="OrphelinListForm">
             <p:commandButton id="toggler" type="button" value="أعمدة" 
                              style="float:left" icon="ui-icon-calculator" />
@@ -46,8 +44,6 @@
                 </p:dataTable>
             </p:panel>
         </h:form>
-        <!--            </p:outputPanel>-->
-
         <ui:include src="../Create.xhtml"/>
         <ui:include src="../Edit.xhtml"/>
         <ui:include src="../View.xhtml"/>

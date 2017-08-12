@@ -7,14 +7,20 @@
       xmlns:p="http://primefaces.org/ui">
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="اصلاح المضاكل"></h:outputText>
+            <h:outputText value="Test Page"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <center>
                 <h:form>
-                    <p:commandButton value="Rectifier Nombre Personnes"  actionListener="#{familleController.rectifierNombrePersonnes()}"/>
-                    <p:commandButton value="Creation De Dossiers"  actionListener="#{userController.createFilesIfNotExists()}"/>
-                    <p:commandButton  value="Regler Les Notes" actionListener="#{scolariteController.regler()}"    />
+                    <p:themeSwitcher value="#{guestPreferences.theme}" style="width: 165px"
+                                     effect="fade" id="statefulSwitcher">
+                        <f:selectItem itemLabel="Choose Theme" itemValue=""/>
+                        <f:selectItems value="#{switcherBeann.themes}"/>
+                        <p:ajax listener="#{switcherBeann.saveTheme}"/>
+                    </p:themeSwitcher>
+                    <center>
+                        <p:commandButton value="HANI"/>
+                    </center>
                 </h:form>
             </center>           
         </ui:define>

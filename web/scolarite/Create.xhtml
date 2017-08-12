@@ -22,10 +22,12 @@
                         <p:inputText id="etablissement" value="#{scolariteController.selected.etablissement}" title="#{bundle.CreateScolariteTitle_etablissement}" />
                         <p:outputLabel value="#{bundle.CreateScolariteLabel_anneeScolaire}" for="anneeScolaire" />
                         <p:row id="anneeScolaire">
-                            <p:inputText id="anneeScolaireSecond" value="#{scolariteController.selected.anneeScolaireSecond}" title="#{bundle.CreateScolariteTitle_anneeScolaire}" />
+                            <p:inputText id="anneeScolaireSecond" value="#{scolariteController.selected.anneeScolaireSecond}" required="true"
+                                         title="#{bundle.CreateScolariteTitle_anneeScolaire}" />
                             /
-                            <p:inputText id="anneeScolaireFirst" value="#{scolariteController.selected.anneeScolaireFirst}" title="#{bundle.CreateScolariteTitle_anneeScolaire}" >
-                                <p:ajax event="keyup" update="anneeScolaireSecond" listener="#{scolariteController.setAnneSecondaireAjax()}"/>
+                            <p:inputText id="anneeScolaireFirst" value="#{scolariteController.selected.anneeScolaireFirst}"
+                                         title="#{bundle.CreateScolariteTitle_anneeScolaire}"  required="true">
+                                <p:ajax event="blur" update="anneeScolaireSecond" listener="#{scolariteController.setAnneSecondaireAjax()}"/>
                             </p:inputText>
                         </p:row>
                         <p:outputLabel value="#{bundle.CreateScolariteLabel_silkScolaire}" for="silkScolaire" />

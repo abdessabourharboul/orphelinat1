@@ -7,7 +7,6 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-
         <p:column width="20">
             <f:facet name="header">
                 <h:outputText value="#" />
@@ -69,7 +68,7 @@
             </f:facet>
             <p:graphicImage  value ="../../resources/image/Thumbs-up.gif" rendered="#{item.soutienScolaire}"/>
             <p:graphicImage  value ="../../resources/image/Thumbs-down.gif" rendered="#{!item.soutienScolaire}"/>
-<!--            <h:outputText  value="# {item.soutienScolaire ? 'نعم': 'لا'}"/>-->
+            <!--            <h:outputText  value="# {item.soutienScolaire ? 'نعم': 'لا'}"/>-->
         </p:column>
         <p:column style="background-color: #{scolariteController.couleurResultatBoolean(item.resultat)}">
             <f:facet name="header">
@@ -91,6 +90,7 @@
                              actionListener="#{scolariteController.annulerDecision(item)}" 
                              update=":ScolariteListForm:datalist"/>
         </p:column>
+
 
 
     </ui:composition>

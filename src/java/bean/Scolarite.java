@@ -29,10 +29,11 @@ public class Scolarite implements Serializable {
     private String silkScolaire;
     private String niveauScolaire;
     private String filiere;
-    private Float moyenne1;
-    private Float moyenne2;
-    private Float moyenneAnnee;
-    private Boolean resultat;
+    private Double moyenne1;
+    private Double moyenne2;
+    private Double moyenneAnnee;
+    //0 non decidé , 1 success , 2 fail
+    private Integer resultat;
     private Boolean soutienScolaire;
 
     @ManyToOne
@@ -94,35 +95,35 @@ public class Scolarite implements Serializable {
         this.filiere = filiere;
     }
 
-    public Float getMoyenne1() {
+    public Double getMoyenne1() {
         return moyenne1;
     }
 
-    public void setMoyenne1(Float moyenne1) {
+    public void setMoyenne1(Double moyenne1) {
         this.moyenne1 = moyenne1;
     }
 
-    public Float getMoyenne2() {
+    public Double getMoyenne2() {
         return moyenne2;
     }
 
-    public void setMoyenne2(Float moyenne2) {
+    public void setMoyenne2(Double moyenne2) {
         this.moyenne2 = moyenne2;
     }
 
-    public Float getMoyenneAnnee() {
+    public Double getMoyenneAnnee() {
         return moyenneAnnee;
     }
 
-    public void setMoyenneAnnee(Float moyenneAnnee) {
+    public void setMoyenneAnnee(Double moyenneAnnee) {
         this.moyenneAnnee = moyenneAnnee;
     }
 
-    public Boolean getResultat() {
+    public Integer getResultat() {
         return resultat;
     }
 
-    public void setResultat(Boolean resultat) {
+    public void setResultat(Integer resultat) {
         this.resultat = resultat;
     }
 
@@ -162,9 +163,13 @@ public class Scolarite implements Serializable {
         return true;
     }
 
+//    @Override
+//    public String toString() {
+//        return "bean.Scolarite[ id=" + id + " ]";
+//    }
+
     @Override
     public String toString() {
-        return "bean.Scolarite[ id=" + id + " ]";
+        return "Scolarite{" + "id=" + id + ", anneeScolaireFirst=" + anneeScolaireFirst + ", anneeScolaireSecond=" + anneeScolaireSecond + ", silkScolaire=" + silkScolaire + ", niveauScolaire=" + niveauScolaire + ", moyenneAnnee=" + moyenneAnnee + ", resultat=" + resultat + ", orphelin=" + orphelin + '}';
     }
-
 }

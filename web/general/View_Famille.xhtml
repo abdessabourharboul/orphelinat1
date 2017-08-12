@@ -20,11 +20,11 @@
                             </h:commandLink>
                         </p:panel>
                         <h:outputText value="#{bundle.ViewFamilleLabel_zoneGeographique}"/>
-                        <h:outputText value="#{familleController.selected.zoneGeographique}" styleClass="normalInfo" title="#{bundle.ViewFamilleTitle_zoneGeographique}"/>
+                        <h:outputText value="#{familleController.selected.user.zoneGeographique}" styleClass="normalInfo" title="#{bundle.ViewFamilleTitle_zoneGeographique}"/>
                         <h:outputText value="#{bundle.ViewFamilleLabel_situation}"/>
                         <h:outputText value="#{familleController.selected.situation}" styleClass="normalInfo" title="#{bundle.ViewFamilleTitle_situation}"/>
                         <h:outputText value="#{bundle.ViewFamilleLabel_responsableZone}"/>
-                        <h:outputText value="#{familleController.selected.responsableZone}" styleClass="normalInfo" title="#{bundle.ViewFamilleTitle_responsableZone}"/>
+                        <h:outputText value="#{familleController.selected.user.nom}" styleClass="normalInfo" title="#{bundle.ViewFamilleTitle_responsableZone}"/>
                         <h:outputText value="#{bundle.ViewFamilleLabel_telephone}"/>
                         <h:outputText value="#{familleController.selected.telephone}" styleClass="normalInfo" title="#{bundle.ViewFamilleTitle_telephone}"/>
                         <h:outputText value="#{bundle.ViewFamilleLabel_nombrePersonnes}"/>
@@ -35,9 +35,7 @@
                         <h:outputText value="#{familleController.selected.typeLogement}" styleClass="normalInfo" title="#{bundle.ViewFamilleTitle_typeLogement}"/>
                         <h:outputText value="#{bundle.ViewFamilleLabel_adresse}"/>
                         <h:outputText value="#{familleController.selected.adresse}" styleClass="normalInfo" title="#{bundle.ViewFamilleTitle_adresse}"/>
-                        <h:outputText value="#{bundle.ViewFamilleLabel_cout}"/>
-                        <h:outputText value="#{familleController.selected.cout}" styleClass="normalInfo" title="#{bundle.ViewFamilleTitle_cout}"/>
-                    </p:panelGrid>
+                         </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="FamilleViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

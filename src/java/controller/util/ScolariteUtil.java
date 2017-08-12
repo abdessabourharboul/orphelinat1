@@ -48,6 +48,23 @@ public class ScolariteUtil {
         return new ArrayList<>();
     }
 
+    public static List<String> situations() {
+        List<String> list = new ArrayList<>();
+        String makfoul = "مكفول";
+        String intidar = "في انتظار";
+        String mawsimi = "موسمي";
+        String mouiz = "معوز";
+        String jadid = "جديد";
+        String akhar = "اخر";
+        list.add(makfoul);
+        list.add(intidar);
+        list.add(mawsimi);
+        list.add(mouiz);
+        list.add(jadid);
+        list.add(akhar);
+        return list;
+    }
+
     public static List<String> niveauxScolarite() {
         ScolariteUtil scolariteStrings = getNiveauxScolarite();
         List<String> list = new ArrayList<>();
@@ -183,7 +200,7 @@ public class ScolariteUtil {
         }
         return silkScolaire;
     }
-    
+
     public static List<String> getSilkScolaires() {
         List<String> list = new ArrayList<>();
         list.add(ScolariteUtil.getPimaire());

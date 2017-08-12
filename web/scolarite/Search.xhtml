@@ -28,25 +28,15 @@
                     <p:outputLabel value="#{bundle.ViewScolariteLabel_etablissement}" for="etablissement" style="display:block;width:80px"/>
                     <p:inputText id="etablissement" value="#{scolariteController.etablissementForSearch}" style="display:block;width:80px;color: red;width: 100%" />
 
-                    <p:outputLabel value="#{bundle.ViewScolariteLabel_niveauScolaire}" for="niveauScolaire" style="display:block;width:80px"/>
-                    <p:selectOneMenu id="niveauScolaire" value="#{scolariteController.niveauScolaireDeSearch}" filter="true" filterMatchMode="contains">
-                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{scolariteController.getItemsAvailableSelectOneString('niveauScolaire')}"
-                                       var="NiveauScolaire"
-                                       itemValue="#{NiveauScolaire}" itemLabel="#{NiveauScolaire}"/>
-                    </p:selectOneMenu>
-
-                    <p:outputLabel value="#{bundle.ViewScolariteLabel_anneeScolaire}" for="anneeScolaire" style="display:block;width:80px"/>
-                    <p:selectOneMenu id="anneeScolaire" value="#{scolariteController.anneeScolaireFirstForSearch}" filter="true" filterMatchMode="contains">
-                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
-                        <f:selectItems value="#{scolariteController.getItemsAvailableSelectOneString('anneeScolaire')}"
-                                       var="AnneeScolaire" itemValue="#{AnneeScolaire}"
-                                       itemLabel="#{AnneeScolaire}/#{scolariteController.stringToIntToString(AnneeScolaire)}"/>
-                    </p:selectOneMenu>
-
                     <p:outputLabel value="#{bundle.ViewScolariteLabel_filiere}" for="filiere" style="display:block;width:80px"/>
                     <p:inputText id="filiere" value="#{scolariteController.filiereForSearch}" style="display:block;width:80px;color: red;width: 100%" />
 
+                    <p:outputLabel value="#{bundle.ViewScolariteLabel_soutienScolaire}" for="soutienScolaire" style="display:block;width:80px"/>
+                    <p:selectOneMenu  id="soutienScolaire"  value="#{scolariteController.soutienScolaireForSearch}" >
+                        <f:selectItem itemValue="#{null}" itemLabel="----" />
+                        <f:selectItem itemValue="#{true}" itemLabel="--نعم--" />
+                        <f:selectItem itemValue="#{false}" itemLabel="--لا--" />
+                    </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.ViewScolariteLabel_moyenne1}" for="moyenne1" style="display:block;width:80px"/>
                     <p:inputText id="moyenne1" value="#{scolariteController.moyenne1ForSearch}" style="display:block;width:80px;color: red;width: 100%" />
@@ -57,23 +47,44 @@
                     <p:outputLabel value="#{bundle.ViewScolariteLabel_moyenneAnnee}" for="moyenneAnneeExact" style="display:block;width:80px"/>
                     <p:inputText id="moyenneAnneeExact" value="#{scolariteController.moyenneAnneeExact}" style="display:block;width:80px;color: red;width: 100%" />
 
-                    <p:outputLabel value="#{bundle.ViewScolariteLabel_resultat}" for="resultat" style="display:block;width:80px"/>
-                    <p:selectOneMenu  id="resultat"  value="#{scolariteController.resultatForSearch}" >
+                    <p:outputLabel value="#{bundle.ViewScolariteLabel_resultat}" rendered="#{!scolariteController.typeOfItems.equalsIgnoreCase('situation')}"
+                                   for="resultat" style="display:block;width:80px"/>
+                    <p:selectOneMenu  id="resultat" rendered="#{!scolariteController.typeOfItems.equalsIgnoreCase('situation')}"
+                                      value="#{scolariteController.resultatForSearch}" >
                         <f:selectItem itemValue="#{null}" itemLabel="----" />
-                        <f:selectItem itemValue="#{true}" itemLabel="--نعم--" />
-                        <f:selectItem itemValue="#{false}" itemLabel="--لا--"  />
+                        <f:selectItem itemValue="#{0}" itemLabel="--لم يحدد بعد--" />
+                        <f:selectItem itemValue="#{1}" itemLabel="--نعم--" />
+                        <f:selectItem itemValue="#{2}" itemLabel="--لا--"  />
                     </p:selectOneMenu>
 
-
-                    <p:outputLabel value="#{bundle.ViewScolariteLabel_soutienScolaire}" for="soutienScolaire" style="display:block;width:80px"/>
-                    <p:selectOneMenu  id="soutienScolaire"  value="#{scolariteController.soutienScolaireForSearch}" >
-                        <f:selectItem itemValue="#{null}" itemLabel="----" />
-                        <f:selectItem itemValue="#{true}" itemLabel="--نعم--" />
-                        <f:selectItem itemValue="#{false}" itemLabel="--لا--" />
+                    <p:outputLabel value="#{bundle.ViewFamilleLabel_situation}" for="situation" style="display:block;width:80px"/>
+                    <p:selectOneMenu id="situation" value="#{scolariteController.situationDeSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{scolariteController.getItemsAvailableSelectOneString('situation')}"
+                                       var="Situation" itemValue="#{Situation}"
+                                       itemLabel="#{Situation}"/>
                     </p:selectOneMenu>
 
+                    <p:outputLabel value="#{bundle.ViewScolariteLabel_niveauScolaire}" rendered="#{!scolariteController.typeOfItems.equalsIgnoreCase('niveau')}"
+                                   for="niveauScolaire" style="display:block;width:80px"/>
+                    <p:selectOneMenu id="niveauScolaire" rendered="#{!scolariteController.typeOfItems.equalsIgnoreCase('niveau')}"
+                                     value="#{scolariteController.niveauScolaireDeSearch}" filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{scolariteController.getItemsAvailableSelectOneString('niveauScolaire')}"
+                                       var="NiveauScolaire"
+                                       itemValue="#{NiveauScolaire}" itemLabel="#{NiveauScolaire}"/>
+                    </p:selectOneMenu>
 
-
+                    <p:outputLabel value="#{bundle.ViewScolariteLabel_anneeScolaire}" rendered="#{!scolariteController.typeOfItems.equalsIgnoreCase('currentYear')}"
+                                   for="anneeScolaire" style="display:block;width:80px"/>
+                    <p:selectOneMenu id="anneeScolaire" rendered="#{!scolariteController.typeOfItems.equalsIgnoreCase('currentYear')}"
+                                     value="#{scolariteController.anneeScolaireFirstForSearch}" filter="true" filterMatchMode="contains">
+<!--                        <f:selectItem itemLabel="now" itemValue="# {scolariteController.anneeScolaireFirstYear()}"/>-->
+                        <f:selectItem itemLabel="---اختيار---" itemValue="#{null}"/>
+                        <f:selectItems value="#{scolariteController.getItemsAvailableSelectOneString('anneeScolaire')}"
+                                       var="AnneeScolaire" itemValue="#{AnneeScolaire}"
+                                       itemLabel="#{AnneeScolaire}/#{scolariteController.stringToIntToString(AnneeScolaire)}"/>
+                    </p:selectOneMenu>
 
                     <p:commandButton id="rechercher" value="بحث" icon="ui-icon-search"  actionListener="#{scolariteController.rechercheScolariteByQuery}" update=":ScolariteListForm:datalist" style="display:block;width:60px" />         
                 </p:panelGrid>

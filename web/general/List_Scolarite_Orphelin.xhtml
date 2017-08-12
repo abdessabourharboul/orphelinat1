@@ -31,7 +31,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListScolariteTitle_anneeScolaire}"/>
                             </f:facet>
-                            <h:outputText value="#{item.anneeScolaire}"/>
+                            <h:outputText value="#{item.anneeScolaireFirst}/#{item.anneeScolaireSecond}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
@@ -67,7 +67,7 @@
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListScolariteTitle_resultat}"/>
                             </f:facet>
-                            <h:outputText value="#{item.resultat ? 'نعم': 'لا'}"/>
+                            <h:outputText value="#{scolariteController.passOrNot(item)}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">

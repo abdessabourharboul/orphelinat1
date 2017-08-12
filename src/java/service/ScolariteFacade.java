@@ -5,11 +5,14 @@ import bean.Scolarite;
 import controller.util.DateUtil;
 import controller.util.JsfUtil;
 import controller.util.ScolariteUtil;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -24,127 +27,132 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
 
     @Override
     public void create(Scolarite scolarite) {
-        super.create(toDoBeforeCreate(scolarite));
+        Scolarite scolariteCheck = findByOrphelinAndScolarYearSingle(scolarite.getOrphelin(),
+                scolarite.getAnneeScolaireFirst());
+        if (scolariteCheck != null) {
+            JsfUtil.addErrorMessage("الدراسة موجودة من قبل");
+        } else {
+            checkAndCalculMoyenneForSilkScolaires(scolarite);
+            super.create(scolarite);
+            if (scolarite.getResultat() == 1) {
+                Scolarite scolariteloadedForScolarite = checkExistenceScolariteByOrphelinAndFirstYear(scolarite);
+                if (scolariteloadedForScolarite != null) {
+                    System.out.println("Haniiiii");
+                    createNextScolariteAFterCreation(scolariteloadedForScolarite);
+                }
+            }
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ScolariteCreated"));
+        }
+    }
+
+    public void createNextScolariteAFterCreation(Scolarite scolarite) {
+        Scolarite clone = clone(scolarite);
+        clone.setAnneeScolaireFirst(yearPlusOneString(clone.getAnneeScolaireFirst()));
+        clone.setAnneeScolaireSecond(yearPlusOneString(clone.getAnneeScolaireSecond()));
+        clone.setMoyenne1(null);
+        clone.setMoyenne2(null);
+        clone.setMoyenneAnnee(null);
+        clone.setResultat(0);
+        clone.setNiveauScolaire(succesNiveauScolaire(clone.getNiveauScolaire()));
+        clone.setSilkScolaire(succesSilkScolaire(clone.getNiveauScolaire()));
+        Scolarite scolariteCheck = findByOrphelinAndScolarYearSingle(clone.getOrphelin(), clone.getAnneeScolaireFirst());
+        if (scolariteCheck != null) {
+            System.out.println("scolariteCheck: " + scolariteCheck);
+        }
+        if (scolariteCheck != null) {
+            super.remove(scolariteCheck);
+            super.create(clone);
+        } else {
+            super.create(clone);
+        }
+    }
+
+    private Scolarite checkExistenceScolariteByOrphelinAndFirstYear(Scolarite scolarite) {
+        Scolarite scolariteCheck = findByOrphelinAndScolarYearSingle(scolarite.getOrphelin(),
+                scolarite.getAnneeScolaireFirst());
+        if (scolariteCheck != null) {
+            return scolarite;
+        } else {
+            return null;
+        }
     }
 
     @Override
     public void edit(Scolarite scolarite) {
-        super.edit(toDoBeforeEdit(scolarite));
-    }
-
-    public Scolarite toDoBeforeCreate(Scolarite scolarite) {
         checkAndCalculMoyenneForSilkScolaires(scolarite);
-        checkBeforeCreate(scolarite);
-        return scolarite;
-    }
-
-    public Scolarite toDoBeforeEdit(Scolarite scolarite) {
-        checkAndCalculMoyenneForSilkScolaires(scolarite);
-        checkBeforeEdit(scolarite);
-        return scolarite;
-    }
-
-    public void checkAndCalculMoyenneForSilkScolaires(Scolarite scolarite) {
-        if (scolarite.getMoyenne1() == null || scolarite.getMoyenne2() == null) {
-            scolarite.setMoyenneAnnee(null);
-            scolarite.setResultat(null);
-        } else {
-            float moy = (scolarite.getMoyenne1() + scolarite.getMoyenne2()) / 2;
-            scolarite.setMoyenneAnnee(moy);
-        }
-        if (scolarite.getMoyenneAnnee() != null) {
-            if (scolarite.getSilkScolaire() != null) {
-                if (scolarite.getSilkScolaire().equals(ScolariteUtil.getPimaire())) {
-                    if (scolarite.getMoyenneAnnee() >= 5) {
-                        scolarite.setResultat(true);
-                    }
-                } else {
-                    if (scolarite.getMoyenneAnnee() >= 10) {
-                        scolarite.setResultat(true);
-                    }
-                }
-            }
-        }
-    }
-
-    private void checkBeforeCreate(Scolarite scolarite) {
-        List<Scolarite> list = findByOrphelinAndScolarYear(scolarite.getOrphelin(), scolarite.getAnneeScolaireFirst());
-        if (list.isEmpty()) {
-            super.create(scolarite);
-        } else {
-            if (scolarite.getResultat() == true) {
-                passButtonActionListener(scolarite);
-            }
-            JsfUtil.addSuccessMessage("تذكير: الدراسة موجودة");
-        }
-    }
-
-    private void checkBeforeEdit(Scolarite scolarite) {
-        if (scolarite.getResultat() != null) {
-            if (scolarite.getResultat() == true) {
-                passButtonActionListener(scolarite);
-            }
-        }
-    }
-
-    public void passButtonActionListener(Scolarite scolarite) {
-        scolarite.setResultat(true);
         super.edit(scolarite);
-        Scolarite newScolarite = scolarite;
-        String first = yearPlusOneString(scolarite.getAnneeScolaireFirst());
-        String second = yearPlusOneString(scolarite.getAnneeScolaireSecond());
-        newScolarite.setAnneeScolaireFirst(first);
-        newScolarite.setAnneeScolaireSecond(second);
-        newScolarite.setId(null);
+        Scolarite loadedAfterEdit = find(scolarite.getId());
+        Scolarite clone = clone(loadedAfterEdit);
+        clone.setAnneeScolaireFirst(yearPlusOneString(clone.getAnneeScolaireFirst()));
+        clone.setAnneeScolaireSecond(yearPlusOneString(clone.getAnneeScolaireSecond()));
+        clone.setMoyenne1(null);
+        clone.setMoyenne2(null);
+        clone.setMoyenneAnnee(null);
+        clone.setResultat(0);
+        Scolarite scolariteCheck = findByOrphelinAndScolarYearSingle(clone.getOrphelin(), clone.getAnneeScolaireFirst());
+        if (loadedAfterEdit.getResultat() == 0) {
+            if (scolariteCheck != null) {
+                super.remove(scolariteCheck);
+            }
+        } else if (loadedAfterEdit.getResultat() == 1) {
+            clone.setNiveauScolaire(succesNiveauScolaire(clone.getNiveauScolaire()));
+            clone.setSilkScolaire(clone.getNiveauScolaire());
+            if (scolariteCheck != null) {
+                super.remove(scolariteCheck);
+                super.create(clone);
+            } else {
+                super.create(clone);
+            }
+        }
+    }
+
+    public Scolarite clone(Scolarite oldScolarite) {
+        Scolarite newScolarite = new Scolarite();
+        newScolarite.setAnneeScolaireFirst(oldScolarite.getAnneeScolaireFirst());
+        newScolarite.setAnneeScolaireSecond(oldScolarite.getAnneeScolaireSecond());
+        newScolarite.setEtablissement(oldScolarite.getEtablissement());
+        newScolarite.setFiliere(oldScolarite.getFiliere());
+        newScolarite.setMoyenne1(oldScolarite.getMoyenne1());
+        newScolarite.setMoyenne2(oldScolarite.getMoyenne2());
+        newScolarite.setMoyenneAnnee(oldScolarite.getMoyenneAnnee());
+        newScolarite.setNiveauScolaire(oldScolarite.getNiveauScolaire());
+        newScolarite.setOrphelin(oldScolarite.getOrphelin());
+        newScolarite.setResultat(oldScolarite.getResultat());
+        newScolarite.setSilkScolaire(oldScolarite.getSilkScolaire());
+        newScolarite.setSoutienScolaire(oldScolarite.getSoutienScolaire());
+        return newScolarite;
+    }
+
+    public void passOrNotPassButtonActionListener(Scolarite scolarite) {
+        super.edit(scolarite);
+        Scolarite loadedAfterEdit = find(scolarite.getId());
+        Scolarite newScolarite = clone(loadedAfterEdit);
+        newScolarite.setAnneeScolaireFirst(yearPlusOneString(newScolarite.getAnneeScolaireFirst()));
+        newScolarite.setAnneeScolaireSecond(yearPlusOneString(newScolarite.getAnneeScolaireSecond()));
         newScolarite.setMoyenne1(null);
         newScolarite.setMoyenne2(null);
         newScolarite.setMoyenneAnnee(null);
-        newScolarite.setResultat(null);
-        newScolarite.setNiveauScolaire(succesNiveauScolaire(scolarite.getNiveauScolaire()));
-        newScolarite.setSilkScolaire(succesSilkScolaire(newScolarite.getNiveauScolaire()));
-        List<Scolarite> list = findByOrphelinAndScolarYear(newScolarite.getOrphelin(), newScolarite.getAnneeScolaireFirst());
-        if (list.isEmpty()) {
-            super.create(newScolarite);
-        } else {
-            for (int i = 0; i < list.size(); i++) {
-                Scolarite get = list.get(i);
-                get.setNiveauScolaire(newScolarite.getNiveauScolaire());
-                get.setSilkScolaire(newScolarite.getSilkScolaire());
-                super.edit(get);
-            }
-            JsfUtil.addSuccessMessage("تذكير: الدراسة موجودة");
+        newScolarite.setResultat(0);
+        if (loadedAfterEdit.getResultat() == 1) {
+            newScolarite.setNiveauScolaire(succesNiveauScolaire(loadedAfterEdit.getNiveauScolaire()));
+            newScolarite.setSilkScolaire(succesSilkScolaire(newScolarite.getNiveauScolaire()));
         }
-    }
-
-    public void notPassButtonActionListener(Scolarite scolarite) {
-        scolarite.setResultat(false);
-        super.edit(scolarite);
-        Scolarite newScolarite = scolarite;
-        String first = yearPlusOneString(scolarite.getAnneeScolaireFirst());
-        String second = yearPlusOneString(scolarite.getAnneeScolaireSecond());
-        newScolarite.setAnneeScolaireFirst(first);
-        newScolarite.setAnneeScolaireSecond(second);
-        newScolarite.setId(null);
-        newScolarite.setMoyenne1(null);
-        newScolarite.setMoyenne2(null);
-        newScolarite.setMoyenneAnnee(null);
-        newScolarite.setResultat(null);
-        List<Scolarite> list = findByOrphelinAndScolarYear(newScolarite.getOrphelin(), newScolarite.getAnneeScolaireFirst());
-        if (list.isEmpty()) {
+        Scolarite scolariteCheck = findByOrphelinAndScolarYearSingle(newScolarite.getOrphelin(),
+                newScolarite.getAnneeScolaireFirst());
+        if (scolariteCheck != null) {
+            System.out.println("HA scolariteCheck: " + scolariteCheck);
+        }
+        if (scolariteCheck == null) {
             super.create(newScolarite);
         } else {
-            for (int i = 0; i < list.size(); i++) {
-                Scolarite get = list.get(i);
-                get.setNiveauScolaire(scolarite.getNiveauScolaire());
-                get.setSilkScolaire(scolarite.getSilkScolaire());
-                super.edit(get);
-            }
+            super.remove(scolariteCheck);
+            super.create(newScolarite);
             JsfUtil.addSuccessMessage("تذكير: الدراسة موجودة");
         }
     }
 
     public void annulerDecision(Scolarite scolarite) {
-        scolarite.setResultat(null);
+        scolarite.setResultat(0);
         super.edit(scolarite);
     }
 
@@ -162,6 +170,16 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
 
     public List<String> getSilkScolaires() {
         return ScolariteUtil.getSilkScolaires();
+    }
+
+    public String anneeScolaireFirstYear() {
+        Date d = new Date();
+        int month = DateUtil.getMonth();
+        if (month >= 0 && month <= 6) {
+            return DateUtil.getPreviousYearString();
+        } else {
+            return DateUtil.getCurrentYearString();
+        }
     }
 
     public List<Scolarite> findScolariteThisYear() {
@@ -220,9 +238,9 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
         }
     }
 
-    public List<Scolarite> findByQuery(String nomOrphelin, String etablissement,String niveauScolaire, 
-            String filiere, Float moyenne1, Float moyenne2,Float moyenneAnneeExact,
-            Boolean resultat, Boolean soutienScolaire,String situation, String anneeScolaireFirst) {
+    public List<Scolarite> findByQuery(String nomOrphelin, String etablissement, String niveauScolaire,
+            String filiere, Double moyenne1, Double moyenne2, Double moyenneAnneeExact,
+            Integer resultat, Boolean soutienScolaire, String situation, String anneeScolaireFirst) {
         String requete = "SELECT r FROM Scolarite r WHERE 1=1 ";
         if (situation != null && !situation.equals("")) {
             requete += " and r.orphelin.veuve.famille.situation LIKE CONCAT('%','" + situation + "','%')";
@@ -273,6 +291,9 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
             case "niveauScolaire": {
                 return ScolariteUtil.niveauxScolarite();
             }
+            case "situation": {
+                return ScolariteUtil.situations();
+            }
             default:
                 return new ArrayList<>();
         }
@@ -283,6 +304,22 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
         foo++;
         String fooString = foo.toString();
         return fooString;
+    }
+
+    public Scolarite findByOrphelinAndScolarYearSingle(Orphelin orphelin, String firstYear) {
+        try {
+            if (orphelin != null && orphelin.getPrenom() != null) {
+                String requette = "SELECT s FROM Scolarite s WHERE 1=1 ";
+                requette += " and s.orphelin.prenom='" + orphelin.getPrenom() + "'";
+                requette += " and s.orphelin.veuve.famille.nomFamille='" + orphelin.getVeuve().getFamille().getNomFamille() + "'";
+                requette += " and s.anneeScolaireFirst='" + firstYear + "'";
+                System.out.println("Ha requette: " + requette);
+                return (Scolarite) em.createQuery(requette).getSingleResult();
+            }
+            return null;
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public List<Scolarite> findByOrphelinAndScolarYear(Orphelin orphelin, String firstYear) {
@@ -306,6 +343,66 @@ public class ScolariteFacade extends AbstractFacade<Scolarite> {
         String requete = "SELECT r FROM Scolarite r WHERE 1=1 ";
         requete += " and r.anneeScolaireFirst='" + DateUtil.getCurrentYearString() + "'";
         return executeQuery(requete);
+    }
+
+    public void reglerLesNotes() {
+        List<Scolarite> all = findAll();
+        for (int i = 0; i < all.size(); i++) {
+            Scolarite get = all.get(i);
+            if (get.getMoyenne1() != null) {
+                get.setMoyenne1(roundToTwo(get.getMoyenne1()));
+            }
+            if (get.getMoyenne2() != null) {
+                get.setMoyenne2(roundToTwo(get.getMoyenne2()));
+            }
+            if (get.getMoyenne1() != null) {
+                get.setMoyenneAnnee(roundToTwo(get.getMoyenne1()));
+            }
+            super.edit(get);
+        }
+    }
+
+    public Double roundToTwo(Double d) {
+        BigDecimal bd = new BigDecimal(d);
+        bd = bd.setScale(2, BigDecimal.ROUND_DOWN);
+        d = bd.doubleValue();
+        return d;
+    }
+
+    public void checkAndCalculMoyenneForSilkScolaires(Scolarite scolarite) {
+        if (scolarite.getMoyenne1() == null || scolarite.getMoyenne2() == null) {
+            scolarite.setMoyenneAnnee(null);
+            scolarite.setResultat(0);
+        } else {
+            Double moy = (scolarite.getMoyenne1() + scolarite.getMoyenne2()) / 2;
+            scolarite.setMoyenneAnnee(moy);
+        }
+        if (scolarite.getMoyenne1() != null) {
+            scolarite.setMoyenne1(roundToTwo(scolarite.getMoyenne1()));
+        }
+        if (scolarite.getMoyenne2() != null) {
+            scolarite.setMoyenne2(roundToTwo(scolarite.getMoyenne2()));
+        }
+        if (scolarite.getMoyenneAnnee() != null) {
+            scolarite.setMoyenneAnnee(roundToTwo(scolarite.getMoyenneAnnee()));
+        }
+        if (scolarite.getMoyenneAnnee() != null) {
+            if (scolarite.getSilkScolaire() != null) {
+                if (scolarite.getSilkScolaire().equals(ScolariteUtil.getPimaire())) {
+                    if (scolarite.getMoyenneAnnee() >= 5) {
+                        scolarite.setResultat(1);
+                    } else {
+                        scolarite.setResultat(0);
+                    }
+                } else {
+                    if (scolarite.getMoyenneAnnee() >= 10) {
+                        scolarite.setResultat(1);
+                    } else {
+                        scolarite.setResultat(0);
+                    }
+                }
+            }
+        }
     }
 
     @Override

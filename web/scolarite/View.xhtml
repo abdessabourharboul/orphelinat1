@@ -29,7 +29,7 @@
                         <h:outputText value="#{bundle.ViewScolariteLabel_moyenneAnnee}"/>
                         <h:outputText value="#{scolariteController.selected.moyenneAnnee}" title="#{bundle.ViewScolariteTitle_moyenneAnnee}"/>
                         <h:outputText value="#{bundle.ViewScolariteLabel_resultat}"/>
-                        <h:outputText value="#{scolariteController.selected.resultat ? 'نعم': 'لا'}" />
+                        <h:outputText value="#{scolariteController.passOrNot(scolariteController.selected)}" />
                         <h:outputText value="#{bundle.ViewScolariteLabel_soutienScolaire}"/>
                         <h:outputText value="#{scolariteController.selected.soutienScolaire ? 'نعم': 'لا'}"/>
                     </p:panelGrid>

@@ -28,6 +28,10 @@ public class ProvisionController implements Serializable {
     private List<Provision> items = null;
     private Provision selected;
 
+    public int nombreFamilles(Long nombrePersonnes) {
+        return ejbFacade.nombreFamilles(nombrePersonnes);
+    }
+
     public ProvisionController() {
     }
 
@@ -76,11 +80,17 @@ public class ProvisionController implements Serializable {
 
     public List<Provision> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getFacade().getItems();
         }
         return items;
     }
 
+//    public List<Provision> getItems() {
+//        if (items == null) {
+//            items = getFacade().findAll();
+//        }
+//        return items;
+//    }
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();

@@ -12,12 +12,6 @@
             <h:form id="ProvisionEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{provisionController.selected != null}">
-                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{provisionController.selected.id}" title="#{bundleProvision.EditProvisionTitle_id}" />
-                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_annee}" for="annee" />
-                        <p:inputText id="annee" value="#{provisionController.selected.annee}" title="#{bundleProvision.EditProvisionTitle_annee}" />
-                        <p:outputLabel value="#{bundleProvision.EditProvisionLabel_nombrePersonne}" for="nombrePersonne" />
-                        <p:inputText id="nombrePersonne" value="#{provisionController.selected.nombrePersonne}" title="#{bundleProvision.EditProvisionTitle_nombrePersonne}" />
                         <p:outputLabel value="#{bundleProvision.EditProvisionLabel_quantiteFarine}" for="quantiteFarine" />
                         <p:inputText id="quantiteFarine" value="#{provisionController.selected.quantiteFarine}" title="#{bundleProvision.EditProvisionTitle_quantiteFarine}" />
                         <p:outputLabel value="#{bundleProvision.EditProvisionLabel_quantiteHuile}" for="quantiteHuile" />

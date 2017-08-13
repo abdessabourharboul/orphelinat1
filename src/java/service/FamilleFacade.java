@@ -28,26 +28,12 @@ public class FamilleFacade extends AbstractFacade<Famille> {
     private EntityManager em;
 
     public List<String> findNomForSearchBySituation(String situation) {
+        if (situation == null) {
+            situation = "";
+        }
         String requete = "SELECT DISTINCT  r.nomFamille FROM Famille r WHERE 1=1";
         requete += " and r.situation LIKE CONCAT('%','" + situation + "','%')";
         return executerLaRequette(requete);
-    }
-
-    public int checkTypeOfSearchButton(String nomSearch, int searchButtonNumber) {
-        if (nomSearch.equals("makfoul")) {
-            searchButtonNumber = 1;
-        } else if (nomSearch.equals("intidar")) {
-            searchButtonNumber = 2;
-        } else if (nomSearch.equals("mawsimi")) {
-            searchButtonNumber = 3;
-        } else if (nomSearch.equals("jadid")) {
-            searchButtonNumber = 4;
-        } else if (nomSearch.equals("mouiz")) {
-            searchButtonNumber = 5;
-        } else if (nomSearch.equals("general")) {
-            searchButtonNumber = 0;
-        }
-        return searchButtonNumber;
     }
 
     public void rectifierNombrePersonnes() {
@@ -122,7 +108,9 @@ public class FamilleFacade extends AbstractFacade<Famille> {
             Long nombrePersonnesMin, Long nombrePersonnesMax,
             String telephone, Float coutMin, Float coutMax) {
         String requete = "SELECT r FROM Famille r WHERE 1=1 ";
-        requete += " and r.situation LIKE CONCAT('%','" + situation + "','%')";
+        if (situation != null && !situation.equals("")) {
+            requete += " and r.situation LIKE CONCAT('%','" + situation + "','%')";
+        }
         if (nomFamille != null && !nomFamille.equals("")) {
             requete += " and r.nomFamille='" + nomFamille + "'";
         }

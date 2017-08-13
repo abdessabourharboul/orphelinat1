@@ -99,6 +99,10 @@ public class UserFacade extends AbstractFacade<User> {
         }
     }
 
+    public void changeTheme(User user) {
+        super.edit(user);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;

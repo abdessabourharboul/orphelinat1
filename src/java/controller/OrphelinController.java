@@ -62,6 +62,19 @@ public class OrphelinController implements Serializable {
     private List<String> photos;
     private String typeOfItems;
 
+    public String generalListenerTemplate() {
+        setTypeOfItems("general");
+        setSituationDeSearch("");
+        return "/orphelin/List?faces-redirect=true";
+    }
+
+    public String situationListenerTemplate(String situation) {
+        setTypeOfItems("situation");
+        setSituationDeSearch(situation);
+        System.out.println("getSituationDeSearch: " + getSituationDeSearch());
+        return "/orphelin/List?faces-redirect=true";
+    }
+
     public List<String> getPhotos() {
         return photos;
     }
@@ -355,6 +368,14 @@ public class OrphelinController implements Serializable {
         }
     }
 
+    public List<Orphelin> getItemsBySituations() {
+        if (items == null) {
+            items = getFacade().findOrphelinBySituation(getSituationDeSearch());
+        }
+        System.out.println("Hani f la Methode getItemsBySituations()");
+        return items;
+    }
+
     public List<Orphelin> getItemsByType() {
         switch (getTypeOfItems()) {
             case "general":
@@ -364,14 +385,6 @@ public class OrphelinController implements Serializable {
             default:
                 return getItems();
         }
-    }
-
-    public List<Orphelin> getItemsBySituations() {
-        if (items == null) {
-            items = getFacade().findOrphelinBySituation(getSituationDeSearch());
-        }
-        System.out.println("Hani f la Methode getItemsBySituations()");
-        return items;
     }
 
     public List<Orphelin> getItems() {

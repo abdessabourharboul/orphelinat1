@@ -52,12 +52,18 @@ public class OrphelinFacade extends AbstractFacade<Orphelin> {
     }
 
     public List<String> findNomForSearchBySituation(String situation) {
+        if (situation == null) {
+            situation = "";
+        }
         String requete = "SELECT DISTINCT  r.nomFamille FROM Famille r WHERE 1=1";
         requete += " and r.situation LIKE CONCAT('%','" + situation + "','%')";
         return executerLaRequette(requete);
     }
 
     public List<String> findPrenomForSearchBySituation(String situation) {
+        if (situation == null) {
+            situation = "";
+        }
         String requete = "SELECT DISTINCT  r.prenom FROM Orphelin r WHERE 1=1";
         requete += " and r.veuve.famille.situation LIKE CONCAT('%','" + situation + "','%')";
         return executerLaRequette(requete);

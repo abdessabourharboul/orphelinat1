@@ -14,9 +14,9 @@
                     <p:panelGrid columns="2" rendered="#{userController.selected != null}">
                         <h:outputText value="#{bundleUser.ViewUserLabel_id}"/>
                         <h:outputText value="#{userController.selected.id}" title="#{bundleUser.ViewUserTitle_id}"/>
-                        <h:outputText value="#{bundleUser.ViewUserLabel_password}"/>
+                        <h:outputText value="#{bundleUser.CreateUserLabel_nom}"/>
                         <h:outputText value="#{userController.selected.nom}" title="#{bundleUser.ViewUserTitle_password}"/>
-                        <h:outputText value="#{bundleUser.ViewUserLabel_passwordSuppresion}"/>
+                        <h:outputText value="#{bundleUser.CreateUserLabel_zoneGeographique}"/>
                         <h:outputText value="#{userController.selected.zoneGeographique}" title="#{bundleUser.ViewUserTitle_passwordSuppresion}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundleUser.Close}" onclick="UserViewDialog.hide()"/>

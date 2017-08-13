@@ -25,7 +25,7 @@
                 <h:form id="menuForm" >
                     <p:menubar>
                         <p:menuitem value="خروج" action="#{userController.seDeconnecter()}" />
-                        
+
 
                         <p:submenu label="اعدادات" style="margin-left: 700px">
                             <p:menuitem value="الحسابات" outcome="/user/List.xhtml" />
@@ -38,63 +38,66 @@
                         <p:menuitem value="الامراض" outcome="/maladie/List.xhtml" />
                         <p:menuitem value="الاستفادات" outcome="/bonification/List.xhtml" />
                         <p:submenu label="الدراسات">
-                            <p:menuitem value="جميع الدراسات" action="#{scolariteController.generalListenerTemplate('general')}" />
-                            <p:menuitem value="الدراسات الحالية" action="#{scolariteController.currentYearListenerTemplate('currentYear')}" />
+                            <p:menuitem value="جميع الدراسات" action="#{scolariteController.generalListenerTemplate()}" />
+                            <p:menuitem value="الدراسات الحالية" action="#{scolariteController.currentYearListenerTemplate()}" />
                             <p:submenu label="حسب الوضعية">
-                                <p:menuitem  value="الدراسات المكفولة" action="#{scolariteController.situationListenerTemplate('مكفول','situation')}" />
-                                <p:menuitem  value="الدراسات في انتظار" action="#{scolariteController.situationListenerTemplate('في انتظار','situation')}" />
-                                <p:menuitem  value="الدراسات الموسمية" action="#{scolariteController.situationListenerTemplate('موسمي','situation')}" />
-                                <p:menuitem  value="الدراسات الجديدة" action="#{scolariteController.situationListenerTemplate('جديد','situation')}" />
-                                <p:menuitem  value="الدراسات المعوزة"   action="#{scolariteController.situationListenerTemplate('معوز','situation')}" />
-                                <p:menuitem  value="الدراسات المعوزة"   action="#{scolariteController.situationListenerTemplate('اخر','situation')}" />
+                                <p:menuitem  value="الدراسات المكفولة" action="#{scolariteController.situationListenerTemplate('مكفول')}" />
+                                <p:menuitem  value="الدراسات في انتظار" action="#{scolariteController.situationListenerTemplate('في انتظار')}" />
+                                <p:menuitem  value="الدراسات الموسمية" action="#{scolariteController.situationListenerTemplate('موسمي')}" />
+                                <p:menuitem  value="الدراسات الجديدة" action="#{scolariteController.situationListenerTemplate('جديد')}" />
+                                <p:menuitem  value="الدراسات المعوزة"   action="#{scolariteController.situationListenerTemplate('معوز')}" />
+                                <p:menuitem  value="الدراسات الاخرى"   action="#{scolariteController.situationListenerTemplate('اخر')}" />
                             </p:submenu>
                             <p:submenu label="حسب المستويات">
                                 <p:submenu label="الابتدائي">
-                                    <p:menuitem value="أولى ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(0),'niveau')}" />
-                                    <p:menuitem value="ثانية ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(1),'niveau')}" />
-                                    <p:menuitem value="ثالثة ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(2),'niveau')}"/>
-                                    <p:menuitem value="رابعة ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(3),'niveau')}" />
-                                    <p:menuitem value="خامسة ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(4),'niveau')}" />
-                                    <p:menuitem value="سادسة ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(5),'niveau')}" />
+                                    <p:menuitem value="أولى ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(0))}" />
+                                    <p:menuitem value="ثانية ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(1))}" />
+                                    <p:menuitem value="ثالثة ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(2))}"/>
+                                    <p:menuitem value="رابعة ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(3))}" />
+                                    <p:menuitem value="خامسة ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(4))}" />
+                                    <p:menuitem value="سادسة ابتدائى" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(5))}" />
                                 </p:submenu>
                                 <p:submenu label="الاعدادي">
-                                    <p:menuitem value="أولى اعدادي" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(6),'niveau')}" />
-                                    <p:menuitem value="ثانية اعدادي" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(7),'niveau')}" />
-                                    <p:menuitem value="ثالثة اعدادي" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(8),'niveau')}" />
+                                    <p:menuitem value="أولى اعدادي" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(6))}" />
+                                    <p:menuitem value="ثانية اعدادي" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(7))}" />
+                                    <p:menuitem value="ثالثة اعدادي" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(8))}" />
                                 </p:submenu>
                                 <p:submenu label="التانوي">
-                                    <p:menuitem value="الجدع المشترك" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(9),'niveau')}" />
-                                    <p:menuitem value="اولى باكالوريا" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(10),'niveau')}" />
-                                    <p:menuitem value="ثانية باكالوريا" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(11),'niveau')}" />
+                                    <p:menuitem value="الجدع المشترك" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(9))}" />
+                                    <p:menuitem value="اولى باكالوريا" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(10))}" />
+                                    <p:menuitem value="ثانية باكالوريا" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(11))}" />
                                 </p:submenu>
-                                <p:menuitem value="الجامعي" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(12),'niveau')}" />
+                                <p:menuitem value="الجامعي" action="#{scolariteController.niveauListenerTemplate(scolariteController.niveauxScolairesList().get(12))}" />
                             </p:submenu>
                         </p:submenu>
                         <p:submenu label="الايتام">
-                            <p:menuitem value="جميع الايتام" outcome="/orphelin/Lists/List.xhtml" />
-                            <p:menuitem value="الايتام المكفولة" outcome="/orphelin/Lists/List_Makfoul.xhtml" />
-                            <p:menuitem value="الايتام في انتظار" outcome="/orphelin/Lists/List_Intidar.xhtml" />
-                            <p:menuitem value="الايتام الموسمية" outcome="/orphelin/Lists/List_Mawsimi.xhtml" />
-                            <p:menuitem value="الايتام الجديدة" outcome="/orphelin/Lists/List_Jadid.xhtml" />
-                            <p:menuitem value="الايتام المعوزة" outcome="/orphelin/Lists/List_Mouiz.xhtml" />
+                            <p:menuitem value="جميع الايتام" action="#{orphelinController.generalListenerTemplate()}" />
+                            <p:menuitem value="الايتام المكفولة" action="#{orphelinController.situationListenerTemplate('مكفول')}" />
+                            <p:menuitem value="الايتام في انتظار" action="#{orphelinController.situationListenerTemplate('في انتظار')}" />
+                            <p:menuitem value="الايتام الموسمية" action="#{orphelinController.situationListenerTemplate('موسمي')}" />
+                            <p:menuitem value="الايتام الجديدة" action="#{orphelinController.situationListenerTemplate('جديد')}" />
+                            <p:menuitem value="الايتام المعوزة" action="#{orphelinController.situationListenerTemplate('معوز')}" />
+                            <p:menuitem value="الايتام الاخرى" action="#{orphelinController.situationListenerTemplate('اخر')}" />
                         </p:submenu>
                         <p:submenu label="الارامل" >
-                            <p:menuitem value="جميع الارامل" outcome="/veuve/Lists/List.xhtml" />
-                            <p:menuitem value="الارامل المكفولة" outcome="/veuve/Lists/List_Makfoul.xhtml" />
-                            <p:menuitem value="الارامل في انتظار" outcome="/veuve/Lists/List_Intidar.xhtml" />
-                            <p:menuitem value="الارامل الموسمية" outcome="/veuve/Lists/List_Mawsimi.xhtml" />
-                            <p:menuitem value="الارامل الجديدة" outcome="/veuve/Lists/List_Jadid.xhtml" />
-                            <p:menuitem value="الارامل المعوزة" outcome="/veuve/Lists/List_Mouiz.xhtml" />
+                            <p:menuitem value="جميع الارامل" action="#{veuveController.generalListenerTemplate()}" />
+                            <p:menuitem value="الارامل المكفولة" action="#{veuveController.situationListenerTemplate('مكفول')}" />
+                            <p:menuitem value="الارامل في انتظار" action="#{veuveController.situationListenerTemplate('في انتظار')}" />
+                            <p:menuitem value="الارامل الموسمية" action="#{veuveController.situationListenerTemplate('موسمي')}" />
+                            <p:menuitem value="الارامل الجديدة" action="#{veuveController.situationListenerTemplate('جديد')}" />
+                            <p:menuitem value="الارامل المعوزة" action="#{veuveController.situationListenerTemplate('معوز')}" />
+                            <p:menuitem value="الارامل الاخرى" action="#{veuveController.situationListenerTemplate('اخر')}" />
                         </p:submenu>
                         <p:submenu label="العائلات" >
 
-                            <p:menuitem value="جميع العائلات" outcome="/famille/Lists/List.xhtml" />
-                            <p:menuitem value="الخاصة بالجزيرةالعائلاتtajribi " outcome="/famille/Lists/ListMaZone.xhtml" />
-                            <p:menuitem value="العائلات المكفولة" outcome="/famille/Lists/List_Makfoul.xhtml" />
-                            <p:menuitem value="العائلات في انتظار" outcome="/famille/Lists/List_Intidar.xhtml" />
-                            <p:menuitem value="العائلات الموسمية" outcome="/famille/Lists/List_Mawsimi.xhtml" />
-                            <p:menuitem value="العائلات الجديدة" outcome="/famille/Lists/List_Jadid.xhtml" />
-                            <p:menuitem value="العائلات المعوزة" outcome="/famille/Lists/List_Mouiz.xhtml" />
+                            <p:menuitem value="جميع العائلات" action="#{familleController.generalListenerTemplate()}" />
+                            <p:menuitem value="الخاصة بالجزيرةالعائلاتtajribi " action="#{familleController.generalListenerTemplate()}" /><p:separator/>
+                            <p:menuitem value="العائلات المكفولة" action="#{familleController.situationListenerTemplate('مكفول')}" />
+                            <p:menuitem value="العائلات في انتظار" action="#{familleController.situationListenerTemplate('في انتظار')}" />
+                            <p:menuitem value="العائلات الموسمية" action="#{familleController.situationListenerTemplate('موسمي')}" />
+                            <p:menuitem value="العائلات الجديدة" action="#{familleController.situationListenerTemplate('جديد')}" />
+                            <p:menuitem value="العائلات المعوزة" action="#{familleController.situationListenerTemplate('معوز')}" />
+                            <p:menuitem value="العائلات الاخرى" action="#{familleController.situationListenerTemplate('اخر')}" />
                         </p:submenu>
                         <p:menuitem value="#{bundle.Home}" outcome="/general/general.xhtml" icon="ui-icon-home" />
 

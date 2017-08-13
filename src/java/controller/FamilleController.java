@@ -65,6 +65,20 @@ public class FamilleController implements Serializable {
     private int searchButtonNumber;
     private String situationDeSearch;
     private Integer size = 0;
+    private String typeOfItems;
+
+    public String generalListenerTemplate() {
+        setTypeOfItems("general");
+        setSituationDeSearch("");
+        return "/famille/List?faces-redirect=true";
+    }
+
+    public String situationListenerTemplate(String situation) {
+        setTypeOfItems("situation");
+        setSituationDeSearch(situation);
+        System.out.println("getSituationDeSearch: " + getSituationDeSearch());
+        return "/famille/List?faces-redirect=true";
+    }
 
     public String findPath(Famille famille) {
         if (famille != null) {
@@ -398,6 +412,17 @@ public class FamilleController implements Serializable {
         return items;
     }
 
+    public List<Famille> getItemsByType() {
+        switch (getTypeOfItems()) {
+            case "general":
+                return getItems();
+            case "situation":
+                return getItemsBySituations();
+            default:
+                return getItems();
+        }
+    }
+
     public List<Famille> getItems() {
         if (items == null) {
             items = getFacade().findAll();
@@ -494,6 +519,17 @@ public class FamilleController implements Serializable {
             }
         }
 
+    }
+
+    public String getTypeOfItems() {
+        if (typeOfItems == null) {
+            typeOfItems = "";
+        }
+        return typeOfItems;
+    }
+
+    public void setTypeOfItems(String typeOfItems) {
+        this.typeOfItems = typeOfItems;
     }
 
 }

@@ -40,6 +40,20 @@ public class VeuveController implements Serializable {
     private String passwordForDelete;
     private Integer size = 0;
     private String situationDeSearch;
+    private String typeOfItems;
+
+    public String generalListenerTemplate() {
+        setTypeOfItems("general");
+        setSituationDeSearch("");
+        return "/veuve/List?faces-redirect=true";
+    }
+
+    public String situationListenerTemplate(String situation) {
+        setTypeOfItems("situation");
+        setSituationDeSearch(situation);
+        System.out.println("getSituationDeSearch: " + getSituationDeSearch());
+        return "/veuve/List?faces-redirect=true";
+    }
 
     public List<String> getItemsAvailableSelectOneStringNoms() {
         return getFacade().findNomForSearchBySituation(getSituationDeSearch());
@@ -232,6 +246,17 @@ public class VeuveController implements Serializable {
         return items;
     }
 
+    public List<Veuve> getItemsByType() {
+        switch (getTypeOfItems()) {
+            case "general":
+                return getItems();
+            case "situation":
+                return getItemsBySituations();
+            default:
+                return getItems();
+        }
+    }
+
     public List<Veuve> getItems() {
         if (items == null) {
             items = getFacade().findAll();
@@ -322,6 +347,17 @@ public class VeuveController implements Serializable {
             }
         }
 
+    }
+
+    public String getTypeOfItems() {
+        if (typeOfItems == null) {
+            typeOfItems = "";
+        }
+        return typeOfItems;
+    }
+
+    public void setTypeOfItems(String typeOfItems) {
+        this.typeOfItems = typeOfItems;
     }
 
 }

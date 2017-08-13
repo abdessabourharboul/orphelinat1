@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-        <p:column width="20">
+        <p:column width="40">
             <f:facet name="header">
                 <h:outputText value="#" />
             </f:facet>
@@ -20,13 +20,13 @@
             </f:facet>
             <h:outputText value="#{item.nomFamille}"/>
         </p:column>
-        <p:column sortBy="#{item.situation}">
+        <p:column sortBy="#{item.situation}" width="100">
             <f:facet name="header">
                 <h:outputText value="#{bundle.ListFamilleTitle_situation}"/>
             </f:facet>
             <h:outputText value="#{item.situation}"/>
         </p:column>
-        <p:column width="35">
+        <p:column width="35" sortBy="#{item.nombrePersonnes}">
             <f:facet name="header">
                 <h:outputText value="#{bundle.ListFamilleTitle_nombrePersonnes}"/>
             </f:facet>
@@ -38,36 +38,29 @@
             </f:facet>
             <h:outputText value="#{item.user.zoneGeographique}"/>
         </p:column>
-        <p:column>
+        <p:column width="60" sortBy="#{item.typeLogement}">
             <f:facet name="header">
                 <h:outputText value="#{bundle.ListFamilleTitle_typeLogement}"/>
             </f:facet>
             <h:outputText value="#{item.typeLogement}"/>
         </p:column>
-        <p:column>
+        <p:column sortBy="#{item.adresse}">
             <f:facet name="header">
                 <h:outputText value="#{bundle.ListFamilleTitle_adresse}"/>
             </f:facet>
             <h:outputText value="#{item.adresse}"/>
         </p:column>
-        <p:column >
+        <p:column width="90" sortBy="#{item.telephone}">
             <f:facet name="header">
                 <h:outputText value="#{bundle.ListFamilleTitle_telephone}"/>
             </f:facet>
             <h:outputText value="#{item.telephone}"/>
         </p:column>
-        <p:column style="background-color: #{item.user.zoneGeographique eq familleController.connectedUser.zoneGeographique ? '#c7ddef' : null}">
+        <p:column sortBy="#{item.user.nom}" style="background-color: #{item.user.zoneGeographique eq familleController.connectedUser.zoneGeographique ? '#c7ddef' : null}">
             <f:facet name="header">
                 <h:outputText value="#{bundle.ListFamilleTitle_responsableZone}"/>
             </f:facet>
             <h:outputText value="#{item.user.nom}"/>
         </p:column>
-<!--        <p:column>
-            <f:facet name="header">
-                <h:outputText value="# {bundle.ListFamilleTitle_cout}"/>
-            </f:facet>
-            <h:outputText value="# {item.cout}"/>
-        </p:column>-->
-
     </ui:composition>
 </html>

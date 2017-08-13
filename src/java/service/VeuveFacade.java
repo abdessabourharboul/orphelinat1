@@ -31,14 +31,20 @@ public class VeuveFacade extends AbstractFacade<Veuve> {
     private FamilleFacade familleFacade;
     @EJB
     private OrphelinFacade orphelinFacade;
-    
+
     public List<String> findNomVeuveForSearchBySituation(String situation) {
+        if (situation == null) {
+            situation = "";
+        }
         String requete = "SELECT DISTINCT  r.nomVeuve FROM Veuve r WHERE 1=1";
         requete += " and r.famille.situation LIKE CONCAT('%','" + situation + "','%')";
         return executerLaRequette(requete);
     }
-    
+
     public List<String> findNomForSearchBySituation(String situation) {
+        if (situation == null) {
+            situation = "";
+        }
         String requete = "SELECT DISTINCT  r.nomFamille FROM Famille r WHERE 1=1";
         requete += " and r.situation LIKE CONCAT('%','" + situation + "','%')";
         return executerLaRequette(requete);

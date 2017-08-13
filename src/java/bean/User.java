@@ -25,6 +25,7 @@ public class User implements Serializable {
     private String password;
     private String nom;
     private String zoneGeographique;
+    private String theme;
     private boolean logged = false;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
@@ -79,6 +80,14 @@ public class User implements Serializable {
 
     public void setFamilles(List<Famille> familles) {
         this.familles = familles;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
     @Override

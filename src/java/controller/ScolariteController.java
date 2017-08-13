@@ -59,23 +59,23 @@ public class ScolariteController implements Serializable {
         return str;
     }
     
-    public String generalListenerTemplate(String type) {
-        setTypeOfItems(type);
+    public String generalListenerTemplate() {
+        setTypeOfItems("general");
         setSituationDeSearch("");
         setNiveauScolaireDeSearch("");
         return "/scolarite/List?faces-redirect=true";
     }
     
-    public String currentYearListenerTemplate(String type) {
-        setTypeOfItems(type);
+    public String currentYearListenerTemplate() {
+        setTypeOfItems("currentYear");
         setSituationDeSearch("");
         setNiveauScolaireDeSearch("");
         setAnneeScolaireFirstForSearch(ejbFacade.anneeScolaireFirstYear());
         return "/scolarite/List?faces-redirect=true";
     }
     
-    public String situationListenerTemplate(String situation, String type) {
-        setTypeOfItems(type);
+    public String situationListenerTemplate(String situation) {
+        setTypeOfItems("situation");
         setSituationDeSearch(situation);
         setNiveauScolaireDeSearch("");
         setAnneeScolaireFirstForSearch(ejbFacade.anneeScolaireFirstYear());
@@ -83,8 +83,8 @@ public class ScolariteController implements Serializable {
         return "/scolarite/List?faces-redirect=true";
     }
     
-    public String niveauListenerTemplate(String niveau, String type) {
-        setTypeOfItems(type);
+    public String niveauListenerTemplate(String niveau) {
+        setTypeOfItems("niveau");
         setNiveauScolaireDeSearch(niveau);
         setSituationDeSearch("");
         setAnneeScolaireFirstForSearch(ejbFacade.anneeScolaireFirstYear());

@@ -8,23 +8,77 @@
       xmlns:b="http://bootsfaces.net/ui">
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="Changer Mot de Passe"></h:outputText>
+            <h:outputText value="تغيير الشكل"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <center>
                 <h:form>
-                    <h1><h:outputText value="Changer Votre Mot de passe"/></h1>
-                    <b:container>
-                        <p:themeSwitcher value="#{guestPreferences.theme}" style="width: 165px"
-                                         effect="fade" id="statefulSwitcher">
-                            <f:selectItem itemLabel="Choose Theme" itemValue=""/>
-                            <f:selectItems value="#{switcherBeann.themes}"/>
-                            <p:ajax listener="#{switcherBeann.saveTheme}"/>
-                        </p:themeSwitcher>
-                    </b:container>
-                    <p:commandButton value="Enregistrer" action="#{userController.changePassword()}" update=":growl"/>
+                    <div class="ui-g">
+                        <div class="ui-g-2"></div>
+                        <div class="ui-g-2"></div>
+                        <div class="ui-g-2"></div>
+                        <div class="ui-g-2">
+                            <h1><h:outputText value="تغيير الشكل"/></h1>
+                            <p:themeSwitcher value="#{guestPreferences.theme}" style="width:100px"
+                                             effect="fade" id="statefulSwitcher">
+                                <f:selectItem itemLabel="Choose Theme" itemValue=""/>
+                                <f:selectItems value="#{switcherBeann.themes}"/>
+                                <p:ajax listener="#{switcherBeann.saveTheme}"/>
+                            </p:themeSwitcher>
+                            <p:commandButton value="حفظ" action="#{guestPreferences.changeTheme()}"/>
+                        </div>
+                    </div>
+
+                    <div class="ui-g">
+                        <div class="ui-g-4"><p:separator />
+                        </div>
+                        <div class="ui-g-4"><p:separator />
+                        </div>
+                        <div class="ui-g-4"><p:separator />
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-6"> 
+                            <p:dialog header="Dialog" widgetVar="dlg" minHeight="40" modal="true" appendTo="@(body)">
+                                <h:outputText value="Resistance to PrimeFaces is futile!" />
+                            </p:dialog>   
+
+                            <p:commandButton value="Dialog" onclick="PF('dlg').show()" type="button" style="display:block;"/>
+
+                            <p:panel header="Panel" style="margin:20px 0px">
+                                Panel Content
+                            </p:panel>
+                        </div>
+                        <div class="ui-g-6">
+                            <p:spinner />
+
+                            <p:toolbar style="margin:20px 0px">
+                                <f:facet name="left">
+                                    <p:commandButton type="button" value="New" icon="ui-icon-document" />
+                                    <p:commandButton type="button" value="Open" icon="ui-icon-folder-open"/>
+                                    <p:commandButton type="button" title="Save" icon="ui-icon-disk"/>
+                                    <p:commandButton type="button" title="Delete" icon="ui-icon-trash"/>
+                                    <p:commandButton type="button" title="Print" icon="ui-icon-print"/>
+                                </f:facet>
+
+                                <f:facet name="right">
+                                    <p:menuButton value="Navigate">
+                                        <p:menuitem value="Home" url="http://www.primefaces.org" />
+                                        <p:menuitem value="ShowCase" url="http://www.primefaces.org/showcase" />
+                                        <p:menuitem value="TouchFaces" url="http://www.primefaces.org/showcase/touch" />
+                                    </p:menuButton>
+                                </f:facet>
+                            </p:toolbar>
+
+                            <p:accordionPanel>
+                                <p:tab title="Tab1">Tab1 Content</p:tab>
+                                <p:tab title="Tab2">Tab2 Content</p:tab>
+                                <p:tab title="Tab3">Tab3 Content</p:tab>
+                            </p:accordionPanel>
+                        </div>
+                    </div>
                 </h:form>
-            </center>           
+            </center> 
         </ui:define>
     </ui:composition>
 </html>
